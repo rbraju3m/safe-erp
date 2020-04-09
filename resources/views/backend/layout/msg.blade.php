@@ -1,6 +1,6 @@
 @if(Session::has('message'))
 
-<div class="alert alert-success">
+<div class="alert alert-success" style="font-size: 18px;font-weight: bold;">
 	<span class="close" data-dismiss="alert">×</span>
 	{{Session::get('message')}} 
 </div>
@@ -9,7 +9,7 @@
 
 @if(Session::has('error'))
 
-<div class="alert alert-warning">
+<div class="alert alert-warning" style="font-size: 18px;font-weight: bold;">
 	<span class="close" data-dismiss="alert">×</span>
 	{{Session::get('error')}} 
 </div>
@@ -18,7 +18,7 @@
 
 @if(Session::has('info'))
 
-<div class="alert alert-warning">
+<div class="alert alert-warning" style="font-size: 18px;font-weight: bold;">
 	<span class="close" data-dismiss="alert">×</span>
 	{{Session::get('info')}} 
 </div>
@@ -27,7 +27,7 @@
 @if(Session::has('danger'))
 
 
-<div class="alert alert-danger">
+<div class="alert alert-danger" style="font-size: 18px;font-weight: bold;">
 	<span class="close" data-dismiss="alert">×</span>
 	{{Session::get('danger')}} 
 </div>

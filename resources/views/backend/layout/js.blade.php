@@ -1,4 +1,9 @@
+
 <script src="{{ asset('backend/js/bower/jquery/dist/jquery.min.js') }}"></script>
+{{-- <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" /> --}}
+{{-- <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
+
+{{-- <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script> --}}
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('backend/js/bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- FastClick -->
@@ -34,6 +39,8 @@
 
 <!-- select2 multiple option select -->
 <script src="{{ asset('backend/js/bower/select2/dist/js/select2.full.min.js') }}"></script>
+
+
 
 
 <script>
@@ -74,5 +81,19 @@
       radioClass   : 'iradio_minimal-blue'
     })
     
+  })
+
+  //Presernt address as parmanent address
+  $(document).delegate('.Paramanent_Address','click',function () {
+    var value = $('.Paramanent_Address_check:checked').val();
+    // alert(value);
+    if(value == 'on'){
+      // alert('check ase');
+      var present_address = $('.present_address').val();
+      // alert(present_address);
+      $('#Paramanent_Address').text(present_address);
+    }else{
+      $('#Paramanent_Address').text('');
+    }
   })
 </script>
