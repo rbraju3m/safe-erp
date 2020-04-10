@@ -11,6 +11,8 @@ class User extends Model {
 	protected $table = 'users';
     protected $fillable = [
         'name',
+        'user_id',
+        'image_link',
         'email',
         'password',
         'updated_by',

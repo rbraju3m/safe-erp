@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Modules\User\Models\User;
 
 
-class UserRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     public function authorize()
     {
@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
             'type'              => 'required',
             'religion'          => 'required',
             'gender'            => 'required',
-            'image_link'   => 'required|image|mimes:jpeg,png,jpg|max:5120'.$image,
+            'image_link'   => 'image|mimes:jpeg,png,jpg|max:5120'.$image,
             'status'            => 'required',
         ];
 

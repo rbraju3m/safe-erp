@@ -35,9 +35,9 @@
 		'uses' => 'UserController@show'
 	]);
 
-	Route::get('admin-member-cancellist',[
-		'as' => 'admin.member.cancellist',
-		'uses' => 'UserController@cancellist'
+	Route::get('admin-member-inactive',[
+		'as' => 'admin.member.inactive',
+		'uses' => 'UserController@inactivelist'
 	]);
 
 	Route::get('admin-member-rollback/{id}',[
@@ -45,7 +45,7 @@
 		'uses' => 'UserController@rollback'
 	]);
 
-	Route::get('admin-member-delete/{id}',[
-		'as' => 'admin.member.delete',
-		'uses' => 'UserController@delete'
+	Route::get('admin-member-destroy/{id}',[
+		'as' => 'admin.member.destroy',
+		'uses' => 'UserController@destroy'
 	]);

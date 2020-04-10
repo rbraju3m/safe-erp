@@ -40,7 +40,7 @@
             <li><a href="{{route('admin.member.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Member</a></li>
             <li><a href="{{route('admin.member.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
 Member List</a></li>
-            <li><a href="{{route('admin.breakingnews.cancel')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Member Inactive list</a></li>
+            <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Member Inactive list</a></li>
           </ul>
         </li>      
   

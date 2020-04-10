@@ -18,12 +18,18 @@
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">{{$ModuleTitle.' > '.$pageTitle}}</a></li>
+        <li><a href="{{route('admin.member.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.member.create')}}">{{$pageTitle}}</a></li>
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
-        <a style="margin-left: 10px;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
-        <a href=" {{route('admin.category.create')}} " class="btn btn-primary waves-effect pull-right">Add News</a>
+        <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
+
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-danger waves-effect pull-right">Inactive Member</a>
+
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-success waves-effect pull-right">Active Member</a>
+
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
+
       </ol>
     </section>
 
@@ -44,9 +50,9 @@
         <!-- /.box-header -->
         <div class="box-body">
 
-          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.news.update', $data->id],"class"=>"", 'id' => '']) !!}
+          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.member.update', $data->id],"class"=>"", 'id' => '']) !!}
 
-      @include('News::news._form')
+      @include('User::user._form')
 
       {!! Form::close() !!}
         </div>
