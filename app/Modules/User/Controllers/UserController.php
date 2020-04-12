@@ -78,7 +78,7 @@ class UserController extends Controller
     {
         $input = $request->all();
 
-        // Check already mobile presents or not
+        // Check already mobile present or not
         $data = member::where('mobile',$input['mobile'])->exists();
 
         if (!$data) {
@@ -113,6 +113,7 @@ class UserController extends Controller
                         $user_model->user_id = $member_data->id;
                         $user_model->name=$input['name'];
                         $user_model->email=$input['mobile'];
+                        $user_model->type=$input['type'];
                         $user_model->image_link = $member_img_title;
                         $user_model->password = password_hash($input['mobile'], PASSWORD_BCRYPT);
                         $user_model->save();
@@ -121,9 +122,13 @@ class UserController extends Controller
 
                     DB::commit();
                     Session::flash('message', 'Member is added Successfilly!');
-                    return redirect()->back();
-
-                    // return redirect('admin-news-index');
+                    $status = $input['status'];
+                    if ($status =='active') {
+                        return redirect('admin-member-index');
+                    }else{
+                        return redirect('admin-member-inactive');
+                    }
+                    
                 } catch (\Exception $e) {
                     //If there are any exceptions, rollback the transaction`
                     DB::rollback();
@@ -223,6 +228,7 @@ class UserController extends Controller
         }
 
         $userdata['name'] = $input['name'];
+        $userdata['type'] = $input['type'];
         $userdata['image_link'] = $input['image_link'];
 
 
@@ -239,7 +245,12 @@ class UserController extends Controller
             DB::commit();
 
             Session::flash('message', 'Successfully updated!');
-            return redirect('admin-member-index');
+            $status = $input['status'];
+            if ($status =='active') {
+                return redirect('admin-member-index');
+            }else{
+                return redirect('admin-member-inactive');
+            }
         }
         catch (\Exception $e) {
             //If there are any exceptions, rollback the transaction`
@@ -310,6 +321,33 @@ class UserController extends Controller
                 DB::commit();
                 Session::flash('message', 'Roll Back Successfully !');
                 return redirect('admin-member-index');
+
+            } catch (\Exception $e) {
+                //If there are any exceptions, rollback the transaction`
+                DB::rollback();
+                print($e->getMessage());
+                exit();
+                Session::flash('danger', $e->getMessage());
+            }
+    }
+
+    public function delete($id){
+        /* Transaction Start Here */
+            DB::beginTransaction();
+            try {
+
+                $data = DB::table('member')->where('id',$id)->first();
+                
+                if (File::exists(public_path().'/uploads/member/'.$data->image_link)) {
+                    File::delete(public_path().'/uploads/member/'.$data->image_link);
+                }
+                $member_data = DB::table('member')->where('id',$id);
+                $user_data = DB::table('users')->where('user_id',$id);
+                $member_data->delete();
+                $user_data->delete();
+                DB::commit();
+                Session::flash('message', 'Delete Successfully !');
+                return redirect('admin-member-inactive');
 
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`

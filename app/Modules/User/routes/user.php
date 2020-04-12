@@ -25,16 +25,6 @@
 		'uses' => 'UserController@update'
 	]);
 
-	Route::get('admin-member-cancel/{id}',[
-		'as' => 'admin.member.cancel',
-		'uses' => 'UserController@cancel'
-	]);
-
-	Route::get('admin-member-show',[
-		'as' => 'admin.member.show',
-		'uses' => 'UserController@show'
-	]);
-
 	Route::get('admin-member-inactive',[
 		'as' => 'admin.member.inactive',
 		'uses' => 'UserController@inactivelist'
@@ -48,4 +38,9 @@
 	Route::get('admin-member-destroy/{id}',[
 		'as' => 'admin.member.destroy',
 		'uses' => 'UserController@destroy'
+	]);
+
+	Route::get('admin-member-delete/{id}',[
+		'as' => 'admin.member.delete',
+		'uses' => 'UserController@delete'
 	]);

@@ -15,48 +15,64 @@
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                  <i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
+        
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-          <li class="treeview">
-          <a href="#">
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-            <span>Member</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{route('admin.member.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Member</a></li>
-            <li><a href="{{route('admin.member.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
-Member List</a></li>
-            <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Member Inactive list</a></li>
-          </ul>
-        </li>      
-  
+        <li class="header" style="text-align: center;
+font-size: 20px;
+font-weight: bold;
+color: #d56f6f;">SAFE MENU</li>
 
 
-
-
-        
         <li>
-          <a href="{{route('admin.category.index')}}">
-            <i class="fa fa-th"></i> <span>Category</span>
+          <a href=" {{ route('admin-dashboard') }} ">
+            <i class="fa fa-th"></i> <span>SAFE Dashboard</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green">new</small>
             </span>
           </a>
         </li>
+        <li class="treeview">
+            <a href="#">
+              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+              <span>Member</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            @if (Auth::user()->type == 'Admin')
+              <li><a href="{{route('admin.member.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Member</a></li>
+            @endif
+
+            <li><a href="{{route('admin.member.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active Member </a></li>
+            <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Member </a></li>
+          </ul>
+        </li>  
+
+
+        <li class="treeview">
+            <a href="#">
+              <i class="fa fa-money" aria-hidden="true"></i>
+              <span>Deposite</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            @if (Auth::user()->type == 'Admin')
+              <li><a href="{{route('admin.deposite.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Deposite</a></li>
+            @endif
+
+            <li><a href="{{route('admin.deposite.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active Deposite </a></li>
+            <li><a href="{{route('admin.deposite.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Deposite </a></li>
+          </ul>
+        </li>    
+  
 
         <li class="treeview">
           <a href="#">

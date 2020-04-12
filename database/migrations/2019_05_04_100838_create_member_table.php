@@ -31,7 +31,7 @@ class CreateMemberTable extends Migration
             $table->enum('type',array('Admin','Chairman','General secretary','Member'))->nullable();
             $table->enum('religion',array('Islam','Hinduism','Christianity','Buddhism'))->nullable();
             $table->enum('gender',array('Male','Female','Others'))->nullable();
-            $table->enum('status',array('active','inactive','cancel'))->nullable();
+            $table->enum('status',array('active','inactive'))->nullable();
             $table->string('created_by',50)->nullable();
             $table->string('updated_by',50)->nullable();
             $table->timestamps();

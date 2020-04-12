@@ -14,6 +14,7 @@ class User extends Model {
         'user_id',
         'image_link',
         'email',
+        'type',
         'password',
         'updated_by',
         'created_by',

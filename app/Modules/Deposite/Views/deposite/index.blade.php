@@ -1,5 +1,8 @@
 
-
+<?php
+use App\Modules\User\Models\User;
+  
+?>
 
 
 @extends('backend.layout.master')
@@ -52,17 +55,18 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table table-bordered table-striped text-center">
                 <thead>
 
                 <tr>
                   <th>Sl No</th>
                   <th style="background: rgb(126, 172, 206);">Name</th>
-                  <th>Mobile</th>
-                  <th> Member ID </th>
-                  <th> National ID </th>
-                  <th> Type</th>
-                  <th> Image</th>
+                  <th>Amount</th>
+                  <th>  Type </th>
+                  <th>  Month & Year </th>
+                  <th> Note</th>
+                  <th>Payment Details</th>
+                  <th>Added By</th>
                   <th> Action </th>
                 </tr>
                 </thead>
@@ -76,40 +80,26 @@
 
                        <tr>
                         <td><?=$total_rows?></td>
-                        <td>{{$values->name}}</td>
-                        <td>{{ '0'.$values->mobile }}</td>
+                        <td><img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
+height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile  }}</td>
+                        <td>{{ $values->amount }}</td>
                         <td>
-                        {{$values->member_id}}
+                        {{$values->type}}
                         </td>
-                        <td>{{$values->national_id}}</td>
-                        <td>
-                          
-                          @php
-                            if ($values->type == 'Admin') {
-                              $raju = 'btn-success';
-                            }
-
-                            if ($values->type == 'Chairman') {
-                              $raju = 'btn-warning';
-                            }
-
-                            if ($values->type == 'General secretary') {
-                              $raju = 'btn-primary';
-                            }
-                            if ($values->type == 'Member') {
-                              $raju = 'btn-danger';
-                            }
-                          @endphp
-                          
-                          <span class="btn {{$raju}}">{{$values->type}}</span>
-                          
-                          
-                        </td>
-                        <td>
-                        @if(!empty($values->image_link))
-                        <img width="50" height="50" src="{{URL::to('')}}/uploads/member/{{$values->image_link}}">
-                        @endif
-                        </td>
+                        <td>{{$values->month.'-'.$values->year}}</td>
+                        <td>{{$values->note}}</td>
+                        <td>{{$values->payment_time}}
+                          <br>{{ $values->payment_day}}
+                          <br>{{$values->payment_date  }}</td>
+                          <?php
+        $name = User::where('id', $values->created_by)
+                        ->select('name','image_link')
+                        ->first();
+                          ?>
+                        <td><img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;
+height: 50px;" alt="User Image"><br>{{$name->name}}</td>
+                        
+                        
                         <td>
 
                           {{-- <a title="VIEW" target="new" style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.show', $values->id) }}" ><i class="fa fa-eye"></i></a> --}}

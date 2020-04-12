@@ -23,11 +23,11 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Total Member</span>
-              <span class="info-box-number">20<small></small></span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Total Member</span>
+              <span class="info-box-number" style="font-family: initial;">{{ $member_count }}<small></small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -39,8 +39,8 @@
             <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Months</span>
-              <span class="info-box-number">12</span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Months</span>
+              <span class="info-box-number" style="font-family: initial;">12</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -56,8 +56,8 @@
             <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Years</span>
-              <span class="info-box-number">1</span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Years</span>
+              <span class="info-box-number" style="font-family: initial;">1</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -69,8 +69,8 @@
             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">New Members</span>
-              <span class="info-box-number">2,000</span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">New Members</span>
+              <span class="info-box-number" style="font-family: initial;">2,000</span>
             </div>
             <!-- /.info-box-content -->
           </div>
