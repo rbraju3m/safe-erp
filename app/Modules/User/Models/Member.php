@@ -26,6 +26,11 @@ class Member extends Model {
         'gender',
         'image_link',
         'status',
+        'join_day',
+        'join_month',
+        'join_year',
+        'join_time',
+        'join_date',
         'updated_by',
         'created_by',
     ];

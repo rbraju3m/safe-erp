@@ -21,22 +21,25 @@ use App\Modules\User\Models\User;
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('admin.member.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.member.create')}}">{{$pageTitle}}</a></li>
+        <li><a href="{{route('admin.deposite.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.deposite.create')}}">{{$pageTitle}}</a></li>
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
         <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
-        @if (Route::currentRouteName() != 'admin.member.inactive')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Member</a>
+        @if (Route::currentRouteName() != 'admin.deposite.inactive')
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Deposite</a>
         @endif
         
-        @if (Route::currentRouteName() != 'admin.member.index')
-          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-success waves-effect pull-right">Active Member</a>
+        @if (Route::currentRouteName() != 'admin.deposite.index')
+          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.index')}} " class="btn btn-success waves-effect pull-right">Active Deposite</a>
         @endif
         
-        @if (Route::currentRouteName() != 'admin.member.create')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
+        @if (Route::currentRouteName() != 'admin.deposite.create')
+        @if(Auth::user()->type == 'Admin')
+
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.create')}} " class="btn btn-primary waves-effect pull-right">Add Deposite</a>
+        @endif
         @endif
         
       </ol>
@@ -102,22 +105,26 @@ height: 50px;" alt="User Image"><br>{{$name->name}}</td>
                         
                         <td>
 
-                          {{-- <a title="VIEW" target="new" style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.show', $values->id) }}" ><i class="fa fa-eye"></i></a> --}}
+                          {{-- <a title="VIEW" target="new" style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.deposite.show', $values->id) }}" ><i class="fa fa-eye"></i></a> --}}
                           
                             @if (isset($Cancel) && $Cancel == 'Cancel')
-                            <a title="ROLL BACK" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.rollback', $values->id) }}"  onclick="return confirm('Move to active member?')" ><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                            <a title="ROLL BACK" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.deposite.rollback', $values->id) }}"  onclick="return confirm('Move to active deposite?')" ><i class="fa fa-repeat" aria-hidden="true"></i></a>
             
 
             @if (Auth::user()->type == 'Admin')
 
-                            <a title="PARMANENT DELETE" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.delete', $values->id) }}"  onclick="return confirm('Are you sure to parmanent delete?')" ><i class="fa fa-trash"></i></a>
+                            <a title="PARMANENT DELETE" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.deposite.delete', $values->id) }}"  onclick="return confirm('Are you sure to parmanent delete?')" ><i class="fa fa-trash"></i></a>
             @endif
                             
                             @else
-                              <a title="EDIT" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.edit', $values->id) }}" ><i class="fa fa-edit"></i></a>
+            @if (Auth::user()->type == 'Admin')
+                            
+                              <a title="EDIT" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.deposite.edit', $values->id) }}" ><i class="fa fa-edit"></i></a>
 
-                              <a title="CANCEL" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.destroy', $values->id) }}"  onclick="return confirm('Are you sure to Cancel?')" ><i class="fa fa-ban" aria-hidden="true"></i>
+                              <a title="Inactive" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.deposite.destroy', $values->id) }}"  onclick="return confirm('Are you sure to Inactive?')" ><i class="fa fa-ban" aria-hidden="true"></i>
 </a>
+            @endif
+
                             @endif
 
 

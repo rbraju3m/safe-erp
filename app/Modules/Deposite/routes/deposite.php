@@ -25,6 +25,11 @@
 		'uses' => 'DepositeController@update'
 	]);
 
+	Route::get('admin-deposite-destroy/{id}',[
+		'as' => 'admin.deposite.destroy',
+		'uses' => 'DepositeController@destroy'
+	]);
+
 	Route::get('admin-deposite-inactive',[
 		'as' => 'admin.deposite.inactive',
 		'uses' => 'DepositeController@inactivelist'
@@ -33,11 +38,6 @@
 	Route::get('admin-deposite-rollback/{id}',[
 		'as' => 'admin.deposite.rollback',
 		'uses' => 'DepositeController@rollback'
-	]);
-
-	Route::get('admin-deposite-destroy/{id}',[
-		'as' => 'admin.deposite.destroy',
-		'uses' => 'DepositeController@destroy'
 	]);
 
 	Route::get('admin-deposite-delete/{id}',[

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Input;
 			<div class="form-group">
 				{!! Form::label(' member_id', 'Select Member Name', array('class' => 'col-form-label')) !!}
 				<span style="color: red">*</span> 
-				{!! Form::Select('member_id',$data,Input::old('member_id'),['id'=>'member_id', 'class'=>'form-control select2']) !!}
+				{!! Form::Select('member_id',$member,Input::old('member_id'),['id'=>'member_id', 'class'=>'form-control select2']) !!}
 				<span style="color: red">{!! $errors->first('member_id') !!}</span>
 			</div>
 		</div>

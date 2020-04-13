@@ -33,7 +33,9 @@
         @endif
         
         @if (Route::currentRouteName() != 'admin.member.create')
+        @if (Auth::user()->type == 'Admin')
         <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
+        @endif
         @endif
         
       </ol>

@@ -8,6 +8,7 @@ use App\Modules\User\Requests;
 use Illuminate\Support\Facades\Input;
 
 use App\Modules\User\Models\Member;
+use App\Modules\User\Models\Deposite;
 use App\Modules\User\Models\User;
 
 
@@ -78,6 +79,12 @@ class UserController extends Controller
     {
         $input = $request->all();
 
+        $input['join_date'] = date("d-m-Y");
+        $input['join_day'] = date("l");
+        $input['join_month'] = date("F");
+        $input['join_year'] = date("Y");
+        $input['join_time'] = date(" h:i:sa");
+
         // Check already mobile present or not
         $data = member::where('mobile',$input['mobile'])->exists();
 
@@ -121,7 +128,7 @@ class UserController extends Controller
                     }
 
                     DB::commit();
-                    Session::flash('message', 'Member is added Successfilly!');
+                    Session::flash('message', 'Member is added Successfully!');
                     $status = $input['status'];
                     if ($status =='active') {
                         return redirect('admin-member-index');
@@ -166,7 +173,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $pageTitle = "Add Member Information";
+        $pageTitle = "Update Member Information";
         $ModuleTitle = "Member Information";
 
         // Find news
@@ -231,6 +238,12 @@ class UserController extends Controller
         $userdata['type'] = $input['type'];
         $userdata['image_link'] = $input['image_link'];
 
+
+        $input['join_date'] = $member_model['join_date'];
+        $input['join_day'] = $member_model['join_day'];
+        $input['join_month'] = $member_model['join_month'];
+        $input['join_year'] = $member_model['join_year'];
+        $input['join_time'] = $member_model['join_time'];
 
 
         DB::beginTransaction();
@@ -301,7 +314,7 @@ class UserController extends Controller
 
         
         // Get Parent category data
-        $data = Member::orderBy('id','desc')
+        $data = Member::orderBy('updated_at','desc')
                     ->where('status','inactive') 
                     ->get();
         // return view
@@ -337,7 +350,9 @@ class UserController extends Controller
             try {
 
                 $data = DB::table('member')->where('id',$id)->first();
+                $deposite_data = DB::table('deposite')->where('member_id',$id)->count();
                 
+            if ($deposite_data == 0) {
                 if (File::exists(public_path().'/uploads/member/'.$data->image_link)) {
                     File::delete(public_path().'/uploads/member/'.$data->image_link);
                 }
@@ -348,7 +363,11 @@ class UserController extends Controller
                 DB::commit();
                 Session::flash('message', 'Delete Successfully !');
                 return redirect('admin-member-inactive');
-
+            }else{
+                $mes =  'First Delete Deposite Data for this '.$data->name;
+                Session::flash('danger', $mes);
+                return redirect('admin-member-inactive');
+            }
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
                 DB::rollback();
@@ -356,5 +375,5 @@ class UserController extends Controller
                 exit();
                 Session::flash('danger', $e->getMessage());
             }
-    }
+        }
 }

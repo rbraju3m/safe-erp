@@ -32,6 +32,14 @@ class CreateMemberTable extends Migration
             $table->enum('religion',array('Islam','Hinduism','Christianity','Buddhism'))->nullable();
             $table->enum('gender',array('Male','Female','Others'))->nullable();
             $table->enum('status',array('active','inactive'))->nullable();
+
+            $table->string('join_day',50)->nullable();
+            $table->string('join_month',50)->nullable();
+            $table->string('join_year',50)->nullable();
+            $table->string('join_time',50)->nullable();
+            $table->string('join_date',50)->nullable();
+
+            
             $table->string('created_by',50)->nullable();
             $table->string('updated_by',50)->nullable();
             $table->timestamps();
@@ -47,6 +55,6 @@ class CreateMemberTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('member');
     }
 }

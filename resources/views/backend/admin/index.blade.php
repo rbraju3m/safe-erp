@@ -4,7 +4,7 @@
             @section('body')
             
             
-<div class="content-wrapper">
+<div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -23,12 +23,14 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
+            <a href="{{route('admin.member.index')}}">
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Total Member</span>
-              <span class="info-box-number" style="font-family: initial;">{{ $member_count }}<small></small></span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000">Total Member</span>
+              <span class="info-box-number" style="font-family: initial;color: #000">{{ $member_count }}<small></small></span>
             </div>
+          </a>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->

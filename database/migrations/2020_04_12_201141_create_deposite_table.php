@@ -35,7 +35,8 @@ class CreateDepositeTable extends Migration
             $table->engine= 'InnoDB';
 
             $table->foreign('member_id')
-                  ->references('id')->on('member');
+                  ->references('id')->on('member')
+                  ->onDelete('cascade');
         });
     }
 
@@ -46,6 +47,6 @@ class CreateDepositeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deposites');
+        Schema::dropIfExists('deposite');
     }
 }

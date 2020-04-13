@@ -118,10 +118,23 @@ use Illuminate\Support\Facades\Input;
 	<div class="row">
 		<div class="col-md-3">
 			<div class="form-group">
+				<?php
+					if(Auth::user()->type == 'Admin'){
+						$admintype = "enable";
+					}else{
+						$admintype = "disabled";
+						$text = "Only admin can change";
+					}
+				?>
 				{!!  Form::label('type', 'Member Type', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
+				
 
-				{!! Form::Select('type',array(''=>'Select Member Type','Admin'=>'Admin','Chairman'=>'Chairman','General secretary' => 'General secretary','Member'=>'Member'),Input::old('type'),['id'=>'type', 'class'=>'form-control']) !!}
+				{!! Form::Select('type',array(''=>'Select Member Type','Admin'=>'Admin','Chairman'=>'Chairman','General secretary' => 'General secretary','Member'=>'Member'),Input::old('type'),['id'=>'type', 'class'=>'form-control',$admintype]) !!}
+				@if(Auth::user()->type != 'Admin')
+				<input type="hidden" name="type" value="{{ $data->type}}">
+				@endif
 				<span style="color: red">{!! $errors->first('type') !!}</span>
+				<span style="color: red"> {{$text }}</span>
 			</div>
 		</div>
 
@@ -149,7 +162,7 @@ use Illuminate\Support\Facades\Input;
 
 				{!!  Form::label('status', 'Status', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
 
-				{!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive','cancel' => 'Cancel'),Input::old('status'),['id'=>'status', 'class'=>'form-control']) !!}
+				{!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive'),Input::old('status'),['id'=>'status', 'class'=>'form-control']) !!}
 				<span style="color: red">{!! $errors->first('status') !!}</span>
 			</div>
 		</div>

@@ -33,7 +33,10 @@
         @endif
         
         @if (Route::currentRouteName() != 'admin.deposite.create')
+        @if(Auth::user()->type == 'Admin')
+        
         <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.create')}} " class="btn btn-primary waves-effect pull-right">Add deposite</a>
+        @endif
         @endif
         
       </ol>
