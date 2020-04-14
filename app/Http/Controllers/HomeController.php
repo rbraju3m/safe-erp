@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modules\User\Models\Member;
+use App\Modules\Deposite\Models\Deposite;
 
 
 class HomeController extends Controller
@@ -29,6 +30,10 @@ class HomeController extends Controller
                     ->where('status','active') 
                     ->count();
 
-        return view("backend.admin.index", compact('member_count'));
+        $deposite = Deposite::where('status', 'active')
+                        ->select('*')
+                        ->get();
+
+        return view("backend.admin.index", compact('member_count','deposite'));
     }
 }

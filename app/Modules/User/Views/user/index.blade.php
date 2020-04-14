@@ -115,7 +115,9 @@ $raju = 'btn-danger';
 
 <td style="vertical-align: middle;">
 
-{{-- <a title="VIEW" target="new" style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.show', $values->id) }}" ><i class="fa fa-eye"></i></a> --}}
+<a title="View Member" member-id="{{ $values->id }}" id="view_member" style="border: 1px solid;padding: 2px 5px;" data-href="{{ route('admin.member.show', $values->id) }}" ><i class="fa fa-eye"></i></a>
+
+
 
 @if (isset($Cancel) && $Cancel == 'Cancel')
 <a title="ROLL BACK" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.rollback', $values->id) }}"  onclick="return confirm('Move to active member?')" ><i class="fa fa-repeat" aria-hidden="true"></i></a>
@@ -161,3 +163,27 @@ $total_rows++;
 
            
 
+<div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" style="font-size: 20px;
+font-weight: bold;">Large Modal</h4>
+              <button style="margin-top: -29px;
+color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button> --}}
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->

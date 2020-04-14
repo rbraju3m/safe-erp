@@ -96,4 +96,34 @@
       $('#Paramanent_Address').text('');
     }
   })
+
+  //for view model open with data
+    $(document).delegate('#view_member','click',function () {
+        var url = $(this).attr('data-href');
+        // var member_id = '';
+
+        // alert(member_id);
+        // exit();
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            // data: {member_id: member_id},
+            beforeSend: function( xhr ) {
+
+            }
+        }).done(function( response ) {
+          // alert(response)
+            if(response.result == 'success'){
+                $('.modal-title').text(response.header);
+                $('.modal .modal-body').html(response.content);
+                $('.modal').modal('show');
+            }else{
+                alert('Something went wrong');
+            }
+        }).fail(function( jqXHR, textStatus ) {
+
+        });
+        return false;
+    });
 </script>

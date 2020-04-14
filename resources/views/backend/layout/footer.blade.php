@@ -5,3 +5,4 @@
     <strong>&copy; 2019-2020 ; System Design & Development by <a href="{{route('admin-dashboard')}}">Rashedul Raju</a> <img style="width: 50px;
 height: 50px;" src="{{asset('backend/css/dist/img/raju.jpg')}}" class="img-circle" alt="User Image"></strong>
   </footer>
+

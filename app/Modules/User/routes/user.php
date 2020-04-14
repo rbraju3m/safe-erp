@@ -44,3 +44,9 @@
 		'as' => 'admin.member.delete',
 		'uses' => 'UserController@delete'
 	]);
+
+
+	Route::get('admin-member-show/{id}',[
+		'as' => 'admin.member.show',
+		'uses' => 'UserController@show'
+	]);

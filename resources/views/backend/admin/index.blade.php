@@ -38,11 +38,16 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
+            <span class="info-box-icon bg-red"><i class="fa fa-money"></i></span>
+            <?php
+              $total_deposite = 0;
+              foreach ($deposite as $value) {
+                $total_deposite = $value->amount+$total_deposite;
+              }
+            ?>
             <div class="info-box-content">
-              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Months</span>
-              <span class="info-box-number" style="font-family: initial;">12</span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Deposite</span>
+              <span class="info-box-number" style="font-family: initial;">{{ $total_deposite }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -82,7 +87,7 @@
       </div>
       <!-- /.row -->
 
-      
+
             
     </section>
     <!-- /.content -->

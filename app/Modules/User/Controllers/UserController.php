@@ -8,7 +8,7 @@ use App\Modules\User\Requests;
 use Illuminate\Support\Facades\Input;
 
 use App\Modules\User\Models\Member;
-use App\Modules\User\Models\Deposite;
+use App\Modules\Deposite\Models\Deposite;
 use App\Modules\User\Models\User;
 
 
@@ -160,9 +160,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    
+
+    public function show($id){
+        $response = [];
+        $member_id = $id;
+        // echo $id;
+        // exit();
+        $member = Member::where('member.id', $id)
+                        ->select('member.*')
+                        ->first();
+
+        $deposite = Deposite::where('member_id', $id)
+                        ->where('status', 'active')
+                        ->select('*')
+                        ->get();
+
+        $view = \Illuminate\Support\Facades\View::make('User::user.show',compact('member','deposite'));
+        $contents = $view->render();
+        $response['result'] = 'success';
+        $response['content'] = $contents;
+                
+        $response['header'] = $member->name.' Profile';
+        return $response;
     }
 
     /**
@@ -180,6 +200,7 @@ class UserController extends Controller
         $data = Member::where('member.id', $id)
                         ->select('member.*')
                         ->first();
+        
         
         return view("User::user.edit", compact('pageTitle','ModuleTitle','data'));
     }
