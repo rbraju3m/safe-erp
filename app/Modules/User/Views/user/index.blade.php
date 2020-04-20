@@ -79,8 +79,12 @@ $total_rows = 1;
 
 <tr>
   <td style="vertical-align: middle;"><?=$total_rows?></td>
-  <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
-height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile  }}</td>
+  <td style="vertical-align: middle;" style="cursor: pointer;">
+    <a style="cursor: pointer;" title="Member Total Deposite" id="view_member_deposite" member_id = "{{ $values->id }}" data-href="{{ route('admin.member.showDeposite') }}">
+    <img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
+height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile  }}
+  </td></a>
+
   <td style="vertical-align: middle;">
 {{'M-ID : '.$values->member_id}}<br>{{'N-ID : '.$values->national_id}}
 </td>
@@ -115,7 +119,7 @@ $raju = 'btn-danger';
 
 <td style="vertical-align: middle;">
 
-<a title="View Member" member-id="{{ $values->id }}" id="view_member" style="border: 1px solid;padding: 2px 5px;" data-href="{{ route('admin.member.show', $values->id) }}" ><i class="fa fa-eye"></i></a>
+<a title="View Member" member-id="{{ $values->id }}" id="view_member" style="border: 1px solid;padding: 2px 5px;cursor: pointer;" data-href="{{ route('admin.member.show', $values->id) }}" ><i class="fa fa-eye"></i></a>
 
 
 
@@ -133,7 +137,13 @@ $raju = 'btn-danger';
 
 <a title="EDIT" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.edit', $values->id) }}" ><i class="fa fa-edit"></i></a>
 @endif
-<a title="Inactive" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.destroy', $values->id) }}"  onclick="return confirm('Are you sure to Inactive?')" ><i class="fa fa-ban" aria-hidden="true"></i>
+<br><br>
+
+<a title="{{ $values->name}} Deposite Details" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.member.depositeDetails', $values->id) }}"><i class="fa fa-asterisk" aria-hidden="true" style="margin-left: 3px;"></i>
+
+</a>
+
+<a title="Inactive" target="new"  style="border: 1px solid;padding: 2px 5px;margin-left: 5px;" href="{{ route('admin.member.destroy', $values->id) }}"  onclick="return confirm('Are you sure to Inactive?')" ><i class="fa fa-ban" aria-hidden="true"></i>
 </a>
 @endif
 </td>

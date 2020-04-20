@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Settings\Requests;
+namespace App\Modules\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use App\Modules\Settings\Models\Settings;
+use App\Modules\User\Models\User;
 
 
-class VideoEditRequest extends FormRequest
+class PasswordUpdate extends FormRequest
 {
     public function authorize()
     {
@@ -23,9 +23,8 @@ class VideoEditRequest extends FormRequest
     {
         
         return [
-            'title'   => 'required|max:255|unique:video,id'. $this->get('id'),
-            'sort_order'   => 'required|integer',
-            'status' => 'required',
+            'password'       => 'required|min:6',
+            'confirm'        => 'required|min:6|same:password',
         ];
 
     }

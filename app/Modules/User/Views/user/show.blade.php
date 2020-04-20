@@ -106,7 +106,8 @@ color: #000;
 
 font-size: 15px;
 
-font-weight: bold;" class="nav-link active" href="#activity" data-toggle="tab">Deposite Activity</a></li>
+font-weight: bold;" class="nav-link active" href="#activity" data-toggle="tab">Last 10 Transaction Activity</a></li>
+
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -128,7 +129,7 @@ font-weight: bold;" class="nav-link active" href="#activity" data-toggle="tab">D
                   <th> Type </th>
                   <th> Note</th>
                   <th> Date </th>
-                  <th> Received By </th>
+                  <th> Received </th>
                 </tr>
                 </thead>
 <tbody>
@@ -167,6 +168,8 @@ $total_rows++;
 color: #fff;"><b>{{ $total_deposite }}</b></td>
   <td colspan="4"></td>
 </tr>
+            {{-- {{$deposite->links()}} --}}
+
 @else
 
   <h3 style="    background-color: #8c0707;
@@ -193,6 +196,7 @@ color: #fff;"><b>{{ $total_deposite }}</b></td>
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
+
     </section>
 
 

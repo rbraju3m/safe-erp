@@ -126,4 +126,42 @@
         });
         return false;
     });
+
+
+
+    //for view model open with data
+    $(document).delegate('#view_member_deposite','click',function () {
+        var url = $(this).attr('data-href');
+        var member_id = $(this).attr('member_id');
+        
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: {member_id: member_id},
+            beforeSend: function( xhr ) {
+
+            }
+        }).done(function( response ) {
+          // alert(response)
+            if(response.result == 'success'){
+                $('.modal-title').text(response.header);
+                $('.modal .modal-body').html(response.content);
+                $('.modal').modal('show');
+            }else{
+                alert('Something went wrong');
+            }
+        }).fail(function( jqXHR, textStatus ) {
+
+        });
+        return false;
+    });
+
+    //for search deposite specific member data
+    $(document).delegate('#member_id_for_search','change',function () {
+        var id = $(this).val();
+        var route = 'http://127.0.0.1:8000/admin-member-depositeDetails/'+id;
+        $(".raju").attr("href",route);
+        $(".raju").attr("style","border: 1px solid;padding: 4px 18px;background-color: #140644;color: #fff;font-weight: bold;");
+    });
 </script>

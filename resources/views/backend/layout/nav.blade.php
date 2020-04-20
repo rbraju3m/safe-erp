@@ -71,26 +71,20 @@ Active Member </a></li>
 Active Deposite </a></li>
             <li><a href="{{route('admin.deposite.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Deposite </a></li>
           </ul>
-        </li>    
-  
+        </li> 
+        <?php
+          $name = Auth::user()->name;
+          $name = substr($name, 0, strrpos($name, ' '));
+        ?>
 
-        
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-cogs"></i>
-            <span>Settings</span>
+        <li>
+          <a href=" {{route('admin.password.ChangeForm')}} ">
+            <i class="fa fa-unlock-alt"></i> <span>Change Password</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <small class="label pull-top bg-red">{{ $name }}</small>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li>
-            	<a href="{{route('admin.frontvedio.index')}}"><i class="fa fa-video-camera" aria-hidden="true"></i> Frontend Video Section</a>
-            </li>
-
-            
-          </ul>
-        </li>
+        </li>   
      
       </ul>
     </section>

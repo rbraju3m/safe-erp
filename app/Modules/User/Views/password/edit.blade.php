@@ -18,22 +18,25 @@
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">{{$ModuleTitle.' > '.$pageTitle}}</a></li>
+        <li><a href="{{route('admin.member.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.member.create')}}">{{$pageTitle}}</a></li>
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
-        <a style="margin-left: 10px;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
-
-        <a style="margin-left: 10px;" href=" {{route('admin.frontvedio.create')}} " class="btn btn-primary waves-effect pull-right">Add Vedio</a>
-
-        @if (\Request::route()->getName() == 'admin.frontvedio.index')
-        	<a style="margin-left: 10px;" href=" {{route('admin.frontvedio.cancellist')}} " class="btn btn-primary btn-warning pull-right">Cancel List</a>
-        @else 
-        	<a style="margin-left: 10px;" href=" {{route('admin.frontvedio.index')}} " class="btn btn-primary btn-warning pull-right">Active List</a>
-        @endif
-
+        <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
-
+        @if (Route::currentRouteName() != 'admin.member.inactive')
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Member</a>
+        @endif
+        
+        @if (Route::currentRouteName() != 'admin.member.index')
+          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-success waves-effect pull-right">Active Member</a>
+        @endif
+        
+        @if (Route::currentRouteName() != 'admin.member.create')
+        @if (Auth::user()->type == 'Admin')
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
+        @endif
+        @endif
         
       </ol>
     </section>
@@ -41,7 +44,7 @@
     <!-- Main content -->
     <section class="content">
        @include('backend.layout.msg')
-      
+
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
@@ -55,9 +58,9 @@
         <!-- /.box-header -->
         <div class="box-body">
 
-          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.frontvedio.update', $data->id],"class"=>"", 'id' => '']) !!}
+          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.member.update', $data->id],"class"=>"", 'id' => '']) !!}
 
-      @include('Settings::video._form')
+      @include('User::user._form')
 
       {!! Form::close() !!}
         </div>

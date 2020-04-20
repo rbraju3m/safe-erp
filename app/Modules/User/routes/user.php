@@ -50,3 +50,24 @@
 		'as' => 'admin.member.show',
 		'uses' => 'UserController@show'
 	]);
+
+
+	Route::get('admin-member-showDeposite',[
+		'as' => 'admin.member.showDeposite',
+		'uses' => 'UserController@showDeposite'
+	]);
+
+	Route::get('admin-member-depositeDetails/{id}',[
+		'as' => 'admin.member.depositeDetails',
+		'uses' => 'UserController@depositeDetails'
+	]);
+
+	Route::get('admin-password-ChangeForm',[
+		'as' => 'admin.password.ChangeForm',
+		'uses' => 'UserController@ChangeForm'
+	]);
+
+	Route::post('admin-password-change',[
+		'as' => 'admin.password.change',
+		'uses' => 'UserController@change'
+	]);

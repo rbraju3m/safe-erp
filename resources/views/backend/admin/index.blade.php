@@ -27,8 +27,11 @@
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000">Total Member</span>
-              <span class="info-box-number" style="font-family: initial;color: #000">{{ $member_count }}<small></small></span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">Total Member</span>
+              <span class="info-box-number" style="font-family: initial;color: #000">
+                
+                {{ $member_count }}
+              <small></small></span>
             </div>
           </a>
             <!-- /.info-box-content -->
@@ -64,7 +67,9 @@
 
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;">Years</span>
-              <span class="info-box-number" style="font-family: initial;">1</span>
+              <span class="info-box-number" style="font-family: initial;">
+                4
+              </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -86,7 +91,23 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
+    @foreach ($all_member as $element)
+                  <span style="border: 1px solid #530404;
 
+padding: 5px 5px;
+
+font-size: 16px;
+color: #fff;
+font-weight: bold;
+
+text-transform: uppercase;
+
+background: #0aaa8c;
+
+color: #fff;margin-right: 10px;">
+{{-- <a style="cursor: pointer;" title="Member Total Deposite" id="view_member_deposite" member_id = "{{ $element->id }}" data-href="{{ route('admin.member.showDeposite') }}"> --}}
+{{ $element->name }} {{-- </a> --}}</span>
+                @endforeach
 
             
     </section>

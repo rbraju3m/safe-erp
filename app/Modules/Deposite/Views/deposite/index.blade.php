@@ -73,7 +73,7 @@ use App\Modules\User\Models\User;
                   <th> Action </th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody >
                 @if(count($data) > 0)
                        <?php
                        $total_rows = 1;
@@ -82,16 +82,16 @@ use App\Modules\User\Models\User;
                         
 
                        <tr>
-                        <td><?=$total_rows?></td>
-                        <td><img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
+                        <td style="vertical-align: middle;"><?=$total_rows?></td>
+                        <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
 height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile  }}</td>
-                        <td>{{ $values->amount }}</td>
-                        <td>
+                        <td style="vertical-align: middle;">{{ $values->amount }}</td>
+                        <td style="vertical-align: middle;">
                         {{$values->type}}
                         </td>
-                        <td>{{$values->month.'-'.$values->year}}</td>
-                        <td>{{$values->note}}</td>
-                        <td>{{$values->payment_time}}
+                        <td style="vertical-align: middle;">{{$values->month.'-'.$values->year}}</td>
+                        <td style="vertical-align: middle;">{{$values->note}}</td>
+                        <td style="vertical-align: middle;">{{$values->payment_time}}
                           <br>{{ $values->payment_day}}
                           <br>{{$values->payment_date  }}</td>
                           <?php
@@ -99,11 +99,11 @@ height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile 
                         ->select('name','image_link')
                         ->first();
                           ?>
-                        <td><img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;
+                        <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;
 height: 50px;" alt="User Image"><br>{{$name->name}}</td>
                         
                         
-                        <td>
+                        <td style="vertical-align: middle;">
 
                           {{-- <a title="VIEW" target="new" style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.deposite.show', $values->id) }}" ><i class="fa fa-eye"></i></a> --}}
                           

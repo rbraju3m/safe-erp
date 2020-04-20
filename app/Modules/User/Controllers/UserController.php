@@ -154,36 +154,7 @@ class UserController extends Controller
         return redirect()->back()->withInput();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     
-
-    public function show($id){
-        $response = [];
-        $member_id = $id;
-        // echo $id;
-        // exit();
-        $member = Member::where('member.id', $id)
-                        ->select('member.*')
-                        ->first();
-
-        $deposite = Deposite::where('member_id', $id)
-                        ->where('status', 'active')
-                        ->select('*')
-                        ->get();
-
-        $view = \Illuminate\Support\Facades\View::make('User::user.show',compact('member','deposite'));
-        $contents = $view->render();
-        $response['result'] = 'success';
-        $response['content'] = $contents;
-                
-        $response['header'] = $member->name.' Profile';
-        return $response;
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -397,4 +368,178 @@ class UserController extends Controller
                 Session::flash('danger', $e->getMessage());
             }
         }
+
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    
+
+    public function show($id){
+        $response = [];
+        $member_id = $id;
+        // echo $id;
+        // exit();
+        $member = Member::where('member.id', $id)
+                        // ->where('status', 'active')
+                        ->select('member.*')
+                        ->first();
+
+        $deposite = Deposite::where('member_id', $id)
+                        ->where('status', 'active')
+                        ->orderBy('id', 'desc')
+                        ->select('*')
+                        ->limit(10)
+                        ->get();
+
+        $view = \Illuminate\Support\Facades\View::make('User::user.show',compact('member','deposite'));
+        $contents = $view->render();
+        $response['result'] = 'success';
+        $response['content'] = $contents;
+                
+        $response['header'] = $member->name.' Profile';
+        return $response;
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    
+
+    public function showDeposite(){
+        $response = [];
+        $member_id = $_GET['member_id'];
+
+        $member = Member::where('member.id', $member_id)
+                        // ->where('status', 'active')
+                        ->select('member.*')
+                        ->first();
+        if (count($member) > 0) {
+            $deposite2019 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2019')
+                            ->select('*')
+                            ->get();
+
+            $deposite2020 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2020')
+                            ->select('*')
+                            ->get();
+
+            $deposite2021 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2021')
+                            ->select('*')
+                            ->get();
+
+            $deposite2022 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2022')
+                            ->select('*')
+                            ->get();
+
+            $deposite2023 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2023')
+                            ->select('*')
+                            ->get();
+            $deposite2024 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2024')
+                            ->select('*')
+                            ->get();
+
+            $deposite2025 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2025')
+                            ->select('*')
+                            ->get();
+        }
+        $view = \Illuminate\Support\Facades\View::make('User::user.showMemberDeposite',compact('member','deposite2019','deposite2020','deposite2021','deposite2022','deposite2023','deposite2024','deposite2025'));
+        
+        $contents = $view->render();
+        $response['result'] = 'success';
+        $response['content'] = $contents;
+                
+        $response['header'] = $member->name.' Total Deposite View';
+        return $response;
+    }
+
+    public function depositeDetails($id){
+
+        $name = Member::where('id', $id)
+                            ->where('status', 'active')
+                            ->select('name')
+                            ->first();
+        $pageTitle = $name['name']." Deposite List";
+
+        // Get payment  data
+        $data = Deposite::join('member', 'member.id', '=', 'deposite.member_id')
+                ->where('deposite.member_id',$id)
+                ->where('member.status','active')
+                ->where('deposite.status','active')
+                ->select('member.name','member.mobile','member.image_link','deposite.*')
+                ->orderby('deposite.id','desc')
+                ->get();
+        $Total_amount = 0;
+        foreach ($data as  $value) {
+            $Total_amount = $Total_amount+$value->amount;
+        }
+
+        $ModuleTitle = $name['name']." Total Deposite ".$Total_amount.' TK.';
+
+        $member = Member::orderBy('id','asc')
+                    ->where('status','active') 
+                    ->pluck('name','id')
+                    ->all();
+        array_push($member,"Select Member");
+        krsort($member);
+        
+        return view("User::user.memberDepositeDetails", compact('pageTitle','ModuleTitle','data','member'));
+    }
+
+    public function ChangeForm(){
+        $pageTitle = Auth::user()->name." Information";
+        $ModuleTitle = "Change Password";
+
+        return view("User::password.create", compact('pageTitle','ModuleTitle'));   
+    }
+
+    public function change(Requests\PasswordUpdate $request){
+        $input = $request->all();
+        $password = password_hash($input['password'], PASSWORD_BCRYPT);
+
+        $login_id = Auth::user()->id;
+
+        $user_model = User::where('id', $login_id)
+            ->select('*')
+            ->first();
+        
+        /* Transaction Start Here */
+            DB::beginTransaction();
+            try {
+
+                $user_model->update([
+                        'password' => $password,
+                    ]);
+                DB::commit();
+                Session::flash('message', 'Password Change Successfully ! New Password '.$input['password']);
+                return redirect('admin-password-ChangeForm');
+
+            } catch (\Exception $e) {
+                //If there are any exceptions, rollback the transaction`
+                DB::rollback();
+                print($e->getMessage());
+                exit();
+                Session::flash('danger', $e->getMessage());
+            }
+    }
 }

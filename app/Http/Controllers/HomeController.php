@@ -26,6 +26,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $all_member = Member::orderBy('name','asc')
+                    ->where('status','active') 
+                    ->select('*')
+                    ->get();
+
         $member_count = Member::orderBy('id','desc')
                     ->where('status','active') 
                     ->count();
@@ -34,6 +39,6 @@ class HomeController extends Controller
                         ->select('*')
                         ->get();
 
-        return view("backend.admin.index", compact('member_count','deposite'));
+        return view("backend.admin.index", compact('all_member','member_count','deposite'));
     }
 }
