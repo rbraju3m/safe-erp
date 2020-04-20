@@ -297,4 +297,27 @@ class DepositeController extends Controller
                 Session::flash('danger', $e->getMessage());
             }
     }
+
+    public function intotal($year){
+        $pageTitle = "Intotal Deposite For ".$year;
+        $ModuleTitle = "Deposite Information ".$year;
+        
+        $all_member = Member::where('status','active')
+                ->select('*')
+                ->orderby('name','asc')
+                ->get();
+
+        $Total = 0;
+        $intotal = Deposite::where('status','active')
+                  ->where('year',$year)
+                  ->select('deposite.amount')
+                  ->get();
+                  
+          foreach ($intotal as $value) {
+            $Total = $Total+$value->amount;
+          }
+
+        // return view
+        return view("Deposite::intotal.index", compact('pageTitle','ModuleTitle','year','all_member','Total'));
+    }
 }

@@ -44,3 +44,9 @@
 		'as' => 'admin.deposite.delete',
 		'uses' => 'DepositeController@delete'
 	]);
+
+
+	Route::get('admin-deposite-intotal/{year}',[
+		'as' => 'admin.deposite.intotal',
+		'uses' => 'DepositeController@intotal'
+	]);

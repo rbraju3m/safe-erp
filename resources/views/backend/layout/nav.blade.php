@@ -76,6 +76,19 @@ Active Deposite </a></li>
           $name = Auth::user()->name;
           $name = substr($name, 0, strrpos($name, ' '));
         ?>
+        
+        <?php
+          $current_year = date("Y");
+        ?>
+        <li>
+          <a href=" {{route('admin.deposite.intotal',$current_year)}} ">
+            <i class="fa fa-unlock-alt"></i> <span>Calculate</span>
+            <span class="pull-right-container">
+              <small class="label pull-top bg-blue">In Total</small>
+            </span>
+          </a>
+        </li>
+
 
         <li>
           <a href=" {{route('admin.password.ChangeForm')}} ">
