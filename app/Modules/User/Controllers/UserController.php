@@ -542,4 +542,105 @@ class UserController extends Controller
                 Session::flash('danger', $e->getMessage());
             }
     }
+
+
+    public function specificData(){
+        $response = [];
+        $member_id = $_GET['member_id'];
+
+        // echo $member_id;
+        // exit();
+        $member = Member::where('member.id', $member_id)
+                        ->where('status', 'active')
+                        ->select('member.*')
+                        ->first();
+        
+
+        if (count($member) > 0) {
+            $deposite2019 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2019')
+                            ->select('*')
+                            ->get();
+            $total_2019 = 0;
+            foreach ($deposite2019 as $element) {
+                $total_2019 = $total_2019+$element->amount;
+            }
+            
+
+            $deposite2020 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2020')
+                            ->select('*')
+                            ->get();
+            $total_2020 = 0;
+            foreach ($deposite2020 as $element) {
+                $total_2020 = $total_2020+$element->amount;
+            }
+
+            $deposite2021 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2021')
+                            ->select('*')
+                            ->get();
+            $total_2021 = 0;
+            foreach ($deposite2021 as $element) {
+                $total_2021 = $total_2021+$element->amount;
+            }
+
+            $deposite2022 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2022')
+                            ->select('*')
+                            ->get();
+            $total_2022 = 0;
+            foreach ($deposite2022 as $element) {
+                $total_2022 = $total_2022+$element->amount;
+            }
+
+            $deposite2023 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2023')
+                            ->select('*')
+                            ->get();
+            $total_2023 = 0;
+            foreach ($deposite2023 as $element) {
+                $total_2023 = $total_2023+$element->amount;
+            }
+
+            $deposite2024 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2024')
+                            ->select('*')
+                            ->get();
+            $total_2024 = 0;
+            foreach ($deposite2024 as $element) {
+                $total_2024 = $total_2024+$element->amount;
+            }
+
+            $deposite2025 = Deposite::where('member_id', $member_id)
+                            ->where('status', 'active')
+                            ->where('year', '2025')
+                            ->select('*')
+                            ->get();
+            $total_2025 = 0;
+            foreach ($deposite2025 as $element) {
+                $total_2025 = $total_2025+$element->amount;
+            }
+
+            $total = 0;
+            $total = $total_2025+$total_2024+$total_2023+$total_2022+$total_2021+$total_2020;
+        }
+        $view = \Illuminate\Support\Facades\View::make('User::user.showSpecificMember',compact('member','total_2019','total_2020','total_2021','total_2022','total_2023','total_2024','total_2025','total'));
+        
+        $contents = $view->render();
+        $response['result'] = 'success';
+        $response['content'] = $contents;
+                
+        $response['header'] = 'Hi '.Auth::user()->name;
+        $response['headerSmall'] = 'I Am '.$member->name;
+
+
+        return $response;
+    }
 }

@@ -82,7 +82,7 @@ Active Deposite </a></li>
         ?>
         <li>
           <a href=" {{route('admin.deposite.intotal',$current_year)}} ">
-            <i class="fa fa-unlock-alt"></i> <span>Calculate</span>
+            <i class="fa fa-calculator"></i> <span>Calculate</span>
             <span class="pull-right-container">
               <small class="label pull-top bg-blue">In Total</small>
             </span>

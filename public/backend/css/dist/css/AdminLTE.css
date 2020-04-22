@@ -195,6 +195,16 @@ a:focus {
  * Component: Main Header
  * ----------------------
  */
+
+ 
+.step_text{
+  color:aqua;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 28px;
+  margin-bottom: 0px;
+}
 .main-header {
   position: relative;
   max-height: 100px;

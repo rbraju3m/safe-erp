@@ -164,4 +164,36 @@
         $(".raju").attr("href",route);
         $(".raju").attr("style","border: 1px solid;padding: 4px 18px;background-color: #140644;color: #fff;font-weight: bold;");
     });
+
+    //for view specific model open with data
+    $(document).delegate('#view_specific_member','click',function () {
+        var url = $(this).attr('data-href');
+        var member_id = $(this).attr('member_id');
+
+        // alert(url+'--'+member_id);
+        // exit();
+        
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: {member_id: member_id},
+            beforeSend: function( xhr ) {
+
+            }
+        }).done(function( response ) {
+          // alert(response)
+            if(response.result == 'success'){
+                $('.modal-title').text(response.header);
+                $('.modal-title.small').text(response.headerSmall);
+                $('.modal .modal-body').html(response.content);
+                $('.modal').modal('show');
+            }else{
+                alert('Something went wrong');
+            }
+        }).fail(function( jqXHR, textStatus ) {
+
+        });
+        return false;
+    });
 </script>

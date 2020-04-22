@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $all_member = Member::orderBy('name','asc')
-                    ->where('status','active') 
+                    // ->where('status','active') 
                     ->select('*')
                     ->get();
 

@@ -71,3 +71,8 @@
 		'as' => 'admin.password.change',
 		'uses' => 'UserController@change'
 	]);
+
+	Route::get('admin-member-specificData',[
+		'as' => 'admin.member.specificData',
+		'uses' => 'UserController@specificData'
+	]);

@@ -14,7 +14,7 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-        <span style="color:aqua;text-align: center;text-transform: uppercase;font-weight: bold;font-size: 28px;margin-bottom: 0px;">Step for Advanced Future Entrepreneurship</span>
+        <span class="step_text" style="">Step for Advanced Future Entrepreneurship</span>
 
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
