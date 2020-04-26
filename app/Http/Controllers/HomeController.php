@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $all_member = Member::orderBy('name','asc')
-                    // ->where('status','active') 
+                    ->where('status','active') 
                     ->select('*')
                     ->get();
 
@@ -39,6 +39,18 @@ class HomeController extends Controller
                         ->select('*')
                         ->get();
 
-        return view("backend.admin.index", compact('all_member','member_count','deposite'));
+        $current_total = 0;
+        $current_month_deposite = Deposite::where('status', 'active')
+                        ->where('month',date("F"))
+                        ->where('year',date("Y"))
+                        ->select('amount')
+                        ->get();
+        foreach ($current_month_deposite as $value) {
+            $current_total = $current_total+$value['amount'];
+        }
+        // echo $current_total;
+        // exit();
+
+        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total'));
     }
 }

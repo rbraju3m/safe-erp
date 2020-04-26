@@ -191,20 +191,131 @@ a:focus {
   display: block;
   margin-top: 5px;
 }
+
+.content-header > h1 {
+  margin: 0;
+  font-size: 24px;
+}
 /*
  * Component: Main Header
  * ----------------------
  */
 
- 
+
+
 .step_text{
-  color:aqua;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 28px;
-  margin-bottom: 0px;
+    color:aqua;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 0px;
+  }
+
+.member_section{
+  margin-top: 50px;
+  border: 1px #fff;
+  padding: 26px 10px;
+  height: 60%;
+  background-color: #ececec;
 }
+
+.member_modute_title{
+  border: 1px solid;
+  padding: 7px 10px;
+  background-color: #328588;
+  color: #fff;
+  width: 59%;
+  /*text-transform: uppercase;*/
+  font-weight: bold;
+}
+
+.password_change_form{
+    width: 50%;
+    margin: 0 auto;
+  }
+
+
+/* Medium Layout: 1280px. */
+/*@media only screen and (min-width: 992px) and (max-width: 1200px) { 
+  
+    
+}*/
+
+
+/* Mobile Layout: 320px. */
+@media only screen and (max-width: 767px) {
+  .password_change_form{
+    width: 100%;
+    margin: 0 auto;
+  }
+  .member_modute_title{
+    border: 1px solid;
+    padding: 7px 10px;
+    background-color: #328588;
+    color: #fff;
+    width: 100%;
+    font-size: 15px;
+  } 
+ .step_text{
+    color:aqua;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 0px;
+  }
+
+  .navbar-custom-menu{
+    margin-top: -10px;
+  }
+
+  .content-header > .breadcrumb{
+    margin-top: 0px;
+  }
+
+  .member_section{
+    margin-top: 0px;
+    border: 1px #fff;
+    padding: 26px 10px;
+    height: 100%;
+    background-color: #ececec;
+  }
+
+  .inactive{
+    display: none;
+  }
+    
+}
+/* Tablet Layout: 768px. */
+/*@media only screen and (min-width: 768px) and (max-width: 991px) { 
+ .step_text{
+    color:#000;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 0px;
+  }
+    
+}*/
+
+/* Wide Mobile Layout: 480px. */
+/*@media only screen and (min-width: 480px) and (max-width: 767px) { 
+  .step_text{
+    color:red;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0px;
+  }
+}*/
+ 
+
+
+
+
 .main-header {
   position: relative;
   max-height: 100px;
@@ -328,10 +439,7 @@ a:focus {
   position: relative;
   padding: 15px 15px 0 15px;
 }
-.content-header > h1 {
-  margin: 0;
-  font-size: 24px;
-}
+
 .content-header > h1 > small {
   font-size: 15px;
   display: inline-block;

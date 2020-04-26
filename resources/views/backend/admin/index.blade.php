@@ -21,7 +21,7 @@
     <section class="content">
       <!-- Info boxes -->
       <div class="row" style="margin-bottom: 20px;">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
           <div class="info-box">
             <a href="{{route('admin.member.index')}}">
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o" style="margin-top: 20px;"></i></span>
@@ -38,19 +38,15 @@
           </div>
           <!-- /.info-box -->
         </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-money" style="margin-top: 20px;"></i></span>
-            <?php
-              $total_deposite = 0;
-              foreach ($deposite as $value) {
-                $total_deposite = $value->amount+$total_deposite;
-              }
-            ?>
+            <span class="info-box-icon bg-green"><i class="fa fa-money" style="margin-top: 20px;"></i></span>
+
             <div class="info-box-content">
-              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">Deposite</span>
-              <span class="info-box-number" style="font-family: initial;">{{ $total_deposite }}</span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">{{ date("F") }} Deposite</span>
+              <span class="info-box-number" style="font-family: initial;">
+                {{ $current_total }} Tk.
+              </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -61,38 +57,47 @@
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline" style="margin-top: 20px;"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa fa-cubes" style="margin-top: 20px;"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">Years</span>
-              <span class="info-box-number" style="font-family: initial;">
-                4
-              </span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">{{ date("F") }} Due</span>
+              <span class="info-box-number" style="font-family: initial;">{{ $member_count*2000-$current_total }} Tk.</span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline" style="margin-top: 20px;"></i></span>
-
+            <span class="info-box-icon bg-red"><i class="fa fa-balance-scale" style="margin-top: 20px;"></i></span>
+            <?php
+              $total_deposite = 0;
+              foreach ($deposite as $value) {
+                $total_deposite = $value->amount+$total_deposite;
+              }
+            ?>
             <div class="info-box-content">
-              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">New Members</span>
-              <span class="info-box-number" style="font-family: initial;">2,000</span>
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">Total Deposite</span>
+              <span class="info-box-number" style="font-family: initial;">{{ $total_deposite }} Tk.</span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
         </div>
+        <!-- /.col -->
+
+        
+
+        
         <!-- /.col -->
       </div>
       <!-- /.row -->
 
-    <div style="margin-top: 50px;border: 1px #fff;padding: 26px 10px;height: 100%;background-color: #ececec;">
+    <div class="member_section" style="">
 
     @foreach ($all_member as $element)
     

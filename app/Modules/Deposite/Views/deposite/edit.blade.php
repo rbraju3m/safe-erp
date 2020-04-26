@@ -22,20 +22,20 @@
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
-        <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
+        <a style="margin-left: 3px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
         @if (Route::currentRouteName() != 'admin.deposite.inactive')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Deposite</a>
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.deposite.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive Deposite</a>
         @endif
         
         @if (Route::currentRouteName() != 'admin.deposite.index')
-          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.index')}} " class="btn btn-success waves-effect pull-right">Active Deposite</a>
+          <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.deposite.index')}} " class="btn btn-success waves-effect pull-right">Active Deposite</a>
         @endif
         
         @if (Route::currentRouteName() != 'admin.deposite.create')
         @if(Auth::user()->type == 'Admin')
         
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.create')}} " class="btn btn-primary waves-effect pull-right">Add Deposite</a>
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.deposite.create')}} " class="btn btn-primary waves-effect pull-right">Add Deposite</a>
         @endif
         @endif
         

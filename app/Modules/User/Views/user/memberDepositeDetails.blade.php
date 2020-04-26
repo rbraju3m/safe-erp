@@ -15,9 +15,9 @@ use App\Modules\User\Models\User;
     <!-- Content Header (Page header) -->
     <section class="content-header">
 
-      <h1 style="border: 1px solid;padding: 7px 10px;background-color: #328588;color: #fff;width: 59%;text-transform: uppercase;font-weight: bold;">
+      <h2 class="member_modute_title">
         {{$ModuleTitle}}
-      </h1>
+      </h2>
 
       {{-- <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

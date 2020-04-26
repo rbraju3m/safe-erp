@@ -3,19 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+        <div class="col-md-4">
+            <div class="card" style="margin-top: 40px;">
+                <div class="card-header text-center" style="background: rgb(0, 89, 94) none repeat scroll 0% 0%;color: #fff;">
+                    <h2 style="font-size: 20px;font-weight: bold;border-bottom: 1px solid;padding: 7px 0px;">{{ __('SAFE') }}</h2>
+                    <h4 style="font-size: 15px;font-weight: bold;">Login to start your session</h4>
+                </div>
 
-                <div class="card-body">
+                <div class="card-body" style="text-align: center;">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mobile Number') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <div class="col-md-12">
+                                <input placeholder="Mobile Number" id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus >
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -26,10 +28,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <div class="col-md-12">
+                                <input placeholder="Password" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -42,15 +43,19 @@
                         
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                            <div class="col-md-12 ">
+                                <button type="submit" class="btn btn-primary" style="font-size: 12px;font-weight: bold;">
+                                    {{ __('LOGIN') }}
                                 </button>
                             </div>
                         </div>
                     </form>
+
+
                 </div>
+
             </div>
+            <p style="font-size: 12px;font-weight: bold;text-align: right;"><span style="color: red;">&copy;</span> <span> Rashedul Raju</span></p>
         </div>
     </div>
 </div>

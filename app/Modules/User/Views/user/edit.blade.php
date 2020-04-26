@@ -25,7 +25,7 @@
         <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
         @if (Route::currentRouteName() != 'admin.member.inactive')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Member</a>
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive Member</a>
         @endif
         
         @if (Route::currentRouteName() != 'admin.member.index')

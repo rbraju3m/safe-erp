@@ -22,20 +22,20 @@
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
-        <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
+        <a style="margin-left: 5px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
         @if (Route::currentRouteName() != 'admin.member.inactive')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Member</a>
+        <a style="margin-left: 5px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Member</a>
         @endif
         
         @if (Route::currentRouteName() != 'admin.member.index')
-          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-success waves-effect pull-right">Active Member</a>
+          <a style="margin-left: 5px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-success waves-effect pull-right">Active Member</a>
         @endif
         
         @if (Route::currentRouteName() != 'admin.member.create')
         @if (Auth::user()->type == 'Admin')
 
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
+        <a style="margin-left: 5px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
         @endif
         @endif
         
