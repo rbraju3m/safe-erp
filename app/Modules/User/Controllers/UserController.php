@@ -79,6 +79,8 @@ class UserController extends Controller
     {
         $input = $request->all();
 
+        $name = preg_replace('/\s+/', '', $input['name']);
+
         $input['join_date'] = date("d-m-Y");
         $input['join_day'] = date("l");
         $input['join_month'] = date("F");
@@ -99,7 +101,7 @@ class UserController extends Controller
                 if($size < 5120){
                     // echo "5mb er soman ba soto";
                     $avatar = $request->file('image_link');
-                    $member_img_title = $input['name'].'-'.time().'.'.$avatar->getClientOriginalExtension();
+                    $member_img_title = $name.'-'.time().'.'.$avatar->getClientOriginalExtension();
                     Image::make($avatar)->resize(600, 400)->save( public_path('/uploads/member/' . $member_img_title) );
                     $input['image_link'] = $member_img_title;
                     // echo $member_img_title;
@@ -197,12 +199,17 @@ class UserController extends Controller
         $input = $request->all();
         $member_image = $input['image_link'];
 
-        $data = Member::where('member.mobile', $input['mobile'])
+        $name = preg_replace('/\s+/', '', $input['name']);
+
+
+        $data = Member::where('mobile', $input['mobile'])
             ->select('member.*')
             ->get();
         $count = count($data);
 
-        if ($count == 1) {
+        $mobile = '0'.$member_model->mobile;
+
+        if (( ($count == 1) && ($mobile == $input['mobile'])) || ($count == 0)) {
 
         if (isset($member_image) && !empty($member_image)) {
             $member_img = $request->file('image_link');
@@ -212,7 +219,7 @@ class UserController extends Controller
             if($size < 5120){
                 // echo "5mb er soman ba soto";
                 $avatar = $request->file('image_link');
-                $member_img_title = $input['name'].'-'.time().'.'.$avatar->getClientOriginalExtension();
+                $member_img_title = $name.'-'.time().'.'.$avatar->getClientOriginalExtension();
                 Image::make($avatar)->resize(600, 400)->save( public_path('/uploads/member/' . $member_img_title) );
                 $input['image_link'] = $member_img_title;
                 // File::Delete($member_model->image_link);

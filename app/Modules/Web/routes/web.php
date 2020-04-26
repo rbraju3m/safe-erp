@@ -8,7 +8,8 @@ if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
 Route::group(['module' => 'Web', 'middleware' => ['web'], 'namespace' => 'App\Modules\Web\Controllers'], function() {
 
     
-   include('forntend_news_route.php');
+    Route::get('/','WebController@index');
+   
 
 });
 

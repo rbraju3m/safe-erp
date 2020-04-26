@@ -40,11 +40,11 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content password_change_form">
        @include('backend.layout.msg')
 
       <!-- SELECT2 EXAMPLE -->
-      <div class="box box-default password_change_form">
+      <div class="box box-default ">
         <div class="box-header with-border">
           <h3 class="box-title" style="text-transform: uppercase;font-weight: bold;font-size: 18px;">{{$pageTitle}}</h3>
 

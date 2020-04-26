@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
             'type'              => 'required',
             'religion'          => 'required',
             'gender'            => 'required',
-            'image_link'   => 'required|image|mimes:jpeg,png,jpg|max:5120'.$image,
+            'image_link'   => 'required|image|mimes:jpeg,JPEG,Jpeg,PNG,Png,png,jpg,JPG,Jpg|max:5120'.$image,
             'status'            => 'required',
         ];
 

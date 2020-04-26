@@ -85,11 +85,20 @@ use Illuminate\Support\Facades\Input;
 				<span style="color: red">{!! $errors->first('note') !!}</span>
 			</div>
 		</div>
+
 		<div class="col-md-3">
 			<div class="form-group">
 				{!! Form::label('amount', 'Amount', array('class' => 'col-form-label')) !!}
 				<span style="color: red"> *</span> 
-				{!! Form::text('amount',Input::old('amount'),['id'=>'amount','class' => 'form-control',  'amount'=>'Enter Payment amount']) !!}
+				
+
+				<?php
+					$amount = array();
+					$amount['2000'] = '2000';
+					$amount['6000'] = '6000';
+					$amount['100'] = '100';
+				?>
+				{!! Form::Select('amount',$amount,Input::old('amount'),['id'=>'amount', 'class'=>'form-control select2']) !!}
 				<span style="color: red">{!! $errors->first('amount') !!}</span>
 
 			</div>
