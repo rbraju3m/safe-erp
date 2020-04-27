@@ -246,9 +246,15 @@ a:focus {
 
 /* Mobile Layout: 320px. */
 @media only screen and (max-width: 767px) {
+
+  .main-footer{
+        font-size: 12px;
+    }
   .password_change_form{
     width: 100%;
     margin: 0 auto;
+    margin-top: 44px;
+    
   }
   .member_modute_title{
     border: 1px solid;

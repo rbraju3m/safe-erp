@@ -31,7 +31,7 @@ use App\Modules\User\Models\User;
                     <b>N-ID</b> <a class="float-right">{{ $member->national_id }}</a>
                   </li>
                   <li class="list-group-item">
-                    <b>Mobile</b> <a class="float-right">0{{ $member->mobile }}</a>
+                    <b>Mobile</b> <a class="float-right">{{ $member->mobile }}</a>
                   </li>
                 </ul>
 
@@ -49,7 +49,7 @@ use App\Modules\User\Models\User;
 
                 <p class="text-muted">
                   {{ $member->nominee }}<br>
-                   0{{ $member->nominee_mobile }}<br>
+                   {{ $member->nominee_mobile }}<br>
                    {{ $member->nominee_n_id }}
                 </p>
 

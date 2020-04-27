@@ -82,13 +82,13 @@ $total_rows = 1;
   <td style="vertical-align: middle;" style="cursor: pointer;">
     <a style="cursor: pointer;" title="Member Total Deposite" id="view_member_deposite" member_id = "{{ $values->id }}" data-href="{{ route('admin.member.showDeposite') }}">
     <img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
-height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile  }}
+height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{$values->mobile  }}
   </td></a>
 
   <td style="vertical-align: middle;">
 {{'M-ID : '.$values->member_id}}<br>{{'N-ID : '.$values->national_id}}
 </td>
-<td style="vertical-align: middle;">{{$values->nominee}}<br>{{'N-ID : '.$values->nominee_n_id}}<br>{{'0'.$values->nominee_mobile}}</td>
+<td style="vertical-align: middle;">{{$values->nominee}}<br>{{'N-ID : '.$values->nominee_n_id}}<br>{{$values->nominee_mobile}}</td>
 <td style="vertical-align: middle;">{{$values->religion}}<br>{{$values->gender}}</td>
 <td style="vertical-align: middle;">{{$values->join_time}}
                           <br>{{ $values->join_day}}

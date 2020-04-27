@@ -160,7 +160,8 @@
     //for search deposite specific member data
     $(document).delegate('#member_id_for_search','change',function () {
         var id = $(this).val();
-        var route = 'http://127.0.0.1:8000/admin-member-depositeDetails/'+id;
+        var location = window.location.origin;
+        var route = location+'/admin-member-depositeDetails/'+id;
         $(".raju").attr("href",route);
         $(".raju").attr("style","border: 1px solid;padding: 4px 18px;background-color: #140644;color: #fff;font-weight: bold;");
     });

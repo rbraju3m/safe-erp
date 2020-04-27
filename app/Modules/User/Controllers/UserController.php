@@ -207,7 +207,7 @@ class UserController extends Controller
             ->get();
         $count = count($data);
 
-        $mobile = '0'.$member_model->mobile;
+        $mobile = $member_model->mobile;
 
         if (( ($count == 1) && ($mobile == $input['mobile'])) || ($count == 0)) {
 
@@ -234,6 +234,8 @@ class UserController extends Controller
         }
 
         $userdata['name'] = $input['name'];
+        $userdata['email'] = $input['mobile'];
+        // $userdata['password'] = password_hash($input['mobile'], PASSWORD_BCRYPT);
         $userdata['type'] = $input['type'];
         $userdata['image_link'] = $input['image_link'];
 
@@ -636,7 +638,7 @@ class UserController extends Controller
             }
 
             $total = 0;
-            $total = $total_2025+$total_2024+$total_2023+$total_2022+$total_2021+$total_2020;
+            $total = $total_2025+$total_2024+$total_2023+$total_2022+$total_2021+$total_2020+$total_2019;
         }
         $view = \Illuminate\Support\Facades\View::make('User::user.showSpecificMember',compact('member','total_2019','total_2020','total_2021','total_2022','total_2023','total_2024','total_2025','total'));
         

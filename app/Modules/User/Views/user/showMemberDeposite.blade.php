@@ -10,9 +10,7 @@ use App\Modules\User\Models\User;
           <div class="col-md-12">
             <div class="card">
               <div class="card-header p-2">
-                {{-- <ul class="nav nav-pills">
-                  <li class="nav-item"><a style="background-color: #dadbd5;color: #000;font-size: 15px;font-weight: bold;" class="nav-link active" href="#activity" data-toggle="tab">Deposite Activity</a></li>
-                </ul> --}}
+                
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
@@ -197,6 +195,8 @@ use App\Modules\User\Models\User;
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
           @if ($element->month == 'January' && $element->type == 'Monthly')
+            {{ $element->amount }}
+          
       <?php 
         $total_2020 = $total_2020+$element->amount;
         $January_total = $January_total+$element->amount;
