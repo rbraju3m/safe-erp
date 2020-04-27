@@ -16,12 +16,12 @@ class CreateMemberTable extends Migration
         Schema::create('member', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',255)->nullable();
-            $table->integer('mobile')->nullable();
+            $table->string('mobile',255)->nullable();
             $table->string('member_id',255)->nullable();
             $table->string('national_id',255)->nullable();
             $table->string('f_h_name',255)->nullable();
             $table->string('nominee',255)->nullable();
-            $table->integer('nominee_mobile')->nullable();
+            $table->string('nominee_mobile',255)->nullable();
             $table->string('nominee_n_id',255)->nullable();
             $table->text('present_address')->nullable();
             $table->text('parmanent_address')->nullable();

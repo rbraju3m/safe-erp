@@ -84,7 +84,7 @@ use App\Modules\User\Models\User;
                        <tr>
                         <td style="vertical-align: middle;"><?=$total_rows?></td>
                         <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$values->image_link}}" class="img-circle" style="width: 50px;
-height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{' 0'.$values->mobile  }}</td>
+height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{$values->mobile  }}</td>
                         <td style="vertical-align: middle;">{{ $values->amount }}</td>
                         <td style="vertical-align: middle;">
                         {{$values->type}}

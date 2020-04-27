@@ -17,9 +17,9 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
             $table->string('name');
-            $table->string('email')->unique('email');
+            $table->string('email',255)->unique('email');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password',255);
             $table->enum('type',array('Admin','Chairman','General secretary','Member'))->nullable();
             
             $table->string('image_link',128)->nullable();
