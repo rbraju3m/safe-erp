@@ -90,6 +90,26 @@ Active Deposite </a></li>
         </li>
 
 
+        <li class="treeview">
+            <a href="#">
+              <i class="fa fa-file-word-o" aria-hidden="true"></i>
+              <span>File</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            {{-- @if (Auth::user()->type == 'Admin') --}}
+              <li><a href="{{route('admin.file.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add File</a></li>
+            {{-- @endif --}}
+
+            <li><a href="{{route('admin.file.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active File </a></li>
+            <li><a href="{{route('admin.file.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive File </a></li>
+          </ul>
+        </li> 
+
+
         <li>
           <a href=" {{route('admin.password.ChangeForm')}} ">
             <i class="fa fa-unlock-alt"></i> <span>Change Password</span>
