@@ -114,10 +114,24 @@ Active File </a></li>
           <a href=" {{route('admin.password.ChangeForm')}} ">
             <i class="fa fa-unlock-alt"></i> <span>Change Password</span>
             <span class="pull-right-container">
+              <small class="label pull-top bg-red"></small>
+            </span>
+          </a>
+        </li>  
+
+
+        <li>
+          <a href=" {{route('logout')}} " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fa fa-sign-out"></i> <span>Logout</span>
+            <span class="pull-right-container">
               <small class="label pull-top bg-red">{{ $name }}</small>
             </span>
           </a>
-        </li>   
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
+        </li> 
      
       </ul>
     </section>

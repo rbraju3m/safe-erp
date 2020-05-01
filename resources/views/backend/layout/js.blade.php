@@ -35,6 +35,7 @@
 
 <!-- DataTables -->
 <script src="{{ asset('backend/js/bower/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{ asset('backend/js/bower/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
 <!-- select2 multiple option select -->
@@ -44,6 +45,23 @@
 
 
 <script>
+
+
+
+    $(window).on('load', function () {
+        var route = window.location.pathname;
+
+        if( route == "/admin-dashboard"){
+            Swal.fire(
+              'When You Leave This Site \n Please Logout ',
+              '',
+              'success'
+            )      
+        }
+    });
+
+
+
 
     $(function () {
     $('#example1').DataTable()
