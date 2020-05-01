@@ -4,9 +4,8 @@ This README would normally document whatever steps are necessary to get your app
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Safe Organijation
+* Member , Deposite , All Calculate , File System , Password Change
 
 ### How do I get set up? ###
 
@@ -22,3 +21,8 @@ This README would normally document whatever steps are necessary to get your app
 * Writing tests
 * Code review
 * Other guidelines
+
+### Who do I talk to? ###
+
+* Repo owner or admin
+* Other community or team contact
