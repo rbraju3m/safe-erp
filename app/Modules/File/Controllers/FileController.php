@@ -94,9 +94,13 @@ class FileController extends Controller
             $file_title = $name.'-'.time().'.'.$avatar->getClientOriginalExtension();
             $input['file_link'] = $file_title;
 
-            $path = "uploads/file/";
-            $target_file =  $path.basename($file_title); 
-            $result = move_uploaded_file($_FILES['file_link']['tmp_name'],$target_file);
+            $path = public_path("uploads/file/");
+            $target_file =  $path.basename($file_title);
+            
+            $file_path = $_FILES['file_link']['tmp_name'];
+            
+            
+            $result = move_uploaded_file($file_path,$target_file);
 
             if ($result) {
                 /* Transaction Start Here */
@@ -202,9 +206,11 @@ class FileController extends Controller
                     File::delete(public_path().'/uploads/file/'.$MemberFile->file_link);
                 }
 
-            $path = "uploads/file/";
-            $target_file =  $path.basename($file_title); 
-            $result = move_uploaded_file($_FILES['file_link']['tmp_name'],$target_file);
+            $path = public_path("uploads/file/");
+            $target_file =  $path.basename($file_title);
+            $file_path = $_FILES['file_link']['tmp_name'];
+            $result = move_uploaded_file($file_path,$target_file);
+            
         }else{
             $input['file_link'] = $MemberFile['file_link'];
         }

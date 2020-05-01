@@ -1,4 +1,4 @@
-<aside class="main-sidebar">
+<aside class="main-sidebar" style="margin-top: 15px;">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
