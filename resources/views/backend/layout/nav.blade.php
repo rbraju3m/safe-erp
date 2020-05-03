@@ -110,6 +110,26 @@ Active File </a></li>
         </li> 
 
 
+         <li class="treeview">
+            <a href="#">
+              <i class="fa fa-picture-o" aria-hidden="true"></i>
+              <span>Gallery</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            {{-- @if (Auth::user()->type == 'Admin') --}}
+              <li><a href="{{route('admin.gallery.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Gallery</a></li>
+            {{-- @endif --}}
+
+            <li><a href="{{route('admin.gallery.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active Gallery </a></li>
+            <li><a href="{{route('admin.gallery.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Gallery </a></li>
+          </ul>
+        </li> 
+
+
         <li>
           <a href=" {{route('admin.password.ChangeForm')}} ">
             <i class="fa fa-unlock-alt"></i> <span>Change Password</span>

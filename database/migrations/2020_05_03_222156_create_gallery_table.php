@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFileTable extends Migration
+class CreateGalleryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('file', function (Blueprint $table) {
+        Schema::create('gallery', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title',255)->nullable();
             $table->text('discription')->nullable();
             
-            $table->string('file_link',128)->nullable();
+            $table->string('image_link',128)->nullable();
             $table->enum('status',array('active','inactive'))->nullable();
 
-            $table->string('file_day',50)->nullable();
-            $table->string('file_month',50)->nullable();
-            $table->string('file_year',50)->nullable();
-            $table->string('file_time',50)->nullable();
-            $table->string('file_date',50)->nullable();
+            $table->string('image_day',50)->nullable();
+            $table->string('image_month',50)->nullable();
+            $table->string('image_year',50)->nullable();
+            $table->string('image_time',50)->nullable();
+            $table->string('image_date',50)->nullable();
 
             
             $table->string('created_by',50)->nullable();
@@ -42,6 +42,6 @@ class CreateFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file');
+        Schema::dropIfExists('gallery');
     }
 }

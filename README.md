@@ -1,4 +1,4 @@
-# README #
+# Rashedul Raju #
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
@@ -18,11 +18,7 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* Configuration Database
+* Composer Update
+* Create folder member & file in public folder
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact

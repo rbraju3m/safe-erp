@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Modules\File\Models;
+namespace App\Modules\Gallery\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 use App;
 use Auth;
 
-class MemberFile extends Model {
-	protected $table = 'File';
+class Gallery extends Model {
+
+    protected $table = 'gallery';
     protected $fillable = [
         'title',
         'discription',
-        'file_link',
+        'image_link',
         'status',
-        'file_day',
-        'file_month',
-        'file_year',
-        'file_time',
-        'file_date',
+        'image_day',
+        'image_month',
+        'image_year',
+        'image_time',
+        'image_date',
         'updated_by',
         'created_by',
     ];
@@ -40,4 +41,5 @@ class MemberFile extends Model {
             }
         });
     }
+
 }

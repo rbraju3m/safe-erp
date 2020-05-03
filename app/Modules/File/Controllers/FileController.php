@@ -17,7 +17,6 @@ use image;
 use Storage;
 use App;
 use File;
-
 Use Auth;
 
 class FileController extends Controller

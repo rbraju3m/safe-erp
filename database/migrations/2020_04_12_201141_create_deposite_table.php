@@ -15,7 +15,8 @@ class CreateDepositeTable extends Migration
     {
         Schema::create('deposite', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('member_id');
+            // $table->unsignedInteger('member_id');
+            $table->unsignedBigInteger('member_id');
             $table->string('month',50)->nullable();
             $table->string('year',50)->nullable();
             $table->string('type',50)->nullable();

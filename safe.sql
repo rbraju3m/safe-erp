@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `deposite` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `member_id` int(10) UNSIGNED NOT NULL,
+  `member_id` bigint(20) UNSIGNED NOT NULL,
   `month` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `year` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -319,7 +319,7 @@ INSERT INTO `deposite` (`id`, `member_id`, `month`, `year`, `type`, `note`, `amo
 --
 
 CREATE TABLE `file` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `discription` text COLLATE utf8mb4_unicode_ci,
   `file_link` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -345,11 +345,35 @@ INSERT INTO `file` (`id`, `title`, `discription`, `file_link`, `status`, `file_d
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `gallery`
+--
+
+CREATE TABLE `gallery` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discription` text COLLATE utf8mb4_unicode_ci,
+  `image_link` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_day` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_month` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_year` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_time` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_date` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_by` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `member`
 --
 
 CREATE TABLE `member` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `member_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -420,7 +444,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_05_04_100838_create_member_table', 1),
-(4, '2020_04_12_201141_create_deposite_table', 1);
+(4, '2020_04_12_201141_create_deposite_table', 1),
+(5, '2020_04_27_212334_create_file_table', 1),
+(6, '2020_05_03_222156_create_gallery_table', 1);
 
 -- --------------------------------------------------------
 
@@ -444,7 +470,7 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` enum('Admin','Chairman','General secretary','Member') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -497,6 +523,12 @@ ALTER TABLE `file`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `gallery`
+--
+ALTER TABLE `gallery`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `member`
 --
 ALTER TABLE `member`
@@ -513,6 +545,63 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `deposite`
+--
+ALTER TABLE `deposite`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `file`
+--
+ALTER TABLE `file`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `gallery`
+--
+ALTER TABLE `gallery`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `deposite`
+--
+ALTER TABLE `deposite`
+  ADD CONSTRAINT `deposite_member_id_foreign` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
