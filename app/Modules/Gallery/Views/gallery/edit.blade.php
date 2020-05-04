@@ -18,22 +18,22 @@
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('admin.file.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.file.create')}}">{{$pageTitle}}</a></li>
+        <li><a href="{{route('admin.gallery.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.gallery.create')}}">{{$pageTitle}}</a></li>
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
         <a style="margin-left: 3px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
-        @if (Route::currentRouteName() != 'admin.file.inactive')
-        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.file.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive File</a>
+        @if (Route::currentRouteName() != 'admin.gallery.inactive')
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.gallery.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive Gallery</a>
         @endif
         
-        @if (Route::currentRouteName() != 'admin.file.index')
-          <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.file.index')}} " class="btn btn-success waves-effect pull-right">Active File</a>
+        @if (Route::currentRouteName() != 'admin.gallery.index')
+          <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.gallery.index')}} " class="btn btn-success waves-effect pull-right">Active Gallery</a>
         @endif
         
         
-        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.file.create')}} " class="btn btn-primary waves-effect pull-right">Add File</a>
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.gallery.create')}} " class="btn btn-primary waves-effect pull-right">Add Gallery</a>
         
       </ol>
     </section>
@@ -55,9 +55,9 @@
         <!-- /.box-header -->
         <div class="box-body">
 
-          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.file.update', $data->id],"class"=>"", 'id' => '']) !!}
+          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.gallery.update', $data->id],"class"=>"", 'id' => '']) !!}
 
-      @include('File::file._form')
+      @include('Gallery::gallery._form')
 
       {!! Form::close() !!}
         </div>

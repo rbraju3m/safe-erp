@@ -17,6 +17,11 @@
   <link rel="stylesheet" href="{{ asset('backend/css/bower/select2/dist/css/select2.min.css') }}">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{{ asset('backend/js/plugins/iCheck/all.css') }}">
+
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="{{ asset('backend/css/bower/ekko-lightbox/ekko-lightbox.css') }}">
+
+
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{ asset('backend/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
   <!-- DataTables -->

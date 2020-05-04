@@ -118,14 +118,13 @@ class GalleryController extends Controller
 
                 DB::commit();
                 Session::flash('message', 'Gallery is added Successfully!');
-                return redirect()->back();
 
-                // $status = $input['status'];
-                // if ($status =='active') {
-                //     return redirect('admin-gallery-index');
-                // }else{
-                //     return redirect('admin-gallery-inactive');
-                // }
+                $status = $input['status'];
+                if ($status =='active') {
+                    return redirect('admin-gallery-index');
+                }else{
+                    return redirect('admin-gallery-inactive');
+                }
                 
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
@@ -158,7 +157,15 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pageTitle = "Update Gallery Information";
+        $ModuleTitle = "Gallery Information";
+
+        // Find news
+        $data = Gallery::where('id', $id)
+                        ->select('*')
+                        ->first();
+
+        return view("Gallery::gallery.edit", compact('pageTitle','ModuleTitle','data'));
     }
 
     /**
@@ -168,9 +175,71 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\UpdateGalleryRequest $request, $id)
     {
-        //
+        // Find gallery
+        $gallery_model = Gallery::where('id', $id)
+            ->select('*')
+            ->first();
+        
+
+        $input = $request->all();
+        $gallery_img = $input['image_link'];
+
+        $name = preg_replace('/\s+/', '', $input['title']);
+
+        if (isset($gallery_img) && !empty($gallery_img)) {
+            $gallery = $request->file('image_link');
+            $image_info = getimagesize($gallery);
+            $size = $request->file('image_link')->getSize()/1024;
+
+            if($size < 5120){
+                // echo "5mb er soman ba soto";
+                $avatar = $request->file('image_link');
+                $gallery_title = $name.'-'.time().'.'.$avatar->getClientOriginalExtension();
+                Image::make($avatar)->resize(600, 400)->save( public_path('/uploads/gallery/' . $gallery_title) );
+                $input['image_link'] = $gallery_title;
+                // File::Delete($gallery_model->image_link);
+                File::delete(public_path().'/uploads/gallery/'.$gallery_model->image_link);
+            }else{
+                Session::flash('error', 'This Image size bigger than 5MB');    
+                return redirect()->back();
+            }
+        }else{
+            $input['image_link'] = $gallery_model['image_link'];
+        }
+
+        $input['image_date'] = $gallery_model['image_date'];
+        $input['image_day'] = $gallery_model['image_day'];
+        $input['image_month'] = $gallery_model['image_month'];
+        $input['image_year'] = $gallery_model['image_year'];
+        $input['image_time'] = $gallery_model['image_time'];
+
+
+        DB::beginTransaction();
+        try {
+
+            $result = $gallery_model->update($input);
+
+            $gallery_model->save();
+
+            DB::commit();
+
+            Session::flash('message', 'Successfully updated!');
+            $status = $input['status'];
+            if ($status =='active') {
+                return redirect('admin-gallery-index');
+            }else{
+                return redirect('admin-gallery-inactive');
+            }
+        }
+        catch (\Exception $e) {
+            //If there are any exceptions, rollback the transaction`
+            DB::rollback();
+            Session::flash('danger', $e->getMessage());
+        }
+        return redirect()->back()->withInput();
+
     }
 
     /**
@@ -181,6 +250,90 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /* Transaction Start Here */
+            DB::beginTransaction();
+            try {
+
+                $data = DB::table('gallery')->where('id',$id);
+                $data->update([
+                        'status' => 'inactive',
+                        'updated_by' => Auth::user()->id,
+                    ]);
+                DB::commit();
+                Session::flash('danger', 'Gallery Added Inactive List !');
+                return redirect('admin-gallery-inactive');
+            } catch (\Exception $e) {
+                //If there are any exceptions, rollback the transaction`
+                DB::rollback();
+                print($e->getMessage());
+                exit();
+                Session::flash('danger', $e->getMessage());
+            }
     }
+
+    public function inactivelist(){
+        $pageTitle = "List of Inactive Gallery";
+        $ModuleTitle = "Gallery Information";
+
+        $Cancel = 'Cancel';
+
+        
+        // Get file  data
+        $data = Gallery::where('status','inactive')
+                ->select('*')
+                ->get();
+
+        // return view
+        return view("Gallery::Gallery.index", compact('pageTitle','ModuleTitle','data','Cancel'));
+    }
+
+    public function rollback($id){
+        /* Transaction Start Here */
+            DB::beginTransaction();
+            try {
+
+                $data = DB::table('gallery')->where('id',$id);
+                $data->update([
+                        'status' => 'active',
+                        'updated_by' => Auth::user()->id,
+                    ]);
+                DB::commit();
+                Session::flash('message', 'Roll Back Successfully !');
+                return redirect('admin-gallery-index');
+
+            } catch (\Exception $e) {
+                //If there are any exceptions, rollback the transaction`
+                DB::rollback();
+                print($e->getMessage());
+                exit();
+                Session::flash('danger', $e->getMessage());
+            }
+    }
+
+
+    public function delete($id){
+        /* Transaction Start Here */
+            DB::beginTransaction();
+            try {
+
+                $data = Gallery::where('id',$id)->first();
+
+                
+                if (File::exists(public_path().'/uploads/gallery/'.$data->image_link)) {
+                    File::delete(public_path().'/uploads/gallery/'.$data->image_link);
+                }
+                $file = Gallery::where('id',$id);
+                
+                $file->delete();
+                DB::commit();
+                Session::flash('message', 'Delete Successfully !');
+                return redirect('admin-gallery-inactive');
+            } catch (\Exception $e) {
+                //If there are any exceptions, rollback the transaction`
+                DB::rollback();
+                print($e->getMessage());
+                exit();
+                Session::flash('danger', $e->getMessage());
+            }
+        }
 }

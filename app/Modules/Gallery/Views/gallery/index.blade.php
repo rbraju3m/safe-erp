@@ -50,60 +50,37 @@ use App\Modules\User\Models\User;
 
       <div class="row">
         <div class="col-md-12">
-                  <div class="box">
             <div class="box-header">
               <h3 class="box-title">{{$pageTitle}}</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped text-center">
-                <thead>
 
-                <tr>
-                  <th>Sl No</th>
-                  <th style="background: rgb(126, 172, 206);">gallery Title</th>
-                  <th>Discription</th>
-                  <th>gallery</th>
-                  <th>Details</th>
-                  <th>Added By</th>
-                  <th> Action </th>
-                </tr>
-                </thead>
-                <tbody >
+
+              <div class="card card-primary">
+              <div class="card-header">
+                
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  
                 @if(count($data) > 0)
-                       <?php
-                       $total_rows = 1;
-                       ?>
-                       @foreach($data as $values)
-                        
+                @foreach($data as $values)
+                  
+                  <div class="col-md-3 text-center">
+                    <h5 style="font-size: 18px;font-weight: bold;border-bottom: 1px solid;padding-bottom: 6px;">{{$values->title}}</h5>
+                    <p>{{ $values->discription }}</p>
 
-                       <tr>
-                        <td style="vertical-align: middle;"><?=$total_rows?></td>
-                        <td style="vertical-align: middle;">{{$values->title}}</td>
-                        <td style="vertical-align: middle;">{{ $values->discription }}</td>
-                        <td style="vertical-align: middle;"><a href="{{URL::to('')}}/uploads/gallery/{{$values->image_link}}">{{$values->image_link}}</a>
-
-
-                        </td>
-
-
-                        <td style="vertical-align: middle;">{{$values->gallery_time}}
-                          <br>{{ $values->gallery_day}}
-                          <br>{{$values->gallery_date  }}
-                        </td>
-                        
-                          <?php
+                    <a href="{{URL::to('')}}/uploads/gallery/{{$values->image_link}}" data-toggle="lightbox" data-title="{{$values->title}}" data-gallery="gallery">
+                      <img style="width: 250px;height: 220px;" src="{{URL::to('')}}/uploads/gallery/{{$values->image_link}}" class="img-fluid mb-2 rounded img-thumbnail" alt="{{$values->title}}"/>
+                    </a>
+      <?php
         $name = User::where('id', $values->created_by)
-                        ->select('name','image_link')
-                        ->first();
-                          ?>
-                        <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;
-height: 50px;" alt="User Image"><br>{{$name->name}}</td>
-                        
-                        
-<td style="vertical-align: middle;">
+                            ->select('name','image_link')
+                            ->first();
+      ?>
+                    <p>{{$values->image_time}} - {{ $values->image_day}} - {{$values->image_date  }} By <img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;height: 50px;" alt="User Image"><br>{{$name->name}}</p>
 
-@if (isset($Cancel) && $Cancel == 'Cancel')
+                    @if (isset($Cancel) && $Cancel == 'Cancel')
     <a title="ROLL BACK" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.gallery.rollback', $values->id) }}"  onclick="return confirm('Move to active gallery?')" ><i class="fa fa-repeat" aria-hidden="true"></i></a>
 
 @if (Auth::user()->type == 'Admin')
@@ -113,9 +90,9 @@ height: 50px;" alt="User Image"><br>{{$name->name}}</td>
 
 @else
 
-<a title="VIEW" style="border: 1px solid;padding: 2px 5px;" href="{{URL::to('')}}/uploads/gallery/{{$values->gallery_link}}" ><i class="fa fa-eye"></i></a>
+{{-- <a title="VIEW" style="border: 1px solid;padding: 2px 5px;" href="{{URL::to('')}}/uploads/gallery/{{$values->gallery_link}}" ><i class="fa fa-eye"></i></a> --}}
 
-<a title="Download"  style="border: 1px solid;padding: 2px 5px;" href="{{URL::to('')}}/uploads/gallery/download.php?nama={{URL::to('')}}/uploads/gallery/{{$values->gallery_link}}" ><i class="fa fa-download"></i></a>
+<a title="Download"  style="border: 1px solid;padding: 2px 5px;" href="{{URL::to('')}}/uploads/file/download.php?nama={{URL::to('')}}/uploads/gallery/{{$values->image_link}}" ><i class="fa fa-download"></i></a>
 
 @if (Auth::user()->type == 'Admin' || $values->created_by == Auth::user()->id )
 
@@ -127,29 +104,13 @@ height: 50px;" alt="User Image"><br>{{$name->name}}</td>
 @endif
 
 @endif
-
-
-
-
-
-
-
-</td>
-                    </tr>
-                    <?php
-                    $total_rows++;
-                    ?>
-                    @endforeach
-                    @endif
-                </tbody>
-              </table>
+                  </div>
+                  
+                @endforeach
+                @endif
+                </div>
+              </div>
             </div>
-            <!-- /.box-body -->
-        
-           
-            
-          </div>
-          <!-- /.box -->
         </div>
         <!-- /.col -->
       </div>

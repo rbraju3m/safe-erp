@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Modules\Gallery\Models\Gallery;
 
 
-class GalleryRequest extends FormRequest
+class UpdateGalleryRequest extends FormRequest
 {
     public function authorize()
     {
@@ -25,9 +25,9 @@ class GalleryRequest extends FormRequest
         $image = Request::input('image_link')?Request::input('image_link'):'';
         
         return [
-            'title'       => 'required|max:25',
+            'title'         => 'required|max:25',
             'discription'   => 'max:90',
-            'image_link'   => 'required|image|mimes:jpeg,JPEG,Jpeg,PNG,Png,png,jpg,JPG,Jpg|max:5120'.$image,
+            'image_link'    => 'image|mimes:jpeg,JPEG,Jpeg,PNG,Png,png,jpg,JPG,Jpg|max:5120'.$image,
 
         ];
 

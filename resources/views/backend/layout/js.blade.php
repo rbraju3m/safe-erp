@@ -30,6 +30,9 @@
 <!-- CK Editor -->
 <script src="{{ asset('backend/js/bower/ckeditor/ckeditor.js') }}"></script>
 
+<!-- Ekko Lightbox -->
+<script src="{{ asset('backend/css/bower/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ asset('backend/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 
@@ -74,6 +77,22 @@
       'autoWidth'   : false
     });
   });
+
+    // for gallery
+    $(function () {
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox({
+        alwaysShowClose: true
+      });
+    });
+
+    $('.filter-container').filterizr({gutterPixels: 3});
+    $('.btn[data-filter]').on('click', function() {
+      $('.btn[data-filter]').removeClass('active');
+      $(this).addClass('active');
+    });
+  })
 
 
   $(function () {

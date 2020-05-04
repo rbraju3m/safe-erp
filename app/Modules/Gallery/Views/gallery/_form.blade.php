@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Input;
 				</div>
 
 				@if(isset($data['image_link'] ) && !empty($data['image_link']) )
-				<a target="_blank" href="{{URL::to('')}}/uploads/news/{{$data->image_link}}" style="margin-top: 5px;" class="btn btn-primary btn-sm font-10"><img src="{{URL::to('')}}/uploads/member/{{$data->image_link}}" height="50px" alt="{{$data['image_link']}}" ></img>
+				<a target="_blank" href="{{URL::to('')}}/uploads/gallery/{{$data->image_link}}" style="margin-top: 5px;" class="btn btn-primary btn-sm font-10"><img src="{{URL::to('')}}/uploads/gallery/{{$data->image_link}}" height="50px" alt="{{$data['image_link']}}" ></img>
 				</a>
 				@endif
 			</div>

@@ -96,16 +96,22 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
+{{-- background: #fff;color: #000; --}}
     <div class="member_section" style="">
 
     @foreach ($all_member as $element)
+
+    <?php
+      $id = $element->id;
+      if( $id%2 == 0){
+        $style = "box-shadow: 16px 23px 50px 8px #fff;border: 1px solid #bfbfbf;padding: 5px 5px;font-size: 16px;font-weight: bold;text-transform: uppercase;cursor: pointer;margin-left: 10px;margin-top: 16px;display: inline-block;background: #ececec;color: #000;";
+      }else{
+        $style = "box-shadow: 16px 23px 50px 8px #fff;border: 1px solid #bfbfbf;padding: 5px 5px;font-size: 16px;font-weight: bold;text-transform: uppercase;cursor: pointer;margin-left: 10px;margin-top: 16px;display: inline-block;background: #fff;color: #000;";
+      }
+    ?>
     
-<a style="box-shadow: 16px 23px 50px 8px #fff;border: 1px solid #bfbfbf;padding: 5px 5px;font-size: 16px;font-weight: bold;text-transform: uppercase;background: #fff;color: #000;cursor: pointer;margin-left: 10px;
-
-margin-top: 16px;
-
-display: inline-block;" title="{{ $element->name }} Total Deposite" id="view_specific_member" member_id = "{{ $element->id }}" data-href="{{ route('admin.member.specificData') }}">
+<a style="{{ $style }}" title="{{ $element->name }} Total Deposite" id="view_specific_member" member_id = "{{ $element->id }}" data-href="{{ route('admin.member.specificData') }}">
+<img src="{{URL::to('')}}/uploads/member/{{$element->image_link}}" class="img-circle" style="width: 50px;height: 50px;" alt="User Image">
 {{ $element->name }} 
 </a>
 

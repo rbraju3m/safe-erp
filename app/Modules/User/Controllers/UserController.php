@@ -647,7 +647,7 @@ class UserController extends Controller
         $response['content'] = $contents;
                 
         $response['header'] = 'Hi '.Auth::user()->name;
-        $response['headerSmall'] = 'I Am '.$member->name;
+        $response['headerSmall'] = 'I AM '.$member->name;
 
 
         return $response;

@@ -216,7 +216,7 @@ a:focus {
   margin-top: 50px;
   border: 1px #fff;
   padding: 26px 10px;
-  height: 60%;
+  height: auto;
   background-color: #ececec;
 }
 
