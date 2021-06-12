@@ -87,7 +87,14 @@ use App\Modules\User\Models\User;
 height: 50px;" alt="User Image"><br>{{$values->name}}<br>{{$values->mobile  }}</td>
                         <td style="vertical-align: middle;">{{ $values->amount }}</td>
                         <td style="vertical-align: middle;">
-                        {{$values->type}}
+                            <?php
+                                if($values->amount == '2100'){
+                                    echo 'Monthly With Due';
+                                }else{
+                                    echo $values->type;
+                                }
+                            ?>
+                        <!--{{$values->type}}-->
                         </td>
                         <td style="vertical-align: middle;">{{$values->month.'-'.$values->year}}</td>
                         <td style="vertical-align: middle;">{{$values->note}}</td>

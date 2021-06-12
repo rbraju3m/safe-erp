@@ -177,7 +177,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
       <?php 
         $January_total = 0;
@@ -194,7 +194,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
           
       <?php 
@@ -211,7 +211,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $total_2021 = $total_2021+$element->amount;
@@ -227,7 +227,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $total_2022 = $total_2022+$element->amount;
@@ -243,7 +243,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
       <?php 
         $total_2023 = $total_2023+$element->amount;
@@ -259,7 +259,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $total_2024 = $total_2024+$element->amount;
@@ -275,7 +275,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'January' && $element->type == 'Monthly')
+          @if (($element->month == 'January') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $total_2025 = $total_2025+$element->amount;
@@ -294,7 +294,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
     <?php 
       $February_total = 0;
@@ -311,7 +311,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $February_total = $February_total+$element->amount;
@@ -327,7 +327,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $February_total = $February_total+$element->amount;
@@ -343,7 +343,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $February_total = $February_total+$element->amount;
@@ -359,7 +359,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $February_total = $February_total+$element->amount;
@@ -375,7 +375,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
         <?php 
           $February_total = $February_total+$element->amount;
@@ -391,7 +391,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'February' && $element->type == 'Monthly')
+          @if (($element->month == 'February') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
       <?php 
         $February_total = $February_total+$element->amount;
@@ -411,7 +411,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $March_total = 0;
@@ -428,7 +428,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $March_total = $March_total+$element->amount;
@@ -444,7 +444,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -460,7 +460,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -476,7 +476,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -493,7 +493,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -510,7 +510,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'March' && $element->type == 'Monthly')
+          @if (($element->month == 'March' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -530,7 +530,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $April_total = 0;
@@ -547,7 +547,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -563,7 +563,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -579,7 +579,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -595,7 +595,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -611,7 +611,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -627,7 +627,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'April' && $element->type == 'Monthly')
+          @if (($element->month == 'April' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $April_total = $April_total+$element->amount;
@@ -647,7 +647,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $May_total = 0;
@@ -664,7 +664,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -680,7 +680,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -696,7 +696,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -712,7 +712,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -728,7 +728,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -744,7 +744,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'May' && $element->type == 'Monthly')
+          @if (($element->month == 'May' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -765,7 +765,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $June_total = 0;
@@ -782,7 +782,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -798,7 +798,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -814,7 +814,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -830,7 +830,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -846,7 +846,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -862,7 +862,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'June' && $element->type == 'Monthly')
+          @if (($element->month == 'June' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -882,7 +882,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php
               $July_total = 0;
@@ -899,7 +899,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -915,7 +915,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -931,7 +931,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -947,7 +947,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -963,7 +963,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -979,7 +979,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'July' && $element->type == 'Monthly')
+          @if (($element->month == 'July' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -999,7 +999,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $August_total = 0;
@@ -1015,7 +1015,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -1030,7 +1030,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -1045,7 +1045,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -1060,7 +1060,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -1075,7 +1075,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -1090,7 +1090,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'August' && $element->type == 'Monthly')
+          @if (($element->month == 'August') && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -1109,7 +1109,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $September = 0;
@@ -1126,7 +1126,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -1142,7 +1142,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -1158,7 +1158,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php
              $total_2022 = $total_2022+$element->amount;
@@ -1174,7 +1174,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -1190,7 +1190,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -1206,7 +1206,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'September' && $element->type == 'Monthly')
+          @if (($element->month == 'September' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -1226,7 +1226,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $October = 0;
@@ -1243,7 +1243,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -1259,7 +1259,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -1275,7 +1275,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -1291,7 +1291,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -1307,7 +1307,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -1323,7 +1323,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'October' && $element->type == 'Monthly')
+          @if (($element->month == 'October' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -1343,7 +1343,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $November = 0;
@@ -1360,7 +1360,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -1376,7 +1376,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -1392,7 +1392,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -1408,7 +1408,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -1424,7 +1424,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -1440,7 +1440,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'November' && $element->type == 'Monthly')
+          @if (($element->month == 'November' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;
@@ -1460,7 +1460,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2019))
         @foreach ($deposite2019 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $December = 0;
@@ -1477,7 +1477,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2020))
         @foreach ($deposite2020 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2020 = $total_2020+$element->amount;
@@ -1493,7 +1493,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2021))
         @foreach ($deposite2021 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2021 = $total_2021+$element->amount;
@@ -1509,7 +1509,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2022))
         @foreach ($deposite2022 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2022 = $total_2022+$element->amount;
@@ -1525,7 +1525,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2023))
         @foreach ($deposite2023 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2023 = $total_2023+$element->amount;
@@ -1541,7 +1541,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2024 = $total_2024+$element->amount;
@@ -1557,7 +1557,7 @@ use App\Modules\User\Models\User;
   <td style="padding: 3px;">
       @if(isset($deposite2025))
         @foreach ($deposite2025 as $element)
-          @if ($element->month == 'December' && $element->type == 'Monthly')
+          @if (($element->month == 'December' ) && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
             {{ $element->amount }}
             <?php 
               $total_2025 = $total_2025+$element->amount;

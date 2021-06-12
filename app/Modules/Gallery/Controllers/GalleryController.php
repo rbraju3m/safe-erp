@@ -284,7 +284,7 @@ class GalleryController extends Controller
                 ->get();
 
         // return view
-        return view("Gallery::Gallery.index", compact('pageTitle','ModuleTitle','data','Cancel'));
+        return view("Gallery::gallery.index", compact('pageTitle','ModuleTitle','data','Cancel'));
     }
 
     public function rollback($id){

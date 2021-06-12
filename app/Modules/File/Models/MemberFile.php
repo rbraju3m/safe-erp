@@ -8,7 +8,7 @@ use App;
 use Auth;
 
 class MemberFile extends Model {
-	protected $table = 'File';
+	protected $table = 'file';
     protected $fillable = [
         'title',
         'discription',

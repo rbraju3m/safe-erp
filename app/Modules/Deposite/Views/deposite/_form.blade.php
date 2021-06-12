@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\Input;
 			<div class="form-group">
 				{!!  Form::label('type', 'Payment Type', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
 
-				{!! Form::Select('type',array('Monthly'=>'Monthly','Yearly'=>'Yearly','Registration'=>'Registration','Other' => 'Other'),Input::old('type'),['id'=>'type', 'class'=>'form-control select2']) !!}
+				{!! Form::Select('type',array('Monthly'=>'Monthly','Monthly With Due'=>'Monthly With Due','Yearly'=>'Yearly','Registration'=>'Registration','Other' => 'Other'),Input::old('type'),['id'=>'type', 'class'=>'form-control select2']) !!}
 				<span style="color: red">{!! $errors->first('type') !!}</span>
 			</div>
 		</div>
@@ -95,6 +95,7 @@ use Illuminate\Support\Facades\Input;
 				<?php
 					$amount = array();
 					$amount['2000'] = '2000';
+					$amount['2100'] = '2100';
 					$amount['6000'] = '6000';
 					$amount['100'] = '100';
 				?>
