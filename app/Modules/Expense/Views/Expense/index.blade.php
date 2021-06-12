@@ -1,0 +1,157 @@
+
+<?php
+use App\Modules\User\Models\User;
+  
+?>
+
+
+@extends('backend.layout.master')
+      
+
+            @section('body')
+            
+            
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+      <h1>
+        {{$ModuleTitle}}
+      </h1>
+
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('admin.expense.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.expense.create')}}">{{$pageTitle}}</a></li>
+      </ol>
+
+      <ol class="breadcrumb breadcrumbbutton">
+        <a style="margin-left: 3px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
+        
+        @if (Route::currentRouteName() != 'admin.expense.inactive')
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.expense.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive expense</a>
+        @endif
+        
+        @if (Route::currentRouteName() != 'admin.expense.index')
+          <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.expense.index')}} " class="btn btn-success waves-effect pull-right">Active expense</a>
+        @endif
+        
+        @if (Route::currentRouteName() != 'admin.expense.create')
+        @if(Auth::user()->type == 'Admin')
+
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.expense.create')}} " class="btn btn-primary waves-effect pull-right">Add expense</a>
+        @endif
+        @endif
+        
+      </ol>
+
+      
+    </section>
+    <!-- Main content -->
+    <section class="content">
+       @include('backend.layout.msg')
+
+      <div class="row">
+        <div class="col-md-12">
+                  <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">{{$pageTitle}}</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table id="example1" class="table table-bordered table-striped text-center">
+                <thead>
+
+                <tr>
+                  <th>Sl No</th>
+                  <th style="background: rgb(126, 172, 206);">Name</th>
+                  <th>Amount</th>
+                  <th> Note</th>
+                  <th>Expense Details</th>
+                  <th>Added By</th>
+                  <th> Action </th>
+                </tr>
+                </thead>
+                <tbody >
+                @if(count($data) > 0)
+                       <?php
+                       $total_rows = 1;
+                       ?>
+                       @foreach($data as $values)
+                        
+
+                       <tr>
+                        <td style="vertical-align: middle;"><?=$total_rows?></td>
+                        <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/expense/{{$values->image_link}}" class="img-circle" style="width: 50px;
+height: 50px;" alt="User Image"><br>{{$values->name}}</td>
+                        <td style="vertical-align: middle;">{{ $values->amount }}</td>
+                        
+                        <td style="vertical-align: middle;">{{$values->note}}</td>
+                        <td style="vertical-align: middle;">{{$values->expense_time}}
+                          <br>{{ $values->expense_day}}
+                          <br>{{$values->expense_date  }}</td>
+                          <?php
+        $name = User::where('id', $values->created_by)
+                        ->select('name','image_link')
+                        ->first();
+                          ?>
+                        <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;
+height: 50px;" alt="User Image"><br>{{$name->name}}</td>
+                        
+                        
+                        <td style="vertical-align: middle;">
+
+                          {{-- <a title="VIEW" target="new" style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.expense.show', $values->id) }}" ><i class="fa fa-eye"></i></a> --}}
+                          
+                            @if (isset($Cancel) && $Cancel == 'Cancel')
+                            <a title="ROLL BACK" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.expense.rollback', $values->id) }}"  onclick="return confirm('Move to active expense?')" ><i class="fa fa-repeat" aria-hidden="true"></i></a>
+            
+
+            @if (Auth::user()->type == 'Admin')
+
+                            <a title="PARMANENT DELETE" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.expense.delete', $values->id) }}"  onclick="return confirm('Are you sure to parmanent delete?')" ><i class="fa fa-trash"></i></a>
+            @endif
+                            
+                            @else
+            @if (Auth::user()->type == 'Admin')
+                            
+                              <a title="EDIT" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.expense.edit', $values->id) }}" ><i class="fa fa-edit"></i></a>
+
+                              <a title="Inactive" target="new"  style="border: 1px solid;padding: 2px 5px;" href="{{ route('admin.expense.destroy', $values->id) }}"  onclick="return confirm('Are you sure to Inactive?')" ><i class="fa fa-ban" aria-hidden="true"></i>
+</a>
+            @endif
+
+                            @endif
+
+
+                          
+
+                            
+
+                            
+                        </td>
+                    </tr>
+                    <?php
+                    $total_rows++;
+                    ?>
+                    @endforeach
+                    @endif
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+        
+           
+            
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+            
+    </section>
+    <!-- /.content -->
+  </div>
+@endsection
+
+           
+
