@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Input;
 		<div class="col-md-4">
 			<div class="form-group">
 			{!! Form::label(' Expense Date', 'Expense Date', array('class' => 'col-form-label')) !!}
-			{{ Form::date('ex_date', date('Y-m-d'),['id'=>'expense_date','class' => 'form-control','Placeholder' => 'Enter Expense Date']) }} 
+			{{ Form::date('ex_date',Input::old(date('Y-m-d')),['id'=>'expense_date','class' => 'form-control','Placeholder' => 'Enter Expense Date']) }} 
 			<span style="color: red">{!! $errors->first('ex_date') !!}</span>
 			</div>
 		</div>
@@ -60,11 +60,17 @@ use Illuminate\Support\Facades\Input;
 			&nbsp;
 			<span style="color: red">{!! $errors->first('image_link') !!}</span>
 			<span class='label label-info' id="upload-file-info"></span>
-		</div>
-	</div>
-	<div class="form-group">
+			<div class="form-group">
 		<img id="blah"  src="#" alt="."/>
 	</div>
+		</div>
+		<div>@if(isset($data['image_link'] ) && !empty($data['image_link']) )
+				<a target="_blank" href="{{URL::to('')}}/uploads/expense/{{$data->image_link}}" style="margin-top: 5px;" class="btn btn-primary btn-sm font-10">
+					<img style="height: 80px;width: 80px;" src="{{URL::to('')}}/uploads/expense/{{$data->image_link}}">
+				</a>
+				@endif</div>
+	</div>
+	
 	</div>
 
 	

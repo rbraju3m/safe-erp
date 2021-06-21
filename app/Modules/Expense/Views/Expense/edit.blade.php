@@ -18,24 +18,24 @@
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('admin.deposite.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.deposite.create')}}">{{$pageTitle}}</a></li>
+        <li><a href="{{route('admin.expense.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.expense.create')}}">{{$pageTitle}}</a></li>
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
         <a style="margin-left: 3px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
         
-        @if (Route::currentRouteName() != 'admin.deposite.inactive')
-        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.deposite.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive Deposite</a>
+        @if (Route::currentRouteName() != 'admin.expense.inactive')
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.expense.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive Expense</a>
         @endif
         
-        @if (Route::currentRouteName() != 'admin.deposite.index')
-          <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.deposite.index')}} " class="btn btn-success waves-effect pull-right">Active Deposite</a>
+        @if (Route::currentRouteName() != 'admin.expense.index')
+          <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.expense.index')}} " class="btn btn-success waves-effect pull-right">Active Expense</a>
         @endif
         
-        @if (Route::currentRouteName() != 'admin.deposite.create')
+        @if (Route::currentRouteName() != 'admin.expense.create')
         @if(Auth::user()->type == 'Admin')
         
-        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.deposite.create')}} " class="btn btn-primary waves-effect pull-right">Add Deposite</a>
+        <a style="margin-left: 3px;font-weight: bold;" href=" {{route('admin.expense.create')}} " class="btn btn-primary waves-effect pull-right">Add Expense</a>
         @endif
         @endif
         
@@ -59,9 +59,9 @@
         <!-- /.box-header -->
         <div class="box-body">
 
-          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.deposite.update', $data->id],"class"=>"", 'id' => '']) !!}
+          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.expense.update', $data->id],"class"=>"", 'id' => '']) !!}
 
-      @include('Deposite::deposite._form')
+      @include('Expense::expense._form')
 
       {!! Form::close() !!}
         </div>
