@@ -258,7 +258,7 @@ class ExpenseController extends Controller
                 ->get();
 
         // return view
-        return view("Expense::Expense.index", compact('pageTitle','ModuleTitle','data','Cancel'));
+        return view("Expense::expense.index", compact('pageTitle','ModuleTitle','data','Cancel'));
     }
 
     public function rollback($id){
