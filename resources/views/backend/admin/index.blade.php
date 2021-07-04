@@ -90,6 +90,41 @@
         </div>
         <!-- /.col -->
 
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-minus-square" style="margin-top: 20px;"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F')}} Expense</span>
+              <span class="info-box-number" style="font-family: initial;color: #000">
+                
+                {{ $current_expense_total }} tk.
+              <small></small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+
+          <div class="info-box">
+            <a href="{{route('admin.expense.index')}}">
+
+            <span class="info-box-icon bg-green"><i class="fa fa-money" style="margin-top: 20px;"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">Total Expense</span>
+              <span class="info-box-number" style="font-family: initial;">
+                {{ $total_expense }} Tk.
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+            <a href="{{route('admin.member.index')}}">
+
+          </div>
+          <!-- /.info-box -->
+        </div>
         
 
         

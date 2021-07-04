@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Modules\User\Models\Member;
 use App\Modules\Deposite\Models\Deposite;
+use App\Modules\Expense\Models\Expense;
+
 
 
 class HomeController extends Controller
@@ -48,9 +50,36 @@ class HomeController extends Controller
         foreach ($current_month_deposite as $value) {
             $current_total = $current_total+$value['amount'];
         }
-        // echo $current_total;
+
+        $input['expense_month'] = date("F");
+        $input['expense_year'] = date("Y");
+        // Get current month year expense data
+        $curr_mon_year_expense_data = Expense::orderBy('id','desc')
+                ->where('status','active')
+                ->where('expense_month',date("F"))
+                ->where('expense_year',date("Y"))
+                ->select('*')
+                ->get();
+        $current_expense_total = 0;
+        foreach ($curr_mon_year_expense_data as $value) {
+            $current_expense_total = $current_expense_total+$value['amount'];
+        }
+
+        // Get total expense data
+        $total_expense_data = Expense::orderBy('id','desc')
+                ->where('status','active')
+                ->select('*')
+                ->get();
+        $total_expense = 0;
+        foreach ($total_expense_data as $value) {
+            $total_expense = $total_expense+$value['amount'];
+        }
+
+        // echo "<pre>";
+        // print_r($total_expense_data);
+        // echo $total_expense;
         // exit();
 
-        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total'));
+        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total','current_expense_total','total_expense'));
     }
 }
