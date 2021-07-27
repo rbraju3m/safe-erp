@@ -65,6 +65,18 @@ class HomeController extends Controller
             $current_expense_total = $current_expense_total+$value['amount'];
         }
 
+        // Get previous month year expense data
+        $pre_mon_year_expense_data = Expense::orderBy('id','desc')
+                ->where('status','active')
+                ->where('expense_month',date('F',strtotime("-1 month")))
+                ->where('expense_year',date("Y"))
+                ->select('*')
+                ->get();
+        $previous_expense_total = 0;
+        foreach ($pre_mon_year_expense_data as $value) {
+            $previous_expense_total = $previous_expense_total+$value['amount'];
+        }
+
         // Get total expense data
         $total_expense_data = Expense::orderBy('id','desc')
                 ->where('status','active')
@@ -80,6 +92,6 @@ class HomeController extends Controller
         // echo $total_expense;
         // exit();
 
-        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total','current_expense_total','total_expense'));
+        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total','current_expense_total','total_expense','previous_expense_total'));
     }
 }

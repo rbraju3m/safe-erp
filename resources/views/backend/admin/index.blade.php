@@ -95,10 +95,26 @@
             <span class="info-box-icon bg-aqua"><i class="fa fa-minus-square" style="margin-top: 20px;"></i></span>
 
             <div class="info-box-content">
+              <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F',strtotime("-1 month"))}} Expense</span>
+              <span class="info-box-number" style="font-family: initial;color: #000">
+                
+                {{ $previous_expense_total }} TK.
+              <small></small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-minus-square" style="margin-top: 20px;"></i></span>
+
+            <div class="info-box-content">
               <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F')}} Expense</span>
               <span class="info-box-number" style="font-family: initial;color: #000">
                 
-                {{ $current_expense_total }} tk.
+                {{ $current_expense_total }} TK.
               <small></small></span>
             </div>
             <!-- /.info-box-content -->
@@ -111,7 +127,7 @@
           <div class="info-box">
             <a href="{{route('admin.expense.index')}}">
 
-            <span class="info-box-icon bg-green"><i class="fa fa-money" style="margin-top: 20px;"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa fa-minus-square" style="margin-top: 20px;"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;">Total Expense</span>
@@ -120,12 +136,36 @@
               </span>
             </div>
             <!-- /.info-box-content -->
-            <a href="{{route('admin.member.index')}}">
-
+          </a>
           </div>
           <!-- /.info-box -->
         </div>
-        
+
+<div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+<div class="info-box">
+<span class="info-box-icon" style="height: 93px !important;background-color: #dd4b39 ;color: #fff">
+<i class="fa fa-balance-scale" style="margin-top: 20px;"></i></span>
+<div class="info-box-content">
+<span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;"> Total Cash </span>
+<span class="info-box-number" style="font-family: initial;">
+<table width="100%" style="margin-top: 5px;">
+<tr>
+<th> Deposite</th>
+<th style="text-align: right !important;">{{$total_deposite}}</th>
+</tr>
+<tr>
+<th> Expense</th>
+<th style="text-align: right !important;">{{$total_expense}}</th>
+</tr>
+<tr>
+<th> Cash</th>
+<th style="text-align: right !important;">{{$total_deposite-$total_expense}}</th>
+</tr>
+</table>
+</span>
+</div>
+</div>
+</div>        
 
         
         <!-- /.col -->
