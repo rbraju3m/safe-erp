@@ -66,6 +66,7 @@ use App\Modules\User\Models\User;
                   <th style="background: rgb(126, 172, 206);">Name</th>
                   <th>Type</th>
                   <th>Amount</th>
+                  <th>Tr. Date</th>
                   <th> Note</th>
                   <th> Details</th>
                   <th>Added By</th>
@@ -88,6 +89,8 @@ use App\Modules\User\Models\User;
 height: 50px;" alt="User Image"></a><br>{{$values->name}}</td>
                         <td style="vertical-align: middle;">{{ $values->type }}</td>
                         <td style="vertical-align: middle;">{{ $values->amount }}</td>
+                        
+                        <td style="vertical-align: middle;">{{ $values->ex_date }}</td>
                         
                         <td style="vertical-align: middle;">{{$values->note}}</td>
                         <td style="vertical-align: middle;">{{$values->expense_time}}
