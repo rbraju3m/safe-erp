@@ -72,6 +72,46 @@ Active Deposite </a></li>
             <li><a href="{{route('admin.deposite.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Deposite </a></li>
           </ul>
         </li> 
+
+<li class="treeview">
+            <a href="#">
+              <i class="fa fa-minus-square" aria-hidden="true"></i>
+              <span>Expense</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+             @if (Auth::user()->type == 'Admin') 
+              <li><a href="{{route('admin.expense.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Expense</a></li>
+            @endif 
+
+            <li><a href="{{route('admin.expense.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active Expense </a></li>
+            <li><a href="{{route('admin.expense.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Expense </a></li>
+          </ul>
+        </li>
+
+
+        <li class="treeview">
+            <a href="#">
+              <i class="fa fa-university" aria-hidden="true"></i>
+              <span>Bank Profit / Ex </span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+             @if (Auth::user()->type == 'Admin') 
+              <li><a href="{{route('admin.bank.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Bank Profit / Ex</a></li>
+             @endif
+            <li><a href="{{route('admin.bank.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active Bank Profit / Ex </a></li>
+            <li><a href="{{route('admin.bank.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Bank Profit / Ex </a></li>
+          </ul>
+        </li>
+
+
         <?php
           $name = Auth::user()->name;
           $name = substr($name, 0, strrpos($name, ' '));
@@ -130,24 +170,7 @@ Active Gallery </a></li>
         </li> 
 
 
-        <li class="treeview">
-            <a href="#">
-              <i class="fa fa-minus-square" aria-hidden="true"></i>
-              <span>Expense</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-            {{-- @if (Auth::user()->type == 'Admin') --}}
-              <li><a href="{{route('admin.expense.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Expense</a></li>
-            {{-- @endif --}}
-
-            <li><a href="{{route('admin.expense.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
-Active Expense </a></li>
-            <li><a href="{{route('admin.expense.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Expense </a></li>
-          </ul>
-        </li>
+        
 
 
         <li>

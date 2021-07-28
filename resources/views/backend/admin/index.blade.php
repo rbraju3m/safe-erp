@@ -155,7 +155,7 @@
 </tr>
 <tr>
 <th> Expense</th>
-<th style="text-align: right !important;">{{$total_expense}}</th>
+<th style="text-align: right !important;">(-) {{$total_expense}}</th>
 </tr>
 <tr>
 <th> Cash</th>
@@ -166,6 +166,96 @@
 </div>
 </div>
 </div>        
+
+
+
+<div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-plus-square" style="margin-top: 20px;"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text" style="font-size: 15px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F',strtotime("-1 month"))}} Bank Profit</span>
+              <span class="info-box-number" style="font-family: initial;color: #000">
+                
+                {{ $current_bank_profit }} TK.
+              <small></small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-minus-square" style="margin-top: 20px;"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text" style="font-size: 14px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F')}} Bank Expense</span>
+              <span class="info-box-number" style="font-family: initial;color: #000">
+                
+                {{ $current_bank_expense }} TK.
+              <small></small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+ 
+<div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+<div class="info-box">
+<span class="info-box-icon" style="height: 91px !important;background-color: #f39c12  ;color: #fff">
+<i class="fa fa-university" style="margin-top: 20px;"></i></span>
+<div class="info-box-content">
+<span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;"> Total Pro/Exp </span>
+<span class="info-box-number" style="font-family: initial;">
+<table width="100%" style="margin-top: 5px;">
+<tr>
+<th> T.B. Profit</th>
+<th style="text-align: right !important;">{{$total_bank_profit}}</th>
+</tr>
+<tr>
+<th> T.B. Expense</th>
+<th style="text-align: right !important;">{{$total_bank_expense}}</th>
+</tr>
+
+</table>
+</span>
+</div>
+</div>
+</div> 
+
+
+<div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
+<div class="info-box">
+<span class="info-box-icon" style="height: 93px !important;background-color: #dd4b39 ;color: #fff">
+<i class="fa fa-balance-scale" style="margin-top: 20px;"></i></span>
+<div class="info-box-content">
+<!-- <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;border-bottom: 1px solid;"> Total Cash </span> -->
+<span class="info-box-number" style="font-family: initial;">
+<table width="100%" style="margin-top: 5px;">
+  <tr>
+<th> Pre Cash</th>
+<th style="text-align: right !important;">{{$total_deposite-$total_expense}}</th>
+</tr>
+<tr>
+<th> T.B Profit</th>
+<th style="text-align: right !important;">(+) {{$total_bank_profit}}</th>
+</tr>
+<tr>
+<th> T.B Expense</th>
+<th style="text-align: right !important;">(-) {{$total_bank_expense}}</th>
+</tr>
+<tr>
+<th style="color: #0087ff;"> Net Cash</th>
+<th style="text-align: right !important;color: #0087ff;">{{$total_deposite-$total_expense+$total_bank_profit-$total_bank_expense}}</th>
+</tr>
+</table>
+</span>
+</div>
+</div>
+</div>        
+
 
         
         <!-- /.col -->

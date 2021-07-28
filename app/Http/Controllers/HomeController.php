@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Modules\User\Models\Member;
 use App\Modules\Deposite\Models\Deposite;
 use App\Modules\Expense\Models\Expense;
+use App\Modules\Bank\Models\Bank;
 
 
 
@@ -91,7 +92,51 @@ class HomeController extends Controller
         // print_r($total_expense_data);
         // echo $total_expense;
         // exit();
+        $curr_mon_year_bank_profit = Bank::orderBy('id','desc')
+                ->where('status','active')
+                ->where('type','profit')
+                ->where('expense_month',date("F"))
+                ->where('expense_year',date("Y"))
+                ->select('*')
+                ->get();
+        $current_bank_profit = 0;
+        foreach ($curr_mon_year_bank_profit as $value) {
+            $current_bank_profit = $current_bank_profit+$value['amount'];
+        }
 
-        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total','current_expense_total','total_expense','previous_expense_total'));
+
+        $curr_mon_year_bank_expense = Bank::orderBy('id','desc')
+                ->where('status','active')
+                ->where('type','expense')
+                ->where('expense_month',date("F"))
+                ->where('expense_year',date("Y"))
+                ->select('*')
+                ->get();
+        $current_bank_expense = 0;
+        foreach ($curr_mon_year_bank_expense as $value) {
+            $current_bank_expense = $current_bank_expense+$value['amount'];
+        }
+
+        $total_bank_profit_data = Bank::orderBy('id','desc')
+                ->where('status','active')
+                ->where('type','profit')
+                ->select('*')
+                ->get();
+        $total_bank_profit = 0;
+        foreach ($total_bank_profit_data as $value) {
+            $total_bank_profit = $total_bank_profit+$value['amount'];
+        }
+
+        $total_bank_expense_data = Bank::orderBy('id','desc')
+                ->where('status','active')
+                ->where('type','expense')
+                ->select('*')
+                ->get();
+        $total_bank_expense = 0;
+        foreach ($total_bank_expense_data as $value) {
+            $total_bank_expense = $total_bank_expense+$value['amount'];
+        }
+
+        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total','current_expense_total','total_expense','previous_expense_total','current_bank_profit','current_bank_expense','total_bank_profit','total_bank_expense'));
     }
 }
