@@ -155,15 +155,18 @@
                                     <td>{{$index}}</td>
                                     <td>{{$member}}</td>
                                     @php
-                                        $memberTotalDipositeAmount = DB::table('deposite')->where('member_id',$id)->sum('amount');
+                                        #$memberTotalDipositAmount = DB::table('deposite')->where('member_id',$id)->sum('amount');
+                                        $memberTotalDipositAmount = DB::table('deposite')->where('member_id',$id)->whereBetween('year', [2019, $input['year']])->sum('amount');
+                                        $memberTotalDipositAmount = $memberTotalDipositAmount-100;
+
                                     @endphp
-                                    <td class="text-right">{{number_format($memberTotalDipositeAmount,2)}}</td>
+                                    <td class="text-right">{{number_format($memberTotalDipositAmount,2)}}</td>
                                     @php
                                         $netProfit = $totalBankProfit-($otherExpense+$totalBankExpense);
-                                        $personWiseProfit = ($netProfit*$memberTotalDipositeAmount);
+                                        $personWiseProfit = ($netProfit*$memberTotalDipositAmount);
                                         $personWiseProfit = ($personWiseProfit/$netAmount);
                                         $totalPersonProfit = $totalPersonProfit + $personWiseProfit;
-                                        /*dd($netProfit,$memberTotalDipositeAmount,$netAmount);*/
+                                        /*dd($netProfit,$memberTotalDipositAmount,$netAmount);*/
                                     @endphp
                                     <td>{{number_format($personWiseProfit,2)}}</td>
                                 </tr>

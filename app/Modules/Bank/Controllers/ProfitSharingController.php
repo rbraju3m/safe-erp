@@ -104,26 +104,44 @@ class ProfitSharingController extends Controller
         $totalBankProfit = Bank::orderBy('id','desc')
             ->where('status','active')
             ->where('type','profit')
-            ->where('expense_year',$input['year'])
+            ->where('ex_date', 'like', '%' . $input['year'] . '%')
             ->select('*')
             ->sum('amount');
+//        dd($totalBankProfit);
         $totalBankExpense = Bank::orderBy('id','desc')
             ->where('status','active')
             ->where('type','Expense')
-            ->where('expense_year',$input['year'])
+            ->where('ex_date', 'like', '%' . $input['year'] . '%')
             ->select('*')
             ->sum('amount');
 
         $otherExpense = Expense::orderBy('id','desc')
             ->where('status','active')
-            ->where('expense_year',$input['year'])
+            ->where('ex_date', 'like', '%' . $input['year'] . '%')
             ->select('*')
             ->sum('amount');
-        $Deposite = Deposite::where('status', 'active')->sum('amount');
-        $Expense = Expense::where('status','active')->sum('amount');
-        $BankProfit = Bank::where('status','active')->where('type','profit')->sum('amount');
-        $BankExpense = Bank::where('status','active')->where('type','expense')->sum('amount');
-        $netAmount = ($Deposite+$BankProfit)-($Expense+$BankExpense);
+        $Deposit = Deposite::where('status', 'active')->whereBetween('year', [2019, $input['year']])->sum('amount');
+        $registrationFee = count($profitMember)*100;
+        $netAmount = $Deposit-$registrationFee;
+        /*dd($Deposit,count($profitMember)*100);
+        $Expense = Expense::where('status','active');
+            for ($i = $input['year'] ; $i >= 2019;$i-- ){
+                $Expense = $Expense ->orWhere('ex_date', 'like', '%' . $i . '%');
+            }
+        $Expense = $Expense->sum('amount');
+
+        $BankProfit = Bank::where('status','active')->where('type','profit');
+        for ($i = $input['year'] ; $i >= 2019;$i-- ){
+            $BankProfit = $BankProfit ->orWhere('ex_date', 'like', '%' . $i . '%');
+        }
+        $BankProfit = $BankProfit->sum('amount');
+        $BankExpense = Bank::where('status','active')->where('type','expense');
+        for ($i = $input['year'] ; $i >= 2019;$i-- ){
+            $BankExpense = $BankExpense ->orWhere('ex_date', 'like', '%' . $i . '%');
+        }
+        $BankExpense = $BankExpense->sum('amount');
+        $netAmount = ($Deposit+$BankProfit)-($Expense+$BankExpense);*/
+//        dd($netAmount);
 
         return view("Bank::profit-sharing.create", compact('pageTitle','ModuleTitle','activeMember','input','profitMember','totalBankProfit','totalBankExpense','otherExpense','netAmount'));
 
