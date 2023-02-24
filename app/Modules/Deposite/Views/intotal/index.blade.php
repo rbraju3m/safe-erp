@@ -3,16 +3,16 @@
 use App\Modules\User\Models\User;
 use App\Modules\Deposite\Models\Deposite;
 
-  
+
 ?>
 
 
 @extends('backend.layout.master')
-      
+
 
             @section('body')
-            
-            
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -31,17 +31,17 @@ use App\Modules\Deposite\Models\Deposite;
           $next = $year+1;
           $previous = $year-1;
         ?>
-        
+
         <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.intotal',$next)}} " class="btn btn-danger waves-effect pull-right">Next</a>
-       
-        
-        
+
+
+
           <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.intotal',$previous)}} " class="btn btn-success waves-effect pull-right">Previous</a>
-        
-        
+
+
       </ol>
 
-      
+
     </section>
     <!-- Main content -->
     <section class="content">
@@ -78,7 +78,7 @@ use App\Modules\Deposite\Models\Deposite;
                 </tr>
                 </thead>
                   @if(count($all_member) > 0)
-                  
+
                   @foreach($all_member as $values)
                   <tr>
                     <td>
@@ -95,7 +95,7 @@ use App\Modules\Deposite\Models\Deposite;
                               ->select('deposite.*')
                               ->get();
                     ?>
-                    
+
                     <?php
                       $MemberTotal = 0;
                     ?>
@@ -114,145 +114,145 @@ use App\Modules\Deposite\Models\Deposite;
 
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'January' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'January' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'February' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'February' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'March' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'March' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'April' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'April' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'May' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'May' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'June' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'June' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'July' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'July' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'August' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'August' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'September' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'September' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'October' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'October' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'November' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'November' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
                     <td  style="vertical-align: middle;">
                       @foreach ($MemberData as $element)
-                        @if ($element->month == 'December' && $element->amount > 0 && $element->type == 'Monthly')
+                        @if ($element->month == 'December' && $element->amount > 0 && ($element->type == 'Monthly' || $element->type == 'Monthly With Due'))
                           {{ $element->amount }}
                           <?php
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
@@ -265,7 +265,7 @@ use App\Modules\Deposite\Models\Deposite;
                             $MemberTotal = $MemberTotal+$element->amount;
                           ?>
                         @else
-                          
+
                         @endif
                       @endforeach
                     </td>
@@ -288,11 +288,11 @@ use App\Modules\Deposite\Models\Deposite;
         </div>
         <!-- /.col -->
       </div>
-            
+
     </section>
     <!-- /.content -->
   </div>
 @endsection
 
-           
+
 
