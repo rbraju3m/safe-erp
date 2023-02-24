@@ -17,10 +17,10 @@
   @include('backend.layout.nav')
 
   <!-- Content Wrapper. Contains page content -->
-  
+
             @yield('body')
 
-    
+
 
   @include('backend.layout.footer')
 
@@ -32,5 +32,6 @@
 
 <!-- jQuery 3 -->
 @include('backend.layout.js')
+@stack('per_page_js')
 </body>
 </html>

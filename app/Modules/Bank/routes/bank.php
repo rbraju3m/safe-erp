@@ -50,3 +50,8 @@
 		'as' => 'admin.bank.intotal',
 		'uses' => 'BankController@intotal'
 	]);
+
+	Route::get('admin-profit-sharing',[
+		'as' => 'admin_profit_sharing',
+		'uses' => 'BankController@intotal'
+	]);

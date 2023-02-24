@@ -4,7 +4,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          
+
           <img src="{{URL::to('')}}/uploads/member/{{Auth::user()->image_link}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
@@ -15,7 +15,7 @@
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
-        
+
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -37,6 +37,25 @@ color: #d56f6f;">SAFE MENU</li>
         <li class="treeview">
             <a href="#">
               <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+              <span>Profit Sharing</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            @if (Auth::user()->type == 'Admin')
+              <li><a href="{{route('admin_profit_sharing')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Profit Sharing </a></li>
+            @endif
+
+            {{--<li><a href="{{route('admin.member.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+Active Member </a></li>
+            <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Member </a></li>--}}
+          </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
               <span>Member</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -51,7 +70,7 @@ color: #d56f6f;">SAFE MENU</li>
 Active Member </a></li>
             <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Member </a></li>
           </ul>
-        </li>  
+        </li>
 
 
         <li class="treeview">
@@ -71,7 +90,7 @@ Active Member </a></li>
 Active Deposite </a></li>
             <li><a href="{{route('admin.deposite.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Deposite </a></li>
           </ul>
-        </li> 
+        </li>
 
 <li class="treeview">
             <a href="#">
@@ -82,9 +101,9 @@ Active Deposite </a></li>
               </span>
             </a>
             <ul class="treeview-menu">
-             @if (Auth::user()->type == 'Admin') 
+             @if (Auth::user()->type == 'Admin')
               <li><a href="{{route('admin.expense.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Expense</a></li>
-            @endif 
+            @endif
 
             <li><a href="{{route('admin.expense.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
 Active Expense </a></li>
@@ -102,7 +121,7 @@ Active Expense </a></li>
               </span>
             </a>
             <ul class="treeview-menu">
-             @if (Auth::user()->type == 'Admin') 
+             @if (Auth::user()->type == 'Admin')
               <li><a href="{{route('admin.bank.create')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add Bank Profit / Ex</a></li>
              @endif
             <li><a href="{{route('admin.bank.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
@@ -116,7 +135,7 @@ Active Bank Profit / Ex </a></li>
           $name = Auth::user()->name;
           $name = substr($name, 0, strrpos($name, ' '));
         ?>
-        
+
         <?php
           $current_year = date("Y");
         ?>
@@ -147,7 +166,7 @@ Active Bank Profit / Ex </a></li>
 Active File </a></li>
             <li><a href="{{route('admin.file.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive File </a></li>
           </ul>
-        </li> 
+        </li>
 
 
          <li class="treeview">
@@ -167,10 +186,10 @@ Active File </a></li>
 Active Gallery </a></li>
             <li><a href="{{route('admin.gallery.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Gallery </a></li>
           </ul>
-        </li> 
+        </li>
 
 
-        
+
 
 
         <li>
@@ -180,7 +199,7 @@ Active Gallery </a></li>
               <small class="label pull-top bg-red"></small>
             </span>
           </a>
-        </li>  
+        </li>
 
 
         <li>
@@ -194,8 +213,8 @@ Active Gallery </a></li>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
           </form>
-        </li> 
-     
+        </li>
+
       </ul>
     </section>
     <!-- /.sidebar -->

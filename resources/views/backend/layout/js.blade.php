@@ -22,13 +22,13 @@
 <!-- ChartJS -->
 <script src="{{ asset('backend/js/bower/chart.js/Chart.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('backend/js/dist/js/pages/dashboard2.js') }}"></script>
+{{--<script src="{{ asset('backend/js/dist/js/pages/dashboard2.js') }}"></script>--}}
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('backend/js/dist/js/demo.js') }}"></script>
 <!-- Live search select -->
 <script src="{{ asset('backend/js/bower/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- CK Editor -->
-<script src="{{ asset('backend/js/bower/ckeditor/ckeditor.js') }}"></script>
+{{--<script src="{{ asset('backend/js/bower/ckeditor/ckeditor.js') }}"></script>--}}
 
 <!-- Ekko Lightbox -->
 <script src="{{ asset('backend/css/bower/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
@@ -59,7 +59,7 @@
               'When You Leave This Site \n Please Logout ',
               '',
               'success'
-            )      
+            )
         }
     });
 
@@ -87,7 +87,7 @@
       });
     });
 
-    $('.filter-container').filterizr({gutterPixels: 3});
+    // $('.filter-container').filterizr({gutterPixels: 3});
     $('.btn[data-filter]').on('click', function() {
       $('.btn[data-filter]').removeClass('active');
       $(this).addClass('active');
@@ -99,16 +99,16 @@
     //Initialize Select2 Elements
     $('.select2').select2()
     // alert('raju');
-    CKEDITOR.replace('description')
+    // CKEDITOR.replace('description')
     //bootstrap WYSIHTML5 - text editor
     $('.textarea').wysihtml5()
 
-    CKEDITOR.replace('description_tr')
+    // CKEDITOR.replace('description_tr')
     //bootstrap WYSIHTML5 - text editor
     $('.textarea').wysihtml5()
 
 
-    CKEDITOR.replace('meta_description')
+    // CKEDITOR.replace('meta_description')
     //bootstrap WYSIHTML5 - text editor
     $('.textarea').wysihtml5()
 
@@ -117,7 +117,7 @@
       checkboxClass: 'icheckbox_minimal-blue',
       radioClass   : 'iradio_minimal-blue'
     })
-    
+
   })
 
   //Presernt address as parmanent address
@@ -170,7 +170,7 @@
     $(document).delegate('#view_member_deposite','click',function () {
         var url = $(this).attr('data-href');
         var member_id = $(this).attr('member_id');
-        
+
         $.ajax({
             url: url,
             method: "GET",
@@ -210,7 +210,7 @@
 
         // alert(url+'--'+member_id);
         // exit();
-        
+
         $.ajax({
             url: url,
             method: "GET",
@@ -234,4 +234,6 @@
         });
         return false;
     });
+
+
 </script>
