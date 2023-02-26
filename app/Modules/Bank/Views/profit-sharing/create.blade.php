@@ -119,14 +119,10 @@
                <!-- /.box-header -->
                <div class="box-body">
 
-                   {!! Form::open(['route' => 'profit_generate','enctype'=>'multipart/form-data',  'files'=> true]) !!}
+                   {!! Form::open(['route' => 'profit_generate_store','enctype'=>'multipart/form-data',  'files'=> true]) !!}
 
                    <div class="box-body">
                        <div class="row table-responsive">
-                           {{--<h2> Bank Profit {{$input['year']}} : {{$totalBankProfit}} </h2>
-                           <h2> Bank Expense {{$input['year']}} : {{$totalBankExpense}} </h2>
-                           <h2> Other Expense {{$input['year']}} : {{$otherExpense}} </h2>
-                           <h2>Net Profit {{$input['year']}} : {{$totalBankProfit-($otherExpense+$totalBankExpense)}} </h2>--}}
                            <caption>Bank statement of year {{$input['year']}}</caption>
                            <table class="table table-bordered table-responsive table-striped text-center">
                                <tr>
@@ -136,10 +132,21 @@
                                    <th>Net Profit</th>
                                </tr>
                                <tr>
-                                   <td>{{number_format($totalBankProfit,2)}}</td>
-                                   <td>{{number_format($totalBankExpense,2)}}</td>
-                                   <td>{{number_format($otherExpense,2)}}</td>
-                                   <td>{{number_format($totalBankProfit-($otherExpense+$totalBankExpense),2)}}</td>
+                                   <td>{{number_format($totalBankProfit,2)}}
+                                       <input type="hidden" name="profit_year" value="{{$input['year']}}">
+                                       <input type="hidden" name="net_amount" value="{{$netAmount}}">
+                                       <input type="hidden" name="bank_profit" value="{{$totalBankProfit}}">
+                                   </td>
+                                   <td>{{number_format($totalBankExpense,2)}}
+                                       <input type="hidden" name="bank_expense" value="{{$totalBankExpense}}">
+                                   </td>
+                                   <td>{{number_format($otherExpense,2)}}
+                                       <input type="hidden" name="other_expense" value="{{$otherExpense}}">
+                                   </td>
+                                   <td>{{number_format($totalBankProfit-($otherExpense+$totalBankExpense),2)}}
+                                       <input type="hidden" name="net_profit" value="{{$totalBankProfit-($otherExpense+$totalBankExpense)}}">
+                                       <input type="hidden" name="total_profit_member" value="{{count($profitMember)}}">
+                                   </td>
                                </tr>
                            </table>
                             <table class="table-striped table table-bordered">
@@ -160,7 +167,11 @@
                                         $memberTotalDipositAmount = $memberTotalDipositAmount-100;
 
                                     @endphp
-                                    <td class="text-right">{{number_format($memberTotalDipositAmount,2)}}</td>
+                                    <td class="text-right">
+                                        {{number_format($memberTotalDipositAmount,2)}}
+                                        <input type="hidden" name="member_id[]" value="{{$id}}">
+                                        <input type="hidden" name="deposit_amount[]" value="{{$memberTotalDipositAmount}}">
+                                    </td>
                                     @php
                                         $netProfit = $totalBankProfit-($otherExpense+$totalBankExpense);
                                         $personWiseProfit = ($netProfit*$memberTotalDipositAmount);
@@ -168,7 +179,10 @@
                                         $totalPersonProfit = $totalPersonProfit + $personWiseProfit;
                                         /*dd($netProfit,$memberTotalDipositAmount,$netAmount);*/
                                     @endphp
-                                    <td>{{number_format($personWiseProfit,2)}}</td>
+                                    <td>
+                                        {{number_format($personWiseProfit,2)}}
+                                        <input type="hidden" name="profit_amount[]" value="{{$personWiseProfit}}">
+                                    </td>
                                 </tr>
 
                                     <?php $index++; ?>

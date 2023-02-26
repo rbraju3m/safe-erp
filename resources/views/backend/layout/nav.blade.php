@@ -44,12 +44,14 @@ color: #d56f6f;">SAFE MENU</li>
             </a>
             <ul class="treeview-menu">
             @if (Auth::user()->type == 'Admin')
-              <li><a href="{{route('admin_profit_sharing')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Profit Sharing </a></li>
+              <li><a href="{{route('admin_profit_sharing')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Profit Sharing add </a></li>
             @endif
+                <li><a href="{{route('admin_profit_sharing_index')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Profit Sharing Index </a></li>
 
-            {{--<li><a href="{{route('admin.member.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
-Active Member </a></li>
-            <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Member </a></li>--}}
+
+                {{--<li><a href="{{route('admin.member.index')}}"><i class="fa fa-list-ol" aria-hidden="true"></i>
+    Active Member </a></li>
+                <li><a href="{{route('admin.member.inactive')}}"><i class="fa fa-list-ol" aria-hidden="true"></i> Inactive Member </a></li>--}}
           </ul>
         </li>
 

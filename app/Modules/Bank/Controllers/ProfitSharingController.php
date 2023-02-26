@@ -2,6 +2,8 @@
 
 namespace App\Modules\Bank\Controllers;
 
+use App\Modules\Bank\Models\ProfitDistribute;
+use App\Modules\Bank\Models\ProfitDistributeMember;
 use App\Modules\Deposite\Models\Deposite;
 use App\Modules\Expense\Models\Expense;
 use App\Modules\User\Models\Member;
@@ -32,20 +34,15 @@ class ProfitSharingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function profitSharingIndex()
     {
-        $pageTitle = "List of Bank profit / Expense";
-        $ModuleTitle = "Bank profit / Expense Information";
+        $pageTitle = "List of profit sharing";
+        $ModuleTitle = "Bank Profit Sharing Information";
 
-
-        // Get bank  data
-        $data = Bank::orderBy('id','desc')
-                ->where('status','active')
+        $data = ProfitDistribute::orderBy('id','desc')
                 ->select('*')
                 ->get();
-
-        // return view
-        return view("Bank::bank.index", compact('pageTitle','ModuleTitle','data'));
+        return view("Bank::profit-sharing.index", compact('pageTitle','ModuleTitle','data'));
     }
 
     /**
@@ -154,46 +151,32 @@ class ProfitSharingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Requests\BankRequest $request)
+    public function profitGenerateStore(Request $request)
     {
         $input = $request->all();
 
-        $input['expense_date'] = date("d-m-Y");
-        $input['expense_day'] = date("l");
-        $input['expense_month'] = date("F");
-        $input['expense_year'] = date("Y");
-        $input['expense_time'] = date(" h:i:sa");
-
-         if ($request->file('image_link') != '') {
-            $expense_img = $request->file('image_link');
-            $avatar = $request->file('image_link');
-            $expense_img_title = $input['name'].'-'.time().'.'.$avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(600, 400)->save( public_path('/uploads/bank/' . $expense_img_title) );
-            $input['image_link'] = $expense_img_title;
-        }
-
-        // echo $input['image_link'];
-        // exit();
-
-        /* Transaction Start Here */
         DB::beginTransaction();
             try {
-                // Store payment data
-                if($Bank_data = Bank::create($input))
-                {
-                    $Bank_data->save();
-
+                if($profitDistribute = ProfitDistribute::create($input)) {
+                    $profitDistribute->save();
+                    foreach ($input['member_id'] as $index => $value) {
+                        $distributeMember['profit_id'] = $profitDistribute->id;
+                        $distributeMember['member_id'] = $value;
+                        $distributeMember['deposit_amount'] = $input['deposit_amount'][$index];
+                        $distributeMember['profit_amount'] = $input['profit_amount'][$index];
+                        ProfitDistributeMember::create($distributeMember);
+                    }
                 }
 
                 DB::commit();
-                Session::flash('message', 'Bank profit / ex is added Successfully!');
+                /*Session::flash('message', 'Bank profit / ex is added Successfully!');
                 $status = $input['status'];
                 if ($status =='active') {
                     return redirect('admin-bank-index');
                 }else{
                     return redirect('admin-bank-inactive');
-                }
-                // return redirect()->back();
+                }*/
+                 return redirect()->back();
 
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
