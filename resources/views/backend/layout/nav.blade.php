@@ -43,9 +43,9 @@ color: #d56f6f;">SAFE MENU</li>
               </span>
             </a>
             <ul class="treeview-menu">
-            @if (Auth::user()->type == 'Admin')
+            {{--@if (Auth::user()->type == 'Admin')
               <li><a href="{{route('admin_profit_sharing')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Profit Sharing add </a></li>
-            @endif
+            @endif--}}
                 <li><a href="{{route('admin_profit_sharing_index')}}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Profit Sharing Index </a></li>
 
 
