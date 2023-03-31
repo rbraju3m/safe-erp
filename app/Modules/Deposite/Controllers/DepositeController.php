@@ -87,7 +87,6 @@ class DepositeController extends Controller
     public function store(Requests\DepositeRequest $request)
     {
         $input = $request->all();
-M
         $input['payment_date'] = date("d-m-Y");
         $input['payment_day'] = date("l");
         $input['payment_month'] = date("F");
