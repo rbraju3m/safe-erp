@@ -236,4 +236,36 @@
     });
 
 
+    $(document).delegate('#profit-details','click',function () {
+        var url = $('#profit-details-route').attr('data-href');
+        var profit_id = $(this).attr('profit-id');
+
+        // alert(url+'--'+member_id);
+        // exit();
+
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: {profit_id: profit_id},
+            beforeSend: function( xhr ) {
+
+            }
+        }).done(function( response ) {
+          // alert(response)
+            if(response.result == 'success'){
+                $('.modal-title').text(response.header);
+                $('.modal-title.small').text(response.headerSmall);
+                $('.modal .modal-body').html(response.content);
+                $('.modal').modal('show');
+            }else{
+                alert('Something went wrong');
+            }
+        }).fail(function( jqXHR, textStatus ) {
+
+        });
+        return false;
+    });
+
+
 </script>

@@ -1,7 +1,7 @@
 
 <?php
 use App\Modules\User\Models\User;
-  
+
 ?>
 <!-- Main content -->
     <section class="">
@@ -15,7 +15,7 @@ use App\Modules\User\Models\User;
   <div class="tab-content">
     <div class="active tab-pane" id="activity">
       <div class="box-body table-responsive no-padding">
-        
+
 
 <table  id="example1" class="table table-bordered table-striped text-center">
   <thead>
@@ -52,14 +52,14 @@ use App\Modules\User\Models\User;
       <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 30000-$total_2020 }}</td>
       <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 30000-$total_2021 }}</td>
       <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 30000-$total_2022 }}</td>
-      <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 30000-$total_2023 }}</td>
-      <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 30000-$total_2024 }}</td>
-      <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 30000-$total_2025 }}</td>
-      <td style="background-color: #711;color: #fff;font-weight: bold;">{{ 210100-$total }}</td>
+      <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 35000-$total_2023 }}</td>
+      <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 35000-$total_2024 }}</td>
+      <td style="background-color: #003b57;color: #fff;font-weight: bold;">{{ 35000-$total_2025 }}</td>
+      <td style="background-color: #711;color: #fff;font-weight: bold;">{{ 225100-$total }}</td>
     </tr>
   </tbody>
 </table>
-      
+
       </div>
       <div style="margin-top: 8px;">
         <span style="border: 1px solid;padding: 2px 11px;background-color: #711;"></span>  <b style="margin-left: 5px;">Total Diposite / Total Due</b><br>

@@ -375,4 +375,19 @@ class ProfitSharingController extends Controller
                 Session::flash('danger', $e->getMessage());
             }
     }
+
+    public function profitSharingDetails(){
+        $profitID = $_GET['profit_id'];
+        $memberProfitDetails = ProfitDistributeMember::where('profit_id',$profitID)->get();
+        $view = \Illuminate\Support\Facades\View::make('Bank::profit-sharing._profit_details',compact('memberProfitDetails'));
+
+        $contents = $view->render();
+        $response['result'] = 'success';
+        $response['content'] = $contents;
+
+        $response['header'] = 'Profit sharing details ';
+//        $response['headerSmall'] = 'I AM ';
+
+
+        return $response;    }
 }

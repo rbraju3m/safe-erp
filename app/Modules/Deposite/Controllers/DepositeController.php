@@ -47,7 +47,7 @@ class DepositeController extends Controller
         $pageTitle = "List of Deposite Information";
         $ModuleTitle = "Deposite Information";
 
-        
+
         // Get payment  data
         $data = Deposite::join('member', 'member.id', '=', 'deposite.member_id')
                 ->where('member.status','active')
@@ -71,10 +71,10 @@ class DepositeController extends Controller
         $ModuleTitle = "Deposite Information";
 
         $member = Member::orderBy('name','asc')
-                    ->where('status','active') 
+                    ->where('status','active')
                     ->pluck('name','id')
                     ->all();
-        
+
         return view("Deposite::deposite.create", compact('pageTitle','ModuleTitle','member'));
     }
 
@@ -87,7 +87,7 @@ class DepositeController extends Controller
     public function store(Requests\DepositeRequest $request)
     {
         $input = $request->all();
-
+M
         $input['payment_date'] = date("d-m-Y");
         $input['payment_day'] = date("l");
         $input['payment_month'] = date("F");
@@ -97,9 +97,9 @@ class DepositeController extends Controller
         /* Transaction Start Here */
         DB::beginTransaction();
             try {
-                // Store payment data 
+                // Store payment data
                 if($payment_data = Deposite::create($input))
-                {  
+                {
                     $payment_data->save();
 
                 }
@@ -113,7 +113,7 @@ class DepositeController extends Controller
                     return redirect('admin-deposite-inactive');
                 }
                 // return redirect()->back();
-                
+
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
                 DB::rollback();
@@ -151,10 +151,10 @@ class DepositeController extends Controller
                         ->first();
 
         $member = Member::orderBy('name','asc')
-                    ->where('status','active') 
+                    ->where('status','active')
                     ->pluck('name','id')
                     ->all();
-        
+
         return view("Deposite::deposite.edit", compact('pageTitle','ModuleTitle','data','member'));
     }
 
@@ -239,7 +239,7 @@ class DepositeController extends Controller
 
         $Cancel = 'Cancel';
 
-        
+
         // Get inactive deposite data
         $data = Deposite::join('member', 'member.id', '=', 'deposite.member_id')
                 ->where('member.status','active')
@@ -280,7 +280,7 @@ class DepositeController extends Controller
         /* Transaction Start Here */
             DB::beginTransaction();
             try {
-                
+
                 $deposite_data = DB::table('deposite')->where('id',$id);
 
                 $deposite_data->delete();
@@ -301,7 +301,7 @@ class DepositeController extends Controller
     public function intotal($year){
         $pageTitle = "Intotal Deposite For ".$year;
         $ModuleTitle = "Deposite Information ".$year;
-        
+
         $all_member = Member::where('status','active')
                 ->select('*')
                 ->orderby('name','asc')
@@ -312,7 +312,7 @@ class DepositeController extends Controller
                   ->where('year',$year)
                   ->select('deposite.amount')
                   ->get();
-                  
+
           foreach ($intotal as $value) {
             $Total = $Total+$value->amount;
           }

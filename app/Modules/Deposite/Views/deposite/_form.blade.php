@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Input;
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
-				<button type="button" class="btn btn-danger btn-block" style="font-size: 18px;font-weight: bold;text-transform: uppercase;">Member Payment Information</button> 
+				<button type="button" class="btn btn-danger btn-block" style="font-size: 18px;font-weight: bold;text-transform: uppercase;">Member Payment Information</button>
 
 			</div>
 		</div>
 		<div class="col-md-3">
 			<div class="form-group">
 				{!! Form::label(' member_id', 'Select Member Name', array('class' => 'col-form-label')) !!}
-				<span style="color: red">*</span> 
+				<span style="color: red">*</span>
 				{!! Form::Select('member_id',$member,Input::old('member_id'),['id'=>'member_id', 'class'=>'form-control select2']) !!}
 				<span style="color: red">{!! $errors->first('member_id') !!}</span>
 			</div>
@@ -38,13 +38,13 @@ use Illuminate\Support\Facades\Input;
 					$month['October'] = 'October';
 					$month['November'] = 'November';
 					$month['December'] = 'December';
-				?> 
+				?>
 				{!! Form::select('month',$month,Input::old('month'),['id'=>'month','class' => 'form-control select2']) !!}
-				<span style="color: red">{!! $errors->first('month') !!}</span>     
+				<span style="color: red">{!! $errors->first('month') !!}</span>
 			</div>
 		</div>
 
-		
+
 		<div class="col-md-3">
 			<div class="form-group">
 				{!! Form::label(' year', 'Select Year', array('class' => 'col-form-label')) !!}
@@ -60,8 +60,8 @@ use Illuminate\Support\Facades\Input;
 					$year['2024'] = '2024';
 					$year['2025'] = '2025';
 				?>
-				{!! Form::Select('year',$year,Input::old('year'),['id'=>'year', 'class'=>'form-control select2']) !!}
-				<span style="color: red">{!! $errors->first('year') !!}</span> 
+				{!! Form::Select('year',$year,'2023',['id'=>'year', 'class'=>'form-control select2']) !!}
+				<span style="color: red">{!! $errors->first('year') !!}</span>
 			</div>
 		</div>
 
@@ -78,7 +78,7 @@ use Illuminate\Support\Facades\Input;
 
 	<div class="row">
 		<div class="col-md-6">
-			<div class="form-group">  
+			<div class="form-group">
 				{!! Form::label('note', 'Note (If any)', array('class' => 'col-form-label')) !!}
 
 				{!! Form::textarea('note',Input::old('note'),['id'=>'note','class' => 'form-control note', 'title'=>'Enter note', 'rows'=>'2']) !!}
@@ -89,8 +89,8 @@ use Illuminate\Support\Facades\Input;
 		<div class="col-md-3">
 			<div class="form-group">
 				{!! Form::label('amount', 'Amount', array('class' => 'col-form-label')) !!}
-				<span style="color: red"> *</span> 
-				
+				<span style="color: red"> *</span>
+
 
 				<?php
 					$amount = array();
@@ -99,7 +99,8 @@ use Illuminate\Support\Facades\Input;
 					$amount['6000'] = '6000';
 					$amount['100'] = '100';
 				?>
-				{!! Form::Select('amount',$amount,Input::old('amount'),['id'=>'amount', 'class'=>'form-control select2']) !!}
+{{--				{!! Form::Select('amount',$amount,Input::old('amount'),['id'=>'amount', 'class'=>'form-control select2']) !!}--}}
+				{!! Form::text('amount',Input::old('amount'),['id'=>'amount', 'class'=>'form-control']) !!}
 				<span style="color: red">{!! $errors->first('amount') !!}</span>
 
 			</div>
@@ -115,7 +116,7 @@ use Illuminate\Support\Facades\Input;
 			</div>
 		</div>
 
-		
+
 
 	</div>
 	<div class="row">
@@ -128,6 +129,6 @@ use Illuminate\Support\Facades\Input;
 		</div>
 	</div>
 
-	
+
 </div>
 

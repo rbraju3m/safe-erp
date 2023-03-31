@@ -192,8 +192,5 @@ color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close
               <button type="button" class="btn btn-primary">Save changes</button> --}}
             </div>
           </div>
-          <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
       </div>
-      <!-- /.modal -->

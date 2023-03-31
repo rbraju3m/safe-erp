@@ -98,28 +98,11 @@ use App\Modules\User\Models\User;
                            ?>
                            <td style="vertical-align: middle;"><img src="{{URL::to('')}}/uploads/member/{{$name->image_link}}" class="img-circle" style="width: 50px;
 height: 50px;" alt="User Image"><br>{{$name->name}}</td>
+                           <td>
+                               <a data-href="{{route('profit_details')}}"  id="profit-details-route" style="display: none"></a>
+                               <button class="btn btn-primary" profit-id="{{$values->id}}" id="profit-details">Details</button>
+                           </td>
                     </tr>
-                       <tr>
-                           @php
-                                $memberProfitDetails = \App\Modules\Bank\Models\ProfitDistributeMember::where('profit_id',$values->id)->get();
-                           @endphp
-                           <table class="table">
-                               <tr>
-                                   <th colspan="2"></th>
-                                   <th>Member</th>
-                                   <th>Deposit</th>
-                                   <th>Profit</th>
-                               </tr>
-                               @foreach($memberProfitDetails as $dis)
-                                   <tr>
-                                       <td colspan="2"></td>
-                                       <td>{{$dis->member_id}}</td>
-                                       <td>{{number_format($dis->deposit_amount,2)}}</td>
-                                       <td>{{number_format($dis->profit_amount,2)}}</td>
-                                   </tr>
-                               @endforeach
-                           </table>
-                       </tr>
                     <?php
                     $total_rows++;
                     ?>
@@ -141,7 +124,36 @@ height: 50px;" alt="User Image"><br>{{$name->name}}</td>
     </section>
     <!-- /.content -->
   </div>
-@endsection
+
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-size: 20px;font-weight: bold;text-align: center;">Large Modal</h4>
+{{--                <h4 class="modal-title small" style="font-size: 16px;font-weight: bold;text-align: center;">Large Modal</h4>--}}
+
+
+                <button style="margin-top: -29px;
+color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button> --}}
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+            @endsection
 
 
 

@@ -23,3 +23,8 @@
         'as' => 'admin_profit_sharing_index',
         'uses' => 'ProfitSharingController@profitSharingIndex'
     ]);
+
+    Route::get('admin-profit-details',[
+        'as' => 'profit_details',
+        'uses' => 'ProfitSharingController@profitSharingDetails'
+    ]);

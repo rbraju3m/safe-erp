@@ -1,9 +1,9 @@
 @extends('backend.layout.master')
-      
+
 
             @section('body')
-            
-            
+
+
 <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -29,7 +29,7 @@
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">Total Member</span>
               <span class="info-box-number" style="font-family: initial;color: #000">
-                
+
                 {{ $member_count }}
               <small></small></span>
             </div>
@@ -97,7 +97,7 @@
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F',strtotime("-1 month"))}} Expense</span>
               <span class="info-box-number" style="font-family: initial;color: #000">
-                
+
                 {{ $previous_expense_total }} TK.
               <small></small></span>
             </div>
@@ -113,7 +113,7 @@
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 16px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F')}} Expense</span>
               <span class="info-box-number" style="font-family: initial;color: #000">
-                
+
                 {{ $current_expense_total }} TK.
               <small></small></span>
             </div>
@@ -165,7 +165,7 @@
 </span>
 </div>
 </div>
-</div>        
+</div>
 
 
 
@@ -176,7 +176,7 @@
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 15px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F',strtotime("-1 month"))}} Bank Profit</span>
               <span class="info-box-number" style="font-family: initial;color: #000">
-                
+
                 {{ $current_bank_profit }} TK.
               <small></small></span>
             </div>
@@ -192,7 +192,7 @@
             <div class="info-box-content">
               <span class="info-box-text" style="font-size: 14px;font-weight: bold;font-family: initial;color: #000;border-bottom: 1px solid;">{{date('F')}} Bank Expense</span>
               <span class="info-box-number" style="font-family: initial;color: #000">
-                
+
                 {{ $current_bank_expense }} TK.
               <small></small></span>
             </div>
@@ -201,7 +201,7 @@
           <!-- /.info-box -->
         </div>
 
- 
+
 <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
 <div class="info-box">
 <span class="info-box-icon" style="height: 91px !important;background-color: #f39c12  ;color: #fff">
@@ -223,7 +223,7 @@
 </span>
 </div>
 </div>
-</div> 
+</div>
 
 
 <div class="col-md-3 col-sm-6 col-xs-12" style="padding-right: 0px">
@@ -254,10 +254,10 @@
 </span>
 </div>
 </div>
-</div>        
+</div>
 
 
-        
+
         <!-- /.col -->
       </div>
       <!-- /.row -->
@@ -274,10 +274,10 @@
         $style = "box-shadow: 16px 23px 50px 8px #fff;border: 1px solid #bfbfbf;padding: 5px 5px;font-size: 16px;font-weight: bold;text-transform: uppercase;cursor: pointer;margin-left: 10px;margin-top: 16px;display: inline-block;background: #fff;color: #000;";
       }
     ?>
-    
+
 <a style="{{ $style }}" title="{{ $element->name }} Total Deposite" id="view_specific_member" member_id = "{{ $element->id }}" data-href="{{ route('admin.member.specificData') }}">
 <img src="{{URL::to('')}}/uploads/member/{{$element->image_link}}" class="img-circle" style="width: 50px;height: 50px;" alt="User Image">
-{{ $element->name }} 
+{{ $element->name }}
 </a>
 
                 @endforeach
@@ -302,8 +302,8 @@
             <div class="modal-header">
               <h4 class="modal-title" style="font-size: 20px;font-weight: bold;text-align: center;">Large Modal</h4>
               <h4 class="modal-title small" style="font-size: 16px;font-weight: bold;text-align: center;">Large Modal</h4>
-              
-              
+
+
               <button style="margin-top: -29px;
 color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
