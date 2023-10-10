@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Controllers;
 
+use App\Modules\Bank\Models\ProfitDistributeMember;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Requests;
@@ -47,10 +48,10 @@ class UserController extends Controller
         $pageTitle = "List of Member Information";
         $ModuleTitle = "Member Information";
 
-        
+
         // Get Parent category data
         $data = Member::orderBy('id','desc')
-                    ->where('status','active') 
+                    ->where('status','active')
                     ->get();
         // return view
         return view("User::user.index", compact('pageTitle','ModuleTitle','data'));
@@ -106,16 +107,16 @@ class UserController extends Controller
                     $input['image_link'] = $member_img_title;
                     // echo $member_img_title;
                 }else{
-                    Session::flash('error', 'This Image size bigger than 5MB');    
+                    Session::flash('error', 'This Image size bigger than 5MB');
                     return redirect()->back();
                 }
 
             /* Transaction Start Here */
             DB::beginTransaction();
                 try {
-                    // Store cateogory data 
+                    // Store cateogory data
                     if($member_data = Member::create($input))
-                    {  
+                    {
                         $member_data->save();
 
                         $user_model = new User();
@@ -137,7 +138,7 @@ class UserController extends Controller
                     }else{
                         return redirect('admin-member-inactive');
                     }
-                    
+
                 } catch (\Exception $e) {
                     //If there are any exceptions, rollback the transaction`
                     DB::rollback();
@@ -147,7 +148,7 @@ class UserController extends Controller
                 }
             }
         }else{
-            Session::flash('error', 'Something went wrong !');    
+            Session::flash('error', 'Something went wrong !');
             return redirect()->back();
         }
         }else{
@@ -156,7 +157,7 @@ class UserController extends Controller
         return redirect()->back()->withInput();
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -173,8 +174,8 @@ class UserController extends Controller
         $data = Member::where('member.id', $id)
                         ->select('member.*')
                         ->first();
-        
-        
+
+
         return view("User::user.edit", compact('pageTitle','ModuleTitle','data'));
     }
 
@@ -225,7 +226,7 @@ class UserController extends Controller
                 // File::Delete($member_model->image_link);
                 File::delete(public_path().'/uploads/member/'.$member_model->image_link);
             }else{
-                Session::flash('error', 'This Image size bigger than 5MB');    
+                Session::flash('error', 'This Image size bigger than 5MB');
                 return redirect()->back();
             }
         }else{
@@ -313,10 +314,10 @@ class UserController extends Controller
 
         $Cancel = 'Cancel';
 
-        
+
         // Get Parent category data
         $data = Member::orderBy('updated_at','desc')
-                    ->where('status','inactive') 
+                    ->where('status','inactive')
                     ->get();
         // return view
         return view("User::user.index", compact('pageTitle','ModuleTitle','data','Cancel'));
@@ -352,7 +353,7 @@ class UserController extends Controller
 
                 $data = DB::table('member')->where('id',$id)->first();
                 $deposite_data = DB::table('deposite')->where('member_id',$id)->count();
-                
+
             if ($deposite_data == 0) {
                 if (File::exists(public_path().'/uploads/member/'.$data->image_link)) {
                     File::delete(public_path().'/uploads/member/'.$data->image_link);
@@ -365,10 +366,61 @@ class UserController extends Controller
                 Session::flash('message', 'Delete Successfully !');
                 return redirect('admin-member-inactive');
             }else{
-                $mes =  'First Delete Deposite Data for this '.$data->name;
-                Session::flash('danger', $mes);
-                return redirect('admin-member-inactive');
+                $depositArray = [];
+                $totalDeposit = 0;
+                $profitArray = [];
+                $totalProfit = 0;
+                for ($i=2019;$i<=date("Y");$i++){
+                    $deposite = Deposite::where('member_id', $id)
+                        ->where('status', 'active')
+                        ->where('type','!=','Registration')
+                        ->where('year', $i)
+                        ->sum('amount');
+                    $depositArray[$i] = $deposite;
+//                    dd($deposite);
+                    $totalDeposit = $totalDeposit+($deposite?$deposite:0);
+                    $profit = ProfitDistributeMember::join('profit_distribute','profit_distribute.id','=','profit_distribute_member.profit_id')
+                                                        ->where('profit_distribute_member.member_id',$id)
+                                                        ->where('profit_distribute.profit_year',$i)
+                                                        ->select('profit_distribute_member.profit_amount')
+                                                        ->first();
+                    $profitArray[$i] = $profit['profit_amount'];
+                    $totalProfit = $totalProfit+($profit && $profit['profit_amount']?$profit['profit_amount']:0);
+
+                }
+                $member = Member::find($id);
+                return view("User::user.deleteconfirm", compact('pageTitle','ModuleTitle','depositArray','totalDeposit','profitArray','totalProfit','member'));
+
             }
+            } catch (\Exception $e) {
+                //If there are any exceptions, rollback the transaction`
+                DB::rollback();
+                print($e->getMessage());
+                exit();
+                Session::flash('danger', $e->getMessage());
+            }
+        }
+
+        public function parmanentDelete($id){
+            DB::beginTransaction();
+            try {
+
+                $data = DB::table('member')->where('id',$id)->first();
+                $deposite_data = DB::table('deposite')->where('member_id',$id)->delete();
+
+                if (File::exists(public_path().'/uploads/member/'.$data->image_link)) {
+                    File::delete(public_path().'/uploads/member/'.$data->image_link);
+                }
+                $member_data = DB::table('member')->where('id',$id);
+                $user_data = DB::table('users')->where('user_id',$id);
+                $member_data->delete();
+                $user_data->delete();
+                DB::commit();
+                Session::flash('message', 'Delete Successfully !');
+                return redirect('admin-member-inactive');
+//                    return view("User::user.deleteconfirm", compact('pageTitle','ModuleTitle','depositArray','totalDeposit','profitArray','totalProfit','member'));
+
+
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
                 DB::rollback();
@@ -385,7 +437,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function show($id){
         $response = [];
@@ -408,7 +460,7 @@ class UserController extends Controller
         $contents = $view->render();
         $response['result'] = 'success';
         $response['content'] = $contents;
-                
+
         $response['header'] = $member->name.' Profile';
         return $response;
     }
@@ -420,7 +472,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function showDeposite(){
         $response = [];
@@ -473,11 +525,11 @@ class UserController extends Controller
                             ->get();
         }
         $view = \Illuminate\Support\Facades\View::make('User::user.showMemberDeposite',compact('member','deposite2019','deposite2020','deposite2021','deposite2022','deposite2023','deposite2024','deposite2025'));
-        
+
         $contents = $view->render();
         $response['result'] = 'success';
         $response['content'] = $contents;
-                
+
         $response['header'] = $member->name.' Total Deposite View';
         return $response;
     }
@@ -506,12 +558,12 @@ class UserController extends Controller
         $ModuleTitle = $name['name']." Total Deposite ".$Total_amount.' TK.';
 
         $member = Member::orderBy('id','asc')
-                    ->where('status','active') 
+                    ->where('status','active')
                     ->pluck('name','id')
                     ->all();
         array_push($member,"Select Member");
         krsort($member);
-        
+
         return view("User::user.memberDepositeDetails", compact('pageTitle','ModuleTitle','data','member'));
     }
 
@@ -519,7 +571,7 @@ class UserController extends Controller
         $pageTitle = Auth::user()->name." Information";
         $ModuleTitle = "Change Password";
 
-        return view("User::password.create", compact('pageTitle','ModuleTitle'));   
+        return view("User::password.create", compact('pageTitle','ModuleTitle'));
     }
 
     public function change(Requests\PasswordUpdate $request){
@@ -531,7 +583,7 @@ class UserController extends Controller
         $user_model = User::where('id', $login_id)
             ->select('*')
             ->first();
-        
+
         /* Transaction Start Here */
             DB::beginTransaction();
             try {
@@ -563,7 +615,7 @@ class UserController extends Controller
                         ->where('status', 'active')
                         ->select('member.*')
                         ->first();
-        
+
 
         if (count($member) > 0) {
             $deposite2019 = Deposite::where('member_id', $member_id)
@@ -575,7 +627,7 @@ class UserController extends Controller
             foreach ($deposite2019 as $element) {
                 $total_2019 = $total_2019+$element->amount;
             }
-            
+
 
             $deposite2020 = Deposite::where('member_id', $member_id)
                             ->where('status', 'active')
@@ -641,11 +693,11 @@ class UserController extends Controller
             $total = $total_2025+$total_2024+$total_2023+$total_2022+$total_2021+$total_2020+$total_2019;
         }
         $view = \Illuminate\Support\Facades\View::make('User::user.showSpecificMember',compact('member','total_2019','total_2020','total_2021','total_2022','total_2023','total_2024','total_2025','total'));
-        
+
         $contents = $view->render();
         $response['result'] = 'success';
         $response['content'] = $contents;
-                
+
         $response['header'] = 'Hi '.Auth::user()->name;
         $response['headerSmall'] = 'I AM '.$member->name;
 

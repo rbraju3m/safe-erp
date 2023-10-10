@@ -9,7 +9,7 @@ class ProfitDistributeMember extends Model {
 
     protected $table = 'profit_distribute_member';
     protected $fillable = [
-        'profit_id', 'member_id', 'deposit_amount', 'profit_amount'
+        'profit_id', 'member_id','member_name','deposit_amount', 'profit_amount'
     ];
 
 

@@ -50,6 +50,10 @@
 		'as' => 'admin.member.show',
 		'uses' => 'UserController@show'
 	]);
+	Route::get('admin-member-permanent-delete/{id}',[
+		'as' => 'admin_member_parmanent_delete',
+		'uses' => 'UserController@parmanentDelete'
+	]);
 
 
 	Route::get('admin-member-showDeposite',[
