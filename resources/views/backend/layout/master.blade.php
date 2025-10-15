@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SAFE | Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  @include('backend.layout.css')
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SAFE | @yield('title', 'Dashboard')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @include('backend.layout.css')
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini @yield('body-class')">
 <div class="wrapper">
 
-  @include('backend.layout.header')
-  <!-- Left side column. contains the logo and sidebar -->
-  @include('backend.layout.nav')
+    @include('backend.layout.header')
+    @include('backend.layout.nav')
 
-  <!-- Content Wrapper. Contains page content -->
+    {{-- Page Content --}}
+    @yield('body')
 
-            @yield('body')
-
-
-
-  @include('backend.layout.footer')
-
-  <!-- Control Sidebar -->
-  @include('backend.layout.control_setting')
+    @include('backend.layout.footer')
+    @include('backend.layout.control_setting')
 
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery 3 -->
 @include('backend.layout.js')
 @stack('per_page_js')
 </body>

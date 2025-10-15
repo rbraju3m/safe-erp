@@ -1,82 +1,28 @@
 <?php
 
-	Route::get('admin-member-create', [
-	    'as' => 'admin.member.create',
-	    'uses' => 'UserController@create'
-	]);
+Route::prefix('admin-member')->name('admin.member.')->group(function () {
 
-	Route::post('admin-member-store',[
-		'as' => 'admin.member.store',
-		'uses' => 'UserController@store'
-	]);
+    Route::get('create', 'UserController@create')->name('create');
+    Route::post('store', 'UserController@store')->name('store');
+    Route::get('index', 'UserController@index')->name('index');
+    Route::get('edit/{id}', 'UserController@edit')->name('edit');
+    Route::patch('update/{id}', 'UserController@update')->name('update');
+    Route::get('inactive', 'UserController@inactivelist')->name('inactive');
 
-	Route::get('admin-member-index',[
-		'as' => 'admin.member.index',
-		'uses' => 'UserController@index'
-	]);
+    Route::post('rollback/{id}', 'UserController@rollback')->name('rollback'); // changed to POST
+    Route::delete('destroy/{id}', 'UserController@destroy')->name('destroy'); // changed to DELETE
+    Route::delete('delete/{id}', 'UserController@delete')->name('delete'); // changed to DELETE
+    Route::delete('permanent-delete/{id}', 'UserController@permanentDelete')->name('permanentDelete'); // standardized
 
-	Route::get('admin-member-edit/{id}',[
-		'as' => 'admin.member.edit',
-		'uses' => 'UserController@edit'
-	]);
+    Route::get('show/{id}', 'UserController@show')->name('show');
 
-	Route::PATCH('admin-member-update/{id}',[
-		'as' => 'admin.member.update',
-		'uses' => 'UserController@update'
-	]);
+    Route::get('showDeposite', 'UserController@showDeposite')->name('showDeposite');
+    Route::get('depositeDetails/{id}', 'UserController@depositeDetails')->name('depositeDetails');
 
-	Route::get('admin-member-inactive',[
-		'as' => 'admin.member.inactive',
-		'uses' => 'UserController@inactivelist'
-	]);
+    Route::get('password-change-form', 'UserController@ChangeForm')->name('password.change.form');
+    Route::post('password-change', 'UserController@change')->name('password.change');
 
-	Route::get('admin-member-rollback/{id}',[
-		'as' => 'admin.member.rollback',
-		'uses' => 'UserController@rollback'
-	]);
+    Route::get('specificData', 'UserController@specificData')->name('specificData');
 
-	Route::get('admin-member-destroy/{id}',[
-		'as' => 'admin.member.destroy',
-		'uses' => 'UserController@destroy'
-	]);
+});
 
-	Route::get('admin-member-delete/{id}',[
-		'as' => 'admin.member.delete',
-		'uses' => 'UserController@delete'
-	]);
-
-
-	Route::get('admin-member-show/{id}',[
-		'as' => 'admin.member.show',
-		'uses' => 'UserController@show'
-	]);
-	Route::get('admin-member-permanent-delete/{id}',[
-		'as' => 'admin_member_parmanent_delete',
-		'uses' => 'UserController@parmanentDelete'
-	]);
-
-
-	Route::get('admin-member-showDeposite',[
-		'as' => 'admin.member.showDeposite',
-		'uses' => 'UserController@showDeposite'
-	]);
-
-	Route::get('admin-member-depositeDetails/{id}',[
-		'as' => 'admin.member.depositeDetails',
-		'uses' => 'UserController@depositeDetails'
-	]);
-
-	Route::get('admin-password-ChangeForm',[
-		'as' => 'admin.password.ChangeForm',
-		'uses' => 'UserController@ChangeForm'
-	]);
-
-	Route::post('admin-password-change',[
-		'as' => 'admin.password.change',
-		'uses' => 'UserController@change'
-	]);
-
-	Route::get('admin-member-specificData',[
-		'as' => 'admin.member.specificData',
-		'uses' => 'UserController@specificData'
-	]);

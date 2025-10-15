@@ -1,230 +1,198 @@
-<?php
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Input;
-?>
-<!-- /.box-header -->
+<?php use Illuminate\Support\Facades\URL; ?>
 <div class="box-body">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="form-group">
-				<button type="button" class="btn btn-danger btn-block" style="font-size: 18px;font-weight: bold;text-transform: uppercase;">Member Personal Information</button> 
 
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label(' Name', 'Member Name', array('class' => 'col-form-label')) !!}
-				<span style="color: red">*</span> 
-				{!! Form::text('name',Input::old('name'),['id'=>'name','class' => 'form-control','Placeholder' => 'Enter Member Name']) !!}
-				<span style="color: red">{!! $errors->first('name') !!}</span>
-			</div>
-		</div>
+    <!-- Section Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="button" class="btn btn-danger btn-block" style="font-size: 18px;font-weight: bold;text-transform: uppercase;">
+                    Member Personal Information
+                </button>
+            </div>
+        </div>
+    </div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label(' mobile', 'Member Mobile', array('class' => 'col-form-label')) !!}
-				<span style="color: red"> *</span> 
-				{!! Form::text('mobile',Input::old('mobile'),['id'=>'mobile','class' => 'form-control','Placeholder' => 'Enter Member Mobile']) !!}
-				<span style="color: red">{!! $errors->first('mobile') !!}</span>     
-			</div>
-		</div>
+    <!-- Member Personal Info -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('name', 'Member Name') !!} <span class="text-danger">*</span>
+                {!! Form::text('name', old('name'), ['id'=>'name','class'=>'form-control','placeholder'=>'Enter Member Name']) !!}
+                @error('name')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="form-group">  
-				{!! Form::label('id', 'Member ID', array('class' => 'col-form-label')) !!}
-				<span style="color: red">*</span> 
-				{!! Form::text('member_id',Input::old('member_id'),['id'=>'member_id','class' => 'form-control','Placeholder' => 'Enter Member ID (SAFE-0011)']) !!}
-				<span style="color: red">{!! $errors->first('member_id') !!}</span>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('mobile', 'Member Mobile') !!} <span class="text-danger">*</span>
+                {!! Form::text('mobile', old('mobile'), ['id'=>'mobile','class'=>'form-control','placeholder'=>'Enter Member Mobile']) !!}
+                @error('mobile')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="form-group">  
-				{!! Form::label('id', 'National ID', array('class' => 'col-form-label')) !!}
-				<span style="color: red">*</span> 
-				{!! Form::text('national_id',Input::old('national_id'),['id'=>'national_id','class' => 'form-control','Placeholder' => 'Enter National ID']) !!}
-				<span style="color: red">{!! $errors->first('national_id') !!}</span>
-			</div>
-		</div>
-	</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('member_id', 'Member ID') !!} <span class="text-danger">*</span>
+                {!! Form::text('member_id', old('member_id'), ['id'=>'member_id','class'=>'form-control','placeholder'=>'Enter Member ID (SAFE-0011)']) !!}
+                @error('member_id')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		
-	<div class="row">
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label('Name', 'Father / Husband Name', array('class' => 'col-form-label')) !!}
-				<span></span> 
-				{!! Form::text('f_h_name',Input::old('f_h_name'),['id'=>'f_h_name','class' => 'form-control','Placeholder' => 'Enter Father / Husband Name']) !!}
-				<span style="color: red">{!! $errors->first('f_h_name') !!}</span>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('national_id', 'National ID') !!} <span class="text-danger">*</span>
+                {!! Form::text('national_id', old('national_id'), ['id'=>'national_id','class'=>'form-control','placeholder'=>'Enter National ID']) !!}
+                @error('national_id')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
+    </div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label('Nominee', 'Nominee Name', array('class' => 'col-form-label')) !!}
-				<span></span> 
-				{!! Form::text('nominee',Input::old('nominee'),['id'=>'Nominee','class' => 'form-control','Placeholder' => 'Enter Nominee Name']) !!}
-				<span style="color: red">{!! $errors->first('nominee') !!}</span>
-			</div>
-		</div>
+    <!-- Father/Husband & Nominee Info -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('f_h_name', 'Father / Husband Name') !!}
+                {!! Form::text('f_h_name', old('f_h_name'), ['id'=>'f_h_name','class'=>'form-control','placeholder'=>'Enter Father / Husband Name']) !!}
+                @error('f_h_name')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label('Name', 'Nominee Mobile', array('class' => 'col-form-label')) !!}
-				<span></span> 
-				{!! Form::text('nominee_mobile',Input::old('nominee_mobile'),['id'=>'nominee_mobile','class' => 'form-control','Placeholder' => 'Enter Nominee Mobile']) !!}
-				<span style="color: red">{!! $errors->first('nominee_mobile') !!}</span>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('nominee', 'Nominee Name') !!}
+                {!! Form::text('nominee', old('nominee'), ['id'=>'nominee','class'=>'form-control','placeholder'=>'Enter Nominee Name']) !!}
+                @error('nominee')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label('Name', 'Nominee National ID', array('class' => 'col-form-label')) !!}
-				<span></span> 
-				{!! Form::text('nominee_n_id',Input::old('nominee_n_id'),['id'=>'nominee_n_id','class' => 'form-control','Placeholder' => 'Enter Nominee National ID']) !!}
-				<span style="color: red">{!! $errors->first('nominee_n_id') !!}</span>
-			</div>
-		</div>
-	</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('nominee_mobile', 'Nominee Mobile') !!}
+                {!! Form::text('nominee_mobile', old('nominee_mobile'), ['id'=>'nominee_mobile','class'=>'form-control','placeholder'=>'Enter Nominee Mobile']) !!}
+                @error('nominee_mobile')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="col-md-6">
-			<div class="form-group">  
-				{!! Form::label('present_address', 'Present Address', array('class' => 'col-form-label')) !!}
-				<span class="required" style="color: red"> *</span>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('nominee_n_id', 'Nominee National ID') !!}
+                {!! Form::text('nominee_n_id', old('nominee_n_id'), ['id'=>'nominee_n_id','class'=>'form-control','placeholder'=>'Enter Nominee National ID']) !!}
+                @error('nominee_n_id')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
+    </div>
 
-				{!! Form::textarea('present_address',Input::old('present_address'),['id'=>'present_address','class' => 'form-control present_address', 'title'=>'Enter present_address', 'rows'=>'2']) !!}
-				<span style="color: red">{!! $errors->first('present_address') !!}</span>
-			</div>
-		</div>
+    <!-- Addresses -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('present_address', 'Present Address') !!} <span class="text-danger">*</span>
+                {!! Form::textarea('present_address', old('present_address'), ['id'=>'present_address','class'=>'form-control','rows'=>'2','placeholder'=>'Enter Present Address']) !!}
+                @error('present_address')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		<div class="col-md-6">
-			<div class="form-group">
-				{!! Form::label('parmanent_address', 'Parmanent Address', array('class' => 'col-form-label')) !!}
-				<span class="required" style="color: red"> *</span>
-				<span class="Paramanent_Address" >
-					<input type="checkbox" class="form-check-input Paramanent_Address_check" id="exampleCheck1">
-					
-				</span>
-				<label class="form-check-label" for="exampleCheck1">Same as present address</label>
-				
-				{{-- <span class="float-right" id="address"></span> --}}
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('parmanent_address', 'Permanent Address') !!} <span class="text-danger">*</span><br>
+                <input type="checkbox" id="same_address" class="form-check-input">
+                <label for="same_address">Same as present address</label>
+                {!! Form::textarea('parmanent_address', old('parmanent_address'), ['id'=>'parmanent_address','class'=>'form-control','rows'=>'2','placeholder'=>'Enter Permanent Address']) !!}
+                @error('parmanent_address')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
+    </div>
 
-				{!! Form::textarea('parmanent_address',Input::old('parmanent_address'),['id'=>'Paramanent_Address','class' => 'form-control ', 'Placeholder'=>'Enter Parmanent Address', 'rows'=>'2']) !!}
-				<span style="color: red">{!! $errors->first('parmanent_address') !!}</span>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-3">
-			<div class="form-group">
-				<?php
-					if(Auth::user()->type == 'Admin'){
-						$admintype = "enable";
-					}else{
-						$admintype = "disabled";
-						$text = "Only admin can change";
-					}
-				?>
-				{!!  Form::label('type', 'Member Type', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
-				
+    <!-- Member Type, Religion, Gender, Status -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                    <?php
+                    $admintype = (Auth::user()->type == 'Admin') ? '' : 'disabled';
+                    $text = (Auth::user()->type != 'Admin') ? 'Only admin can change' : '';
+                    ?>
+                {!! Form::label('type', 'Member Type') !!} <span class="text-danger">*</span>
+                {!! Form::select('type', [''=>'Select Member Type','Admin'=>'Admin','Chairman'=>'Chairman','General secretary'=>'General secretary','Member'=>'Member'], old('type'), ['class'=>'form-control', $admintype]) !!}
+                @if(Auth::user()->type != 'Admin')
+                    <input type="hidden" name="type" value="{{ old('type', $data->type ?? '') }}">
+                @endif
+                <span class="text-danger">{{ $text }}</span>
+                @error('type')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-				{!! Form::Select('type',array(''=>'Select Member Type','Admin'=>'Admin','Chairman'=>'Chairman','General secretary' => 'General secretary','Member'=>'Member'),Input::old('type'),['id'=>'type', 'class'=>'form-control',$admintype]) !!}
-				@if(Auth::user()->type != 'Admin')
-				<input type="hidden" name="type" value="{{ $data->type}}">
-				@endif
-				<span style="color: red">{!! $errors->first('type') !!}</span>
-				<span style="color: red"> {{$text }}</span>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('religion', 'Religion') !!} <span class="text-danger">*</span>
+                {!! Form::select('religion', [''=>'Select Religion','Islam'=>'Islam','Hinduism'=>'Hinduism','Christianity'=>'Christianity','Buddhism'=>'Buddhism'], old('religion'), ['class'=>'form-control']) !!}
+                @error('religion')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				{!!  Form::label('Religion', 'Religion', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('gender', 'Gender') !!} <span class="text-danger">*</span>
+                {!! Form::select('gender', [''=>'Select Gender','Male'=>'Male','Female'=>'Female','Others'=>'Others'], old('gender'), ['class'=>'form-control']) !!}
+                @error('gender')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
 
-				{!! Form::Select('religion',array(''=>'Select Member Religion','Islam'=>'Islam','Hinduism'=>'Hinduism','Christianity' => 'Christianity','Buddhism'=>'Buddhism'),Input::old('religion'),['id'=>'Religion', 'class'=>'form-control']) !!}
-				<span style="color: red">{!! $errors->first('religion') !!}</span>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('status', 'Status') !!} <span class="text-danger">*</span>
+                {!! Form::select('status', ['active'=>'Active','inactive'=>'Inactive'], old('status'), ['class'=>'form-control']) !!}
+                @error('status')<span class="text-danger">{{ $message }}</span>@enderror
+            </div>
+        </div>
+    </div>
 
-		<div class="col-md-3">
-			<div class="form-group">
-				{!!  Form::label('gender', 'Gender', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
+    <!-- Image Upload -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('image_link', 'Profile Image (jpeg,png,jpg, max 5MB)') !!} <span class="text-danger">*</span>
+                <input type="file" name="image_link" id="image_link" class="form-control" onchange="readURL(this);">
+                @error('image_link')<span class="text-danger">{{ $message }}</span>@enderror
 
-				{!! Form::Select('gender',array(''=>'Select Member Gender','Male'=>'Male','Female'=>'Female','Others' => 'Others'),Input::old('gender'),['id'=>'gender', 'class'=>'form-control']) !!}
-				<span style="color: red">{!! $errors->first('gender') !!}</span>
-			</div>
-		</div>
+                @if(isset($data['image_link']) && !empty($data['image_link']))
+                    <a target="_blank" href="{{ URL::to('uploads/member/'.$data['image_link']) }}" class="btn btn-primary btn-sm mt-2">
+                        <img src="{{ URL::to('uploads/member/'.$data['image_link']) }}" height="50px" alt="Profile Image">
+                    </a>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img id="blah" src="#" alt="Image Preview" style="margin-top: 10px; display:none;" width="250" height="200"/>
+        </div>
+    </div>
 
-
-		<div class="col-md-3">
-			<div class="form-group">
-
-				{!!  Form::label('status', 'Status', array('class' => 'col-form-label')) !!} <span class="required" style="color: red"> *</span>
-
-				{!! Form::Select('status',array('active'=>'Active','inactive'=>'Inactive'),Input::old('status'),['id'=>'status', 'class'=>'form-control']) !!}
-				<span style="color: red">{!! $errors->first('status') !!}</span>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-6">
-			<div class="form-group">
-				{!! Form::label('image_link', 'Image (Supported format :: jpeg,png,jpg & file size max :: 5MB)', array('class' => 'col-form-label')) !!}
-				<span class="required" style="color: red"> *</span>
-
-
-				<div style="position:relative;">
-					<a class='btn btn-primary btn-sm font-10' href='javascript:;'>
-						Choose File...
-						<input name="image_link" onchange="readURL(this);" type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
-					</a>
-					&nbsp;
-<span style="color: red">{!! $errors->first('image_link') !!}</span>
-					<span class='label label-info' id="upload-file-info"></span>
-				</div>
-
-				@if(isset($data['image_link'] ) && !empty($data['image_link']) )
-				<a target="_blank" href="{{URL::to('')}}/uploads/news/{{$data->image_link}}" style="margin-top: 5px;" class="btn btn-primary btn-sm font-10"><img src="{{URL::to('')}}/uploads/member/{{$data->image_link}}" height="50px" alt="{{$data['image_link']}}" ></img>
-				</a>
-				@endif
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="form-group">
-		<div class="col-md-6">
-			<img id="blah" style="margin-top: -22px;" src="#" alt="." />
-			
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-6">
-			{!! Form::submit('Save changes', ['class' => 'btn btn-primary pull-right btn-sm font-10 m-t-15','data-placement'=>'top','data-content'=>'click save changes button for save role information']) !!}&nbsp;
-		</div>
-	</div>
+    <!-- Submit -->
+    <div class="row">
+        <div class="col-md-6">
+            {!! Form::submit('Save changes', ['class'=>'btn btn-primary pull-right mt-3']) !!}
+        </div>
+    </div>
 </div>
 
-</div>
-
+<!-- Scripts -->
 <script>
+    // Image preview
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#blah').attr('src', e.target.result).show();
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-	function readURL(input) {
-	    if (input.files && input.files[0]) {
-	        var reader = new FileReader();
-
-	        reader.onload = function (e) {
-	            $('#blah')
-	                .attr('src', e.target.result)
-	                .width(250)
-	                .height(200);
-	        };
-
-	        reader.readAsDataURL(input.files[0]);
-	    }
-	}
-
-		
+    // Copy present address to permanent address
+    $('#same_address').change(function() {
+        if($(this).is(':checked')) {
+            $('#parmanent_address').val($('#present_address').val());
+        } else {
+            $('#parmanent_address').val('');
+        }
+    });
 </script>
