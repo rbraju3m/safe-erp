@@ -175,7 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ArtemSchander\L5Modular\ModuleServiceProvider::class,
-        Dimsav\Translatable\TranslatableServiceProvider::class,
+        Astrotomic\Translatable\TranslatableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         
