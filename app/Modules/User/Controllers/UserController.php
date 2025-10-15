@@ -45,17 +45,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $pageTitle = "List of Member Information";
+        $pageTitle   = "List of Member Information";
         $ModuleTitle = "Member Information";
 
+        // Fetch active members (latest first)
+        $data = Member::where('status', 'active')
+            ->orderByDesc('id')
+            ->get();
 
-        // Get Parent category data
-        $data = Member::orderBy('id','desc')
-                    ->where('status','active')
-                    ->get();
-        // return view
-        return view("User::user.index", compact('pageTitle','ModuleTitle','data'));
+        // Return to blade
+        return view('User::user.index', compact('pageTitle', 'ModuleTitle', 'data'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -70,93 +71,70 @@ class UserController extends Controller
         return view("User::user.create", compact('pageTitle','ModuleTitle'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Requests\UserRequest $request)
     {
         $input = $request->all();
-
         $name = preg_replace('/\s+/', '', $input['name']);
 
-        $input['join_date'] = date("d-m-Y");
-        $input['join_day'] = date("l");
+        // Join information
+        $input['join_date']  = date("d-m-Y");
+        $input['join_day']   = date("l");
         $input['join_month'] = date("F");
-        $input['join_year'] = date("Y");
-        $input['join_time'] = date(" h:i:sa");
+        $input['join_year']  = date("Y");
+        $input['join_time']  = date("h:i:sa");
 
-        // Check already mobile present or not
-        $data = member::where('mobile',$input['mobile'])->exists();
+        // Check duplicate mobile
+        if (Member::where('mobile', $input['mobile'])->exists()) {
+            Session::flash('info', 'This Mobile Already Exists!');
+            return redirect()->back()->withInput();
+        }
 
-        if (!$data) {
-            if (isset($input) && !empty($input)) {
-            // Check image file exists or not
-            if($request->hasfile('image_link')){
-                $member_img = $request->file('image_link');
-                $image_info = getimagesize($member_img);
-                $size = $request->file('image_link')->getSize()/1024;
+        // Handle image
+        $member_img_title = null;
+        if ($request->hasFile('image_link')) {
+            $avatar = $request->file('image_link');
+            $sizeKb = $avatar->getSize() / 1024;
 
-                if($size < 5120){
-                    // echo "5mb er soman ba soto";
-                    $avatar = $request->file('image_link');
-                    $member_img_title = $name.'-'.time().'.'.$avatar->getClientOriginalExtension();
-                    Image::make($avatar)->resize(600, 400)->save( public_path('/uploads/member/' . $member_img_title) );
-                    $input['image_link'] = $member_img_title;
-                    // echo $member_img_title;
-                }else{
-                    Session::flash('error', 'This Image size bigger than 5MB');
-                    return redirect()->back();
-                }
-
-            /* Transaction Start Here */
-            DB::beginTransaction();
-                try {
-                    // Store cateogory data
-                    if($member_data = Member::create($input))
-                    {
-                        $member_data->save();
-
-                        $user_model = new User();
-                        $user_model->user_id = $member_data->id;
-                        $user_model->name=$input['name'];
-                        $user_model->email=$input['mobile'];
-                        $user_model->type=$input['type'];
-                        $user_model->image_link = $member_img_title;
-                        $user_model->password = password_hash($input['mobile'], PASSWORD_BCRYPT);
-                        $user_model->save();
-
-                    }
-
-                    DB::commit();
-                    Session::flash('message', 'Member is added Successfully!');
-                    $status = $input['status'];
-                    if ($status =='active') {
-                        return redirect('admin-member-index');
-                    }else{
-                        return redirect('admin-member-inactive');
-                    }
-
-                } catch (\Exception $e) {
-                    //If there are any exceptions, rollback the transaction`
-                    DB::rollback();
-                    print($e->getMessage());
-                    exit();
-                    Session::flash('danger', $e->getMessage());
-                }
+            if ($sizeKb > 5120) {
+                Session::flash('error', 'This Image size is bigger than 5MB');
+                return redirect()->back()->withInput();
             }
-        }else{
-            Session::flash('error', 'Something went wrong !');
-            return redirect()->back();
-        }
-        }else{
-            Session::flash('info', 'This Mobile Already Exists !');
-        }
-        return redirect()->back()->withInput();
-    }
 
+            $member_img_title = $name . '-' . time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)
+                ->resize(600, 400)
+                ->save(public_path('/uploads/member/' . $member_img_title));
+
+            $input['image_link'] = $member_img_title;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $member_data = Member::create($input);
+
+            $user = new User();
+            $user->user_id     = $member_data->id;
+            $user->name        = $input['name'];
+            $user->email       = $input['mobile'];
+            $user->type        = $input['type'];
+            $user->image_link  = $member_img_title;
+            $user->password    = bcrypt($input['mobile']); // Laravel helper
+            $user->save();
+
+            DB::commit();
+
+            Session::flash('message', 'Member added successfully!');
+            return $input['status'] === 'active'
+                ? redirect()->route('admin.member.index')
+                : redirect()->route('admin.member.inactive');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Session::flash('danger', 'Error: ' . $e->getMessage());
+            return redirect()->back()->withInput();
+        }
+    }
 
 
     /**
@@ -170,266 +148,252 @@ class UserController extends Controller
         $pageTitle = "Update Member Information";
         $ModuleTitle = "Member Information";
 
-        // Find news
-        $data = Member::where('member.id', $id)
-                        ->select('member.*')
-                        ->first();
+        // Find member
+        $data = Member::find($id);
 
+        if (!$data) {
+            Session::flash('error', 'Member not found!');
+            return redirect()->route('admin.member.index');
+        }
 
         return view("User::user.edit", compact('pageTitle','ModuleTitle','data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Requests\UserUpdateRequest $request, $id)
     {
-        // Find member
-        $member_model = Member::where('member.id', $id)
-            ->select('member.*')
-            ->first();
-        // Find user
-        $user_model = User::where('user_id', $id)
-            ->select('*')
-            ->first();
+        $member = Member::findOrFail($id);
+        $user = User::where('user_id', $id)->firstOrFail();
 
         $input = $request->all();
-        $member_image = $input['image_link'];
+        $nameSlug = preg_replace('/\s+/', '', $input['name']);
 
-        $name = preg_replace('/\s+/', '', $input['name']);
+        // Check if mobile exists for another member
+        $mobileExists = Member::where('mobile', $input['mobile'])
+            ->where('id', '!=', $id)
+            ->exists();
 
-
-        $data = Member::where('mobile', $input['mobile'])
-            ->select('member.*')
-            ->get();
-        $count = count($data);
-
-        $mobile = $member_model->mobile;
-
-        if (( ($count == 1) && ($mobile == $input['mobile'])) || ($count == 0)) {
-
-        if (isset($member_image) && !empty($member_image)) {
-            $member_img = $request->file('image_link');
-            $image_info = getimagesize($member_img);
-            $size = $request->file('image_link')->getSize()/1024;
-
-            if($size < 5120){
-                // echo "5mb er soman ba soto";
-                $avatar = $request->file('image_link');
-                $member_img_title = $name.'-'.time().'.'.$avatar->getClientOriginalExtension();
-                Image::make($avatar)->resize(600, 400)->save( public_path('/uploads/member/' . $member_img_title) );
-                $input['image_link'] = $member_img_title;
-                // File::Delete($member_model->image_link);
-                File::delete(public_path().'/uploads/member/'.$member_model->image_link);
-            }else{
-                Session::flash('error', 'This Image size bigger than 5MB');
-                return redirect()->back();
-            }
-        }else{
-            $input['image_link'] = $member_model['image_link'];
-            // echo $input['image_link'];
+        if ($mobileExists) {
+            Session::flash('info', 'This Mobile Already Exists!');
+            return redirect()->back()->withInput();
         }
 
-        $userdata['name'] = $input['name'];
-        $userdata['email'] = $input['mobile'];
-        // $userdata['password'] = password_hash($input['mobile'], PASSWORD_BCRYPT);
-        $userdata['type'] = $input['type'];
-        $userdata['image_link'] = $input['image_link'];
+        // Handle image upload
+        if ($request->hasFile('image_link')) {
+            $image = $request->file('image_link');
+            $sizeKb = $image->getSize() / 1024;
 
+            if ($sizeKb > 5120) {
+                Session::flash('error', 'This Image size is bigger than 5MB');
+                return redirect()->back();
+            }
 
-        $input['join_date'] = $member_model['join_date'];
-        $input['join_day'] = $member_model['join_day'];
-        $input['join_month'] = $member_model['join_month'];
-        $input['join_year'] = $member_model['join_year'];
-        $input['join_time'] = $member_model['join_time'];
+            $imageName = $nameSlug . '-' . time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(600, 400)->save(public_path('/uploads/member/' . $imageName));
 
+            // Delete old image
+            if ($member->image_link) {
+                File::delete(public_path('/uploads/member/' . $member->image_link));
+            }
+
+            $input['image_link'] = $imageName;
+        } else {
+            $input['image_link'] = $member->image_link;
+        }
+
+        // Preserve join details
+        $input['join_date'] = $member->join_date;
+        $input['join_day'] = $member->join_day;
+        $input['join_month'] = $member->join_month;
+        $input['join_year'] = $member->join_year;
+        $input['join_time'] = $member->join_time;
+
+        $userData = [
+            'name' => $input['name'],
+            'email' => $input['mobile'],
+            'type' => $input['type'],
+            'image_link' => $input['image_link']
+        ];
 
         DB::beginTransaction();
         try {
-
-            $result = $member_model->update($input);
-            $user_model->update($userdata);
-
-            $user_model->save();
-            $member_model->save();
+            $member->update($input);
+            $user->update($userData);
 
             DB::commit();
 
             Session::flash('message', 'Successfully updated!');
-            $status = $input['status'];
-            if ($status =='active') {
-                return redirect('admin-member-index');
-            }else{
-                return redirect('admin-member-inactive');
-            }
-        }
-        catch (\Exception $e) {
-            //If there are any exceptions, rollback the transaction`
+            return $input['status'] === 'active'
+                ? redirect()->route('admin.member.index')
+                : redirect()->route('admin.member.inactive');
+        } catch (\Exception $e) {
             DB::rollback();
             Session::flash('danger', $e->getMessage());
+            return redirect()->back()->withInput();
         }
-        }else{
-            Session::flash('info', 'This Mobile Already Exists !');
-        }
-        return redirect()->back()->withInput();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-         /* Transaction Start Here */
-            DB::beginTransaction();
-            try {
+        DB::beginTransaction();
+        try {
+            $member = Member::findOrFail($id);
+            $member->status = 'inactive';
+            $member->updated_by = Auth::user()->id;
+            $member->save();
 
-                $data = DB::table('member')->where('id',$id);
-                $data->update([
-                        'status' => 'inactive',
-                        'updated_by' => Auth::user()->id,
-                    ]);
-                DB::commit();
-                Session::flash('message', 'Member Added Inactive List !');
-                return redirect('admin-member-inactive');
-            } catch (\Exception $e) {
-                //If there are any exceptions, rollback the transaction`
-                DB::rollback();
-                print($e->getMessage());
-                exit();
-                Session::flash('danger', $e->getMessage());
-            }
+            DB::commit();
+
+            Session::flash('message', 'Member added to Inactive List!');
+            return redirect()->route('admin.member.inactive');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Session::flash('danger', 'Error: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
+
 
     public function inactivelist()
     {
-        $pageTitle = "List of Inactive Member";
+        $pageTitle = "List of Inactive Members";
         $ModuleTitle = "Member Information";
 
         $Cancel = 'Cancel';
 
+        // Fetch all inactive members, latest updated first
+        $data = Member::where('status', 'inactive')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
-        // Get Parent category data
-        $data = Member::orderBy('updated_at','desc')
-                    ->where('status','inactive')
-                    ->get();
-        // return view
-        return view("User::user.index", compact('pageTitle','ModuleTitle','data','Cancel'));
+        return view("User::user.index", compact('pageTitle', 'ModuleTitle', 'data', 'Cancel'));
     }
 
-    public function rollback($id){
-        /* Transaction Start Here */
-            DB::beginTransaction();
-            try {
+    public function rollback($id)
+    {
+        DB::beginTransaction();
+        try {
+            // Update member status to active
+            Member::where('id', $id)->update([
+                'status' => 'active',
+                'updated_by' => Auth::user()->id,
+            ]);
 
-                $data = DB::table('member')->where('id',$id);
-                $data->update([
-                        'status' => 'active',
-                        'updated_by' => Auth::user()->id,
-                    ]);
-                DB::commit();
-                Session::flash('message', 'Roll Back Successfully !');
-                return redirect('admin-member-index');
+            DB::commit();
 
-            } catch (\Exception $e) {
-                //If there are any exceptions, rollback the transaction`
-                DB::rollback();
-                print($e->getMessage());
-                exit();
-                Session::flash('danger', $e->getMessage());
-            }
+            Session::flash('message', 'Member rolled back successfully!');
+            return redirect()->route('admin.member.index'); // Using route helper
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Session::flash('danger', 'Error: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
-    public function delete($id){
-        /* Transaction Start Here */
-            DB::beginTransaction();
-            try {
 
-                $data = DB::table('member')->where('id',$id)->first();
-                $deposite_data = DB::table('deposite')->where('member_id',$id)->count();
+    public function delete($id)
+    {
+        DB::beginTransaction();
 
-            if ($deposite_data == 0) {
-                if (File::exists(public_path().'/uploads/member/'.$data->image_link)) {
-                    File::delete(public_path().'/uploads/member/'.$data->image_link);
+        try {
+            $member = Member::findOrFail($id); // Throws 404 if not found
+            $depositeCount = Deposite::where('member_id', $id)->count();
+
+            if ($depositeCount == 0) {
+                // Delete member image if exists
+                if (File::exists(public_path('uploads/member/' . $member->image_link))) {
+                    File::delete(public_path('uploads/member/' . $member->image_link));
                 }
-                $member_data = DB::table('member')->where('id',$id);
-                $user_data = DB::table('users')->where('user_id',$id);
-                $member_data->delete();
-                $user_data->delete();
+
+                // Delete member and user
+                $member->delete();
+                User::where('user_id', $id)->delete();
+
                 DB::commit();
-                Session::flash('message', 'Delete Successfully !');
-                return redirect('admin-member-inactive');
-            }else{
+
+                Session::flash('message', 'Deleted Successfully!');
+                return redirect()->route('admin.member.inactive');
+            } else {
                 $depositArray = [];
                 $totalDeposit = 0;
                 $profitArray = [];
                 $totalProfit = 0;
-                for ($i=2019;$i<=date("Y");$i++){
-                    $deposite = Deposite::where('member_id', $id)
+
+                for ($year = 2019; $year <= date("Y"); $year++) {
+                    $deposit = Deposite::where('member_id', $id)
                         ->where('status', 'active')
-                        ->where('type','!=','Registration')
-                        ->where('year', $i)
+                        ->where('type', '!=', 'Registration')
+                        ->where('year', $year)
                         ->sum('amount');
-                    $depositArray[$i] = $deposite;
-//                    dd($deposite);
-                    $totalDeposit = $totalDeposit+($deposite?$deposite:0);
-                    $profit = ProfitDistributeMember::join('profit_distribute','profit_distribute.id','=','profit_distribute_member.profit_id')
-                                                        ->where('profit_distribute_member.member_id',$id)
-                                                        ->where('profit_distribute.profit_year',$i)
-                                                        ->select('profit_distribute_member.profit_amount')
-                                                        ->first();
-                    $profitArray[$i] = $profit['profit_amount'];
-                    $totalProfit = $totalProfit+($profit && $profit['profit_amount']?$profit['profit_amount']:0);
 
+                    $depositArray[$year] = $deposit;
+                    $totalDeposit += $deposit ?: 0;
+
+                    $profit = ProfitDistributeMember::join('profit_distribute', 'profit_distribute.id', '=', 'profit_distribute_member.profit_id')
+                        ->where('profit_distribute_member.member_id', $id)
+                        ->where('profit_distribute.profit_year', $year)
+                        ->select('profit_distribute_member.profit_amount')
+                        ->first();
+
+                    $profitAmount = $profit ? $profit->profit_amount : 0;
+                    $profitArray[$year] = $profitAmount;
+                    $totalProfit += $profitAmount;
                 }
-                $member = Member::find($id);
-                return view("User::user.deleteconfirm", compact('pageTitle','ModuleTitle','depositArray','totalDeposit','profitArray','totalProfit','member'));
 
+                $pageTitle = "Confirm Deletion"; // Add meaningful titles
+                $ModuleTitle = "Member Information";
+
+                return view("User::user.deleteconfirm", compact(
+                    'pageTitle',
+                    'ModuleTitle',
+                    'depositArray',
+                    'totalDeposit',
+                    'profitArray',
+                    'totalProfit',
+                    'member'
+                ));
             }
-            } catch (\Exception $e) {
-                //If there are any exceptions, rollback the transaction`
-                DB::rollback();
-                print($e->getMessage());
-                exit();
-                Session::flash('danger', $e->getMessage());
-            }
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Session::flash('danger', 'Error: ' . $e->getMessage());
+            return redirect()->back();
         }
-
-        public function parmanentDelete($id){
-            DB::beginTransaction();
-            try {
-
-                $data = DB::table('member')->where('id',$id)->first();
-                $deposite_data = DB::table('deposite')->where('member_id',$id)->delete();
-
-                if (File::exists(public_path().'/uploads/member/'.$data->image_link)) {
-                    File::delete(public_path().'/uploads/member/'.$data->image_link);
-                }
-                $member_data = DB::table('member')->where('id',$id);
-                $user_data = DB::table('users')->where('user_id',$id);
-                $member_data->delete();
-                $user_data->delete();
-                DB::commit();
-                Session::flash('message', 'Delete Successfully !');
-                return redirect('admin-member-inactive');
-//                    return view("User::user.deleteconfirm", compact('pageTitle','ModuleTitle','depositArray','totalDeposit','profitArray','totalProfit','member'));
+    }
 
 
-            } catch (\Exception $e) {
-                //If there are any exceptions, rollback the transaction`
-                DB::rollback();
-                print($e->getMessage());
-                exit();
-                Session::flash('danger', $e->getMessage());
+    public function parmanentDelete($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Find member
+            $member = Member::findOrFail($id);
+
+            // Delete all deposit records for this member
+            Deposite::where('member_id', $id)->delete();
+
+            // Delete member image if exists
+            if (File::exists(public_path('uploads/member/' . $member->image_link))) {
+                File::delete(public_path('uploads/member/' . $member->image_link));
             }
-        }
 
+            // Delete member and associated user
+            $member->delete();
+            User::where('user_id', $id)->delete();
+
+            DB::commit();
+
+            Session::flash('message', 'Deleted Permanently!');
+            return redirect()->route('admin.member.inactive');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Session::flash('danger', 'Error: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
 
         /**
      * Display the specified resource.

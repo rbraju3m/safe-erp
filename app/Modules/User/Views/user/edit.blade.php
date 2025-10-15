@@ -1,80 +1,51 @@
-
-
-
-
 @extends('backend.layout.master')
- @section('body')
-            
-            
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      
-      <h1>
 
-        {{$ModuleTitle}}
-        {{-- <small>Preview</small> --}}
-      </h1>
+@section('body')
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>{{ $ModuleTitle }}</h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="{{ route('admin.member.index') }}">Member Information</a></li>
+                <li class="active">{{ isset($data) ? 'Edit Member' : 'Add Member' }}</li>
+            </ol>
 
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('admin.member.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.member.create')}}">{{$pageTitle}}</a></li>
-      </ol>
+            <div class="breadcrumb breadcrumbbutton">
+                <a href="javascript:history.back()" class="btn btn-warning pull-right" style="margin-left:10px;">Back</a>
 
-      <ol class="breadcrumb breadcrumbbutton">
-        <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
-        
-        @if (Route::currentRouteName() != 'admin.member.inactive')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.inactive')}} " class="btn btn-danger waves-effect pull-right inactive">Inactive Member</a>
-        @endif
-        
-        @if (Route::currentRouteName() != 'admin.member.index')
-          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.index')}} " class="btn btn-success waves-effect pull-right">Active Member</a>
-        @endif
-        
-        @if (Route::currentRouteName() != 'admin.member.create')
-        @if (Auth::user()->type == 'Admin')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.member.create')}} " class="btn btn-primary waves-effect pull-right">Add Member</a>
-        @endif
-        @endif
-        
-      </ol>
-    </section>
+                @if(Route::currentRouteName() != 'admin.member.inactive')
+                    <a href="{{ route('admin.member.inactive') }}" class="btn btn-danger pull-right">Inactive Member</a>
+                @endif
 
-    <!-- Main content -->
-    <section class="content">
-       @include('backend.layout.msg')
+                @if(Route::currentRouteName() != 'admin.member.index')
+                    <a href="{{ route('admin.member.index') }}" class="btn btn-success pull-right">Active Member</a>
+                @endif
 
-      <!-- SELECT2 EXAMPLE -->
-      <div class="box box-default">
-        <div class="box-header with-border">
-          <h3 class="box-title">{{$pageTitle}}</h3>
+                @if(Route::currentRouteName() != 'admin.member.create' && Auth::user()->type == 'Admin')
+                    <a href="{{ route('admin.member.create') }}" class="btn btn-primary pull-right">Add Member</a>
+                @endif
+            </div>
+        </section>
 
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
+        <section class="content">
+            @include('backend.layout.msg')
 
-          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.member.update', $data->id],"class"=>"", 'id' => '']) !!}
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ $pageTitle }}</h3>
+                </div>
+                <div class="box-body">
+                    @if(isset($data))
+                        {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.member.update', $data->id]]) !!}
+                    @else
+                        {!! Form::open(['method' => 'POST', 'files'=> true, 'route'=> ['admin.member.store']]) !!}
+                    @endif
 
-      @include('User::user._form')
+                    @include('User::user._form')
 
-      {!! Form::close() !!}
-        </div>
-      </div>
-      <!-- /.box -->
-
-      
-
-      
-
-    </section>
-    <!-- /.content -->
-  </div>
-
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </section>
+    </div>
 @endsection
-
-           
