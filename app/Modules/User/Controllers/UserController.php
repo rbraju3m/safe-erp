@@ -501,37 +501,52 @@ class UserController extends Controller
     }
 
 
-    public function depositeDetails($id){
+    public function depositDetails($id)
+    {
+        $member = Member::where('id', $id)
+            ->where('status', 'active')
+            ->select('id', 'name', 'mobile', 'image_link')
+            ->first();
 
-        $name = Member::where('id', $id)
-                            ->where('status', 'active')
-                            ->select('name')
-                            ->first();
-        $pageTitle = $name['name']." Deposite List";
-
-        // Get payment  data
-        $data = Deposite::join('member', 'member.id', '=', 'deposite.member_id')
-                ->where('deposite.member_id',$id)
-                ->where('member.status','active')
-                ->where('deposite.status','active')
-                ->select('member.name','member.mobile','member.image_link','deposite.*')
-                ->orderby('deposite.id','desc')
-                ->get();
-        $Total_amount = 0;
-        foreach ($data as  $value) {
-            $Total_amount = $Total_amount+$value->amount;
+        if (!$member) {
+            abort(404, 'Member not found');
         }
 
-        $ModuleTitle = $name['name']." Total Deposite ".$Total_amount.' TK.';
+        $pageTitle = $member->name . " Deposit List";
 
-        $member = Member::orderBy('id','asc')
-                    ->where('status','active')
-                    ->pluck('name','id')
-                    ->all();
-        array_push($member,"Select Member");
-        krsort($member);
+        // Fetch all deposits (2019–2027)
+        $startYear = 2019;
+        $endYear   = 2027;
 
-        return view("User::user.memberDepositeDetails", compact('pageTitle','ModuleTitle','data','member'));
+        $data = Deposite::join('member', 'member.id', '=', 'deposite.member_id')
+            ->where('deposite.member_id', $id)
+            ->whereBetween('deposite.year', [$startYear, $endYear])
+            ->where('member.status', 'active')
+            ->where('deposite.status', 'active')
+            ->select('member.name', 'member.mobile', 'member.image_link', 'deposite.*')
+            ->orderBy('deposite.year', 'desc')
+            ->orderBy('deposite.month', 'desc')
+            ->get();
+
+        // Calculate total
+        $Total_amount = $data->sum('amount');
+
+        $ModuleTitle = $member->name . " Total Deposit: " . number_format($Total_amount, 2) . " TK";
+
+        $memberList = Member::where('status', 'active')
+            ->orderBy('id', 'asc')
+            ->pluck('name', 'id')
+            ->all();
+
+        array_push($memberList, "Select Member");
+        krsort($memberList);
+
+        return view("User::user.memberDepositDetails", compact(
+            'pageTitle',
+            'ModuleTitle',
+            'data',
+            'memberList'
+        ));
     }
 
     public function ChangeForm(){

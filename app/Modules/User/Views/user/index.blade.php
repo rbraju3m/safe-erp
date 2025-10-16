@@ -128,8 +128,7 @@
                                                     </a>
                                                 @endif
 
-                                                <!-- Deposite Details -->
-                                                <a href="{{ route('admin.member.depositeDetails', $values->id) }}"
+                                                <a href="{{ route('admin.member.deposit_details', $values->id) }}"
                                                    class="btn btn-success btn-sm"
                                                    style="margin-bottom: 2px;">
                                                     <i class="fa fa-asterisk"></i>

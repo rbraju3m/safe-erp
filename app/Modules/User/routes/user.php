@@ -17,7 +17,7 @@ Route::prefix('admin-member')->name('admin.member.')->group(function () {
     Route::get('show/{id}', 'UserController@show')->name('show');
 
     Route::get('show-deposit', 'UserController@showDeposit')->name('show_deposit');
-    Route::get('depositeDetails/{id}', 'UserController@depositeDetails')->name('depositeDetails');
+    Route::get('deposit-details/{id}', 'UserController@depositDetails')->name('deposit_details');
 
     Route::get('password-change-form', 'UserController@ChangeForm')->name('password.change.form');
     Route::post('password-change', 'UserController@change')->name('password.change');

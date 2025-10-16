@@ -194,14 +194,40 @@
         return false;
     });
 
-    //for search deposite specific member data
-    $(document).delegate('#member_id_for_search','change',function () {
+    // For search deposit specific member data
+    $(document).on('change', '#member_id_for_search', function () {
         var id = $(this).val();
-        var location = window.location.origin;
-        var route = location+'/admin-member-depositeDetails/'+id;
-        $(".raju").attr("href",route);
-        $(".raju").attr("style","border: 1px solid;padding: 4px 18px;background-color: #140644;color: #fff;font-weight: bold;");
+        var baseUrl = window.location.origin; // e.g., https://yourdomain.com
+
+        if (id && id !== "") {
+            var route = baseUrl + '/admin-member/deposit-details/' + id;
+
+            $(".raju")
+                .attr("href", route)
+                .css({
+                    "border": "1px solid",
+                    "padding": "4px 18px",
+                    "background-color": "#140644",
+                    "color": "#fff",
+                    "font-weight": "bold",
+                    "display": "inline-block"
+                })
+                .text("Search");
+        } else {
+            // hide if no member selected
+            $(".raju").hide();
+        }
     });
+
+    // Optional: add click event (if <a> is not a real link)
+    $(document).on('click', '.raju', function (e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        if (href && href !== "#") {
+            window.location.href = href; // navigate to deposit details page
+        }
+    });
+
 
     //for view specific model open with data
     $(document).delegate('#view_specific_member','click',function () {
