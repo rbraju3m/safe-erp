@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modules\User\Models\Member;
-use App\Modules\Deposite\Models\Deposite;
+use App\Modules\Deposit\Models\Deposit;
 use App\Modules\Expense\Models\Expense;
 use App\Modules\Bank\Models\Bank;
 
@@ -30,20 +30,20 @@ class HomeController extends Controller
     public function index()
     {
         $all_member = Member::orderBy('id','desc')
-                    ->where('status','active') 
+                    ->where('status','active')
                     ->select('*')
                     ->get();
 
         $member_count = Member::orderBy('id','desc')
-                    ->where('status','active') 
+                    ->where('status','active')
                     ->count();
 
-        $deposite = Deposite::where('status', 'active')
+        $deposite = Deposit::where('status', 'active')
                         ->select('*')
                         ->get();
 
         $current_total = 0;
-        $current_month_deposite = Deposite::where('status', 'active')
+        $current_month_deposite = Deposit::where('status', 'active')
                         ->where('month',date("F"))
                         ->where('year',date("Y"))
                         ->select('amount')

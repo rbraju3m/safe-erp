@@ -3,13 +3,11 @@
 namespace App\Modules\User\Controllers;
 
 use App\Modules\Bank\Models\ProfitDistributeMember;
-use Illuminate\Http\Request;
+use App\Modules\Deposit\Models\Deposit;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Requests;
-use Illuminate\Support\Facades\Input;
 
 use App\Modules\User\Models\Member;
-use App\Modules\Deposite\Models\Deposite;
 use App\Modules\User\Models\User;
 
 
@@ -298,7 +296,7 @@ class UserController extends Controller
 
         try {
             $member = Member::findOrFail($id); // Throws 404 if not found
-            $depositeCount = Deposite::where('member_id', $id)->count();
+            $depositeCount = Deposit::where('member_id', $id)->count();
 
             if ($depositeCount == 0) {
                 // Delete member image if exists
@@ -321,7 +319,7 @@ class UserController extends Controller
                 $totalProfit = 0;
 
                 for ($year = 2019; $year <= date("Y"); $year++) {
-                    $deposit = Deposite::where('member_id', $id)
+                    $deposit = Deposit::where('member_id', $id)
                         ->where('status', 'active')
                         ->where('type', '!=', 'Registration')
                         ->where('year', $year)
@@ -372,7 +370,7 @@ class UserController extends Controller
             $member = Member::findOrFail($id);
 
             // Delete all deposit records for this member
-            Deposite::where('member_id', $id)->delete();
+            Deposit::where('member_id', $id)->delete();
 
             // Delete member image if exists
             if (File::exists(public_path('uploads/member/' . $member->image_link))) {
@@ -416,7 +414,7 @@ class UserController extends Controller
         }
 
         // Last 10 Deposits
-        $deposite = Deposite::where('member_id', $id)
+        $deposite = Deposit::where('member_id', $id)
             ->where('status', 'active')
             ->orderBy('id', 'desc')
             ->limit(10)
@@ -428,7 +426,7 @@ class UserController extends Controller
         $yearTotals = [];
 
         for ($year = $startYear; $year <= $currentYear; $year++) {
-            $yearTotals[$year] = Deposite::where('member_id', $id)
+            $yearTotals[$year] = Deposit::where('member_id', $id)
                 ->where('status', 'active')
                 ->where('year', $year)
                 ->sum('amount');
@@ -470,7 +468,7 @@ class UserController extends Controller
             $deposits = [];
 
             foreach ($years as $year) {
-                $deposits[$year] = Deposite::where('member_id', $member_id)
+                $deposits[$year] = Deposit::where('member_id', $member_id)
                     ->where('status', 'active')
                     ->where('year', $year)
                     ->get();
@@ -491,7 +489,7 @@ class UserController extends Controller
             $view = \Illuminate\Support\Facades\View::make('User::user.showMemberDeposite', compact('member', 'deposits', 'years', 'profits'));
             $response['result'] = 'success';
             $response['content'] = $view->render();
-            $response['header'] = $member->name . ' Total Deposite View';
+            $response['header'] = $member->name . ' Total Deposit View';
         } else {
             $response['result'] = 'error';
             $response['message'] = 'Member not found.';
@@ -518,14 +516,14 @@ class UserController extends Controller
         $startYear = 2019;
         $endYear   = 2027;
 
-        $data = Deposite::join('member', 'member.id', '=', 'deposite.member_id')
-            ->where('deposite.member_id', $id)
-            ->whereBetween('deposite.year', [$startYear, $endYear])
+        $data = Deposit::join('member', 'member.id', '=', 'deposit.member_id')
+            ->where('deposit.member_id', $id)
+            ->whereBetween('deposit.year', [$startYear, $endYear])
             ->where('member.status', 'active')
-            ->where('deposite.status', 'active')
-            ->select('member.name', 'member.mobile', 'member.image_link', 'deposite.*')
-            ->orderBy('deposite.year', 'desc')
-            ->orderBy('deposite.month', 'desc')
+            ->where('deposit.status', 'active')
+            ->select('member.name', 'member.mobile', 'member.image_link', 'deposit.*')
+            ->orderBy('deposit.year', 'desc')
+            ->orderBy('deposit.month', 'desc')
             ->get();
 
         // Calculate total
@@ -600,7 +598,7 @@ class UserController extends Controller
 
 
         if (count($member) > 0) {
-            $deposite2019 = Deposite::where('member_id', $member_id)
+            $deposite2019 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2019')
                             ->select('*')
@@ -611,7 +609,7 @@ class UserController extends Controller
             }
 
 
-            $deposite2020 = Deposite::where('member_id', $member_id)
+            $deposite2020 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2020')
                             ->select('*')
@@ -621,7 +619,7 @@ class UserController extends Controller
                 $total_2020 = $total_2020+$element->amount;
             }
 
-            $deposite2021 = Deposite::where('member_id', $member_id)
+            $deposite2021 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2021')
                             ->select('*')
@@ -631,7 +629,7 @@ class UserController extends Controller
                 $total_2021 = $total_2021+$element->amount;
             }
 
-            $deposite2022 = Deposite::where('member_id', $member_id)
+            $deposite2022 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2022')
                             ->select('*')
@@ -641,7 +639,7 @@ class UserController extends Controller
                 $total_2022 = $total_2022+$element->amount;
             }
 
-            $deposite2023 = Deposite::where('member_id', $member_id)
+            $deposite2023 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2023')
                             ->select('*')
@@ -651,7 +649,7 @@ class UserController extends Controller
                 $total_2023 = $total_2023+$element->amount;
             }
 
-            $deposite2024 = Deposite::where('member_id', $member_id)
+            $deposite2024 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2024')
                             ->select('*')
@@ -661,7 +659,7 @@ class UserController extends Controller
                 $total_2024 = $total_2024+$element->amount;
             }
 
-            $deposite2025 = Deposite::where('member_id', $member_id)
+            $deposite2025 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2025')
                             ->select('*')

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Deposite\Requests;
+namespace App\Modules\Deposit\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use App\Modules\Deposite\Models\Deposite;
+use App\Modules\Deposite\Models\Deposit;
 
 
-class DepositeRequest extends FormRequest
+class DepositRequest extends FormRequest
 {
     public function authorize()
     {
@@ -21,7 +21,7 @@ class DepositeRequest extends FormRequest
      */
     public function rules()
     {
-        
+
         return [
             'member_id'       => 'required',
             'month'          => 'required',

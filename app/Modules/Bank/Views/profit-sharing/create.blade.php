@@ -162,8 +162,8 @@
                                     <td>{{$index}}</td>
                                     <td>{{$member}}</td>
                                     @php
-                                        #$memberTotalDipositAmount = DB::table('deposite')->where('member_id',$id)->sum('amount');
-                                        $memberTotalDipositAmount = DB::table('deposite')->where('member_id',$id)->whereBetween('year', [2019, $input['year']])->sum('amount');
+                                        #$memberTotalDipositAmount = DB::table('deposit')->where('member_id',$id)->sum('amount');
+                                        $memberTotalDipositAmount = DB::table('deposit')->where('member_id',$id)->whereBetween('year', [2019, $input['year']])->sum('amount');
                                         $memberTotalDipositAmount = $memberTotalDipositAmount-100;
 
                                     @endphp

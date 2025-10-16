@@ -13,7 +13,7 @@ class CreateDepositeTable extends Migration
      */
     public function up()
     {
-        Schema::create('deposite', function (Blueprint $table) {
+        Schema::create('deposit', function (Blueprint $table) {
             $table->bigIncrements('id');
             // $table->unsignedInteger('member_id');
             $table->unsignedBigInteger('member_id');
@@ -27,7 +27,7 @@ class CreateDepositeTable extends Migration
             $table->string('payment_year',50)->nullable();
             $table->string('payment_time',50)->nullable();
             $table->string('payment_date',50)->nullable();
-            
+
 
             $table->enum('status',array('active','inactive'))->nullable();
             $table->string('created_by',50)->nullable();
@@ -48,6 +48,6 @@ class CreateDepositeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deposite');
+        Schema::dropIfExists('deposit');
     }
 }

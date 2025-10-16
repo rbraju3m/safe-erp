@@ -57,17 +57,17 @@
             </li>
 
             {{-- Deposit --}}
-            <li class="treeview {{ request()->routeIs('admin.deposite.*') ? 'menu-open active' : '' }}">
+            <li class="treeview {{ request()->routeIs('admin.deposit.*') ? 'menu-open active' : '' }}">
                 <a href="#">
                     <i class="fa fa-money"></i> <span>Deposit</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     @if (Auth::user()->type == 'Admin')
-                        <li><a href="{{ route('admin.deposite.create') }}"><i class="fa fa-plus-circle"></i> Add Deposit</a></li>
+                        <li><a href="{{ route('admin.deposit.create') }}"><i class="fa fa-plus-circle"></i> Add Deposit</a></li>
                     @endif
-                    <li><a href="{{ route('admin.deposite.index') }}"><i class="fa fa-list-ol"></i> Active Deposit</a></li>
-                    <li><a href="{{ route('admin.deposite.inactive') }}"><i class="fa fa-list-ol"></i> Inactive Deposit</a></li>
+                    <li><a href="{{ route('admin.deposit.index') }}"><i class="fa fa-list-ol"></i> Active Deposit</a></li>
+                    <li><a href="{{ route('admin.deposit.inactive') }}"><i class="fa fa-list-ol"></i> Inactive Deposit</a></li>
                 </ul>
             </li>
 
@@ -103,8 +103,8 @@
 
             {{-- Calculate --}}
             @php $current_year = date('Y'); @endphp
-            <li class="{{ request()->routeIs('admin.deposite.intotal') ? 'active' : '' }}">
-                <a href="{{ route('admin.deposite.intotal', $current_year) }}">
+            <li class="{{ request()->routeIs('admin.deposit.intotal') ? 'active' : '' }}">
+                <a href="{{ route('admin.deposit.intotal', $current_year) }}">
                     <i class="fa fa-calculator"></i> <span>Calculate</span>
                     <span class="pull-right-container">
                         <small class="label pull-top bg-blue">In Total</small>

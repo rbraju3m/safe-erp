@@ -4,7 +4,7 @@ namespace App\Modules\Bank\Controllers;
 
 use App\Modules\Bank\Models\ProfitDistribute;
 use App\Modules\Bank\Models\ProfitDistributeMember;
-use App\Modules\Deposite\Models\Deposite;
+use App\Modules\Deposite\Models\Deposit;
 use App\Modules\Expense\Models\Expense;
 use App\Modules\User\Models\Member;
 use Illuminate\Http\Request;
@@ -117,7 +117,7 @@ class ProfitSharingController extends Controller
             ->where('ex_date', 'like', '%' . $input['year'] . '%')
             ->select('*')
             ->sum('amount');
-        $Deposit = Deposite::where('status', 'active')->whereBetween('year', [2019, $input['year']])->sum('amount');
+        $Deposit = Deposit::where('status', 'active')->whereBetween('year', [2019, $input['year']])->sum('amount');
         $registrationFee = count($profitMember)*100;
         $netAmount = $Deposit-$registrationFee;
         /*dd($Deposit,count($profitMember)*100);

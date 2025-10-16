@@ -35,7 +35,7 @@ class Member extends Model {
         'created_by',
     ];
 
-    
+
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
@@ -51,6 +51,12 @@ class Member extends Model {
                 $query->updated_by = Auth::user()->id;
             }
         });
+    }
+
+    public function deposits()
+    {
+        return $this->hasMany(\App\Modules\Deposit\Models\Deposit::class, 'member_id', 'id')
+            ->where('status', 'active'); // optional, only active deposits
     }
 
 }

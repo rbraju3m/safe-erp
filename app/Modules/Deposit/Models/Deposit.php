@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Deposite\Models;
+namespace App\Modules\Deposit\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 use App;
 use Auth;
 
-class Deposite extends Model {
+class Deposit extends Model {
 
     protected $table = 'deposite';
     protected $fillable = [
@@ -27,7 +27,7 @@ class Deposite extends Model {
         'created_by',
     ];
 
-    
+
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'

@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `deposite`
+-- Table structure for table `deposit`
 --
 
 CREATE TABLE `deposite` (
@@ -49,7 +49,7 @@ CREATE TABLE `deposite` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `deposite`
+-- Dumping data for table `deposit`
 --
 
 INSERT INTO `deposite` (`id`, `member_id`, `month`, `year`, `type`, `note`, `amount`, `payment_day`, `payment_month`, `payment_year`, `payment_time`, `payment_date`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
@@ -510,7 +510,7 @@ INSERT INTO `users` (`id`, `user_id`, `name`, `email`, `email_verified_at`, `pas
 --
 
 --
--- Indexes for table `deposite`
+-- Indexes for table `deposit`
 --
 ALTER TABLE `deposite`
   ADD PRIMARY KEY (`id`),
@@ -558,7 +558,7 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `deposite`
+-- AUTO_INCREMENT for table `deposit`
 --
 ALTER TABLE `deposite`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
@@ -598,7 +598,7 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `deposite`
+-- Constraints for table `deposit`
 --
 ALTER TABLE `deposite`
   ADD CONSTRAINT `deposite_member_id_foreign` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE;

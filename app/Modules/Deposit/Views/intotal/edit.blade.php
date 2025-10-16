@@ -4,13 +4,13 @@
 
 @extends('backend.layout.master')
  @section('body')
-            
-            
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      
-      <h1 style="text-transform: uppercase;font-weight: bold;font-size: 18px;">
+
+      <h1>
 
         {{$ModuleTitle}}
         {{-- <small>Preview</small> --}}
@@ -18,27 +18,27 @@
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('admin.deposite.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.deposite.create')}}">{{$pageTitle}}</a></li>
+        <li><a href="{{route('admin.deposit.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.deposit.create')}}">{{$pageTitle}}</a></li>
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
         <a style="margin-left: 10px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
-        
-        @if (Route::currentRouteName() != 'admin.deposite.inactive')
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive deposite</a>
+
+        @if (Route::currentRouteName() != 'admin.deposit.inactive')
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposit.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Deposite</a>
         @endif
-        
-        @if (Route::currentRouteName() != 'admin.deposite.index')
-          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.index')}} " class="btn btn-success waves-effect pull-right">Active deposite</a>
+
+        @if (Route::currentRouteName() != 'admin.deposit.index')
+          <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposit.index')}} " class="btn btn-success waves-effect pull-right">Active Deposite</a>
         @endif
-        
-        @if (Route::currentRouteName() != 'admin.deposite.create')
+
+        @if (Route::currentRouteName() != 'admin.deposit.create')
         @if(Auth::user()->type == 'Admin')
-        
-        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposite.create')}} " class="btn btn-primary waves-effect pull-right">Add deposite</a>
+
+        <a style="margin-left: 10px;font-weight: bold;" href=" {{route('admin.deposit.create')}} " class="btn btn-primary waves-effect pull-right">Add Deposite</a>
         @endif
         @endif
-        
+
       </ol>
     </section>
 
@@ -49,7 +49,7 @@
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title" style="text-transform: uppercase;font-weight: bold;font-size: 18px;">{{$pageTitle}}</h3>
+          <h3 class="box-title">{{$pageTitle}}</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -59,18 +59,18 @@
         <!-- /.box-header -->
         <div class="box-body">
 
-    {!! Form::open(['route' => 'admin.deposite.store','enctype'=>'multipart/form-data',  'files'=> true, 'id'=>'depositeform', 'class' => '']) !!}
+          {!! Form::model($data, ['method' => 'PATCH', 'files'=> true, 'route'=> ['admin.deposit.update', $data->id],"class"=>"", 'id' => '']) !!}
 
-      @include('Deposite::deposite._form')
+      @include('Deposit::deposit._form')
 
       {!! Form::close() !!}
         </div>
       </div>
       <!-- /.box -->
 
-      
 
-      
+
+
 
     </section>
     <!-- /.content -->
@@ -78,4 +78,3 @@
 
 @endsection
 
-           
