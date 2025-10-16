@@ -197,7 +197,7 @@
     // For search deposit specific member data
     $(document).on('change', '#member_id_for_search', function () {
         var id = $(this).val();
-        var baseUrl = window.location.origin; // e.g., https://yourdomain.com
+        var baseUrl = window.location.origin;
 
         if (id && id !== "") {
             var route = baseUrl + '/admin-member/deposit-details/' + id;

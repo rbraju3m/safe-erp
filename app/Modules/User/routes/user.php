@@ -9,10 +9,10 @@ Route::prefix('admin-member')->name('admin.member.')->group(function () {
     Route::patch('update/{id}', 'UserController@update')->name('update');
     Route::get('inactive', 'UserController@inactivelist')->name('inactive');
 
-    Route::post('rollback/{id}', 'UserController@rollback')->name('rollback'); // changed to POST
-    Route::delete('destroy/{id}', 'UserController@destroy')->name('destroy'); // changed to DELETE
-    Route::delete('delete/{id}', 'UserController@delete')->name('delete'); // changed to DELETE
-    Route::delete('permanent-delete/{id}', 'UserController@permanentDelete')->name('permanentDelete'); // standardized
+    Route::get('rollback/{id}', 'UserController@rollback')->name('rollback'); // changed to POST
+    Route::get('destroy/{id}', 'UserController@destroy')->name('destroy'); // changed to DELETE
+    Route::get('delete/{id}', 'UserController@delete')->name('delete'); // changed to DELETE
+    Route::get('permanent-delete/{id}', 'UserController@permanentDelete')->name('permanentDelete'); // standardized
 
     Route::get('show/{id}', 'UserController@show')->name('show');
 

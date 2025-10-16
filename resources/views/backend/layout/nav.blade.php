@@ -26,7 +26,7 @@
             </li>
 
             {{-- Profit Sharing --}}
-            <li class="treeview {{ request()->routeIs('admin_profit_sharing*') || request()->routeIs('admin.member.*') ? 'menu-open active' : '' }}">
+            <li class="treeview {{ request()->routeIs('admin_profit_sharing*') ? 'menu-open active' : '' }}">
                 <a href="#">
                     <i class="fa fa-user-circle-o"></i> <span>Profit Sharing</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>

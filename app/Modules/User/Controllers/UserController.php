@@ -363,7 +363,7 @@ class UserController extends Controller
     }
 
 
-    public function parmanentDelete($id)
+    public function permanentDelete($id)
     {
         DB::beginTransaction();
 
