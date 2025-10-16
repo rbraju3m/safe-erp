@@ -459,66 +459,47 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-    public function showDeposite(){
+    public function showDeposit(){
         $response = [];
         $member_id = $_GET['member_id'];
 
-        $member = Member::where('member.id', $member_id)
-                        // ->where('status', 'active')
-                        ->select('member.*')
-                        ->first();
-        if (count($member) > 0) {
-            $deposite2019 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2019')
-                            ->select('*')
-                            ->get();
+        $member = Member::where('member.id', $member_id)->first();
 
-            $deposite2020 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2020')
-                            ->select('*')
-                            ->get();
+        if ($member) {
+            $years = range(2019, 2027);
+            $deposits = [];
 
-            $deposite2021 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2021')
-                            ->select('*')
-                            ->get();
+            foreach ($years as $year) {
+                $deposits[$year] = Deposite::where('member_id', $member_id)
+                    ->where('status', 'active')
+                    ->where('year', $year)
+                    ->get();
+            }
 
-            $deposite2022 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2022')
-                            ->select('*')
-                            ->get();
+            // get profits
+            $profits = [];
+            foreach ($years as $year) {
+                $profit = DB::table('profit_distribute')
+                    ->join('profit_distribute_member','profit_distribute_member.profit_id','=','profit_distribute.id')
+                    ->where('profit_distribute.profit_year', $year)
+                    ->where('profit_distribute_member.member_id', $member->id)
+                    ->first();
 
-            $deposite2023 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2023')
-                            ->select('*')
-                            ->get();
-            $deposite2024 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2024')
-                            ->select('*')
-                            ->get();
+                $profits[$year] = $profit ? $profit->profit_amount : 0;
+            }
 
-            $deposite2025 = Deposite::where('member_id', $member_id)
-                            ->where('status', 'active')
-                            ->where('year', '2025')
-                            ->select('*')
-                            ->get();
+            $view = \Illuminate\Support\Facades\View::make('User::user.showMemberDeposite', compact('member', 'deposits', 'years', 'profits'));
+            $response['result'] = 'success';
+            $response['content'] = $view->render();
+            $response['header'] = $member->name . ' Total Deposite View';
+        } else {
+            $response['result'] = 'error';
+            $response['message'] = 'Member not found.';
         }
-        $view = \Illuminate\Support\Facades\View::make('User::user.showMemberDeposite',compact('member','deposite2019','deposite2020','deposite2021','deposite2022','deposite2023','deposite2024','deposite2025'));
 
-        $contents = $view->render();
-        $response['result'] = 'success';
-        $response['content'] = $contents;
-
-        $response['header'] = $member->name.' Total Deposite View';
         return $response;
     }
+
 
     public function depositeDetails($id){
 

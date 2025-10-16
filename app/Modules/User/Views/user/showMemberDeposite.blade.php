@@ -1,29 +1,23 @@
+{{--
 
 <?php
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\DB;
 ?>
-<!-- Main content -->
     <section class="">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header p-2">
-
-              </div><!-- /.card-header -->
+              </div>
               <div class="card-body">
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <div class="box-body table-responsive no-padding">
-
               <table  id="example1" class="table table-bordered table-striped text-center">
-
                 <thead>
-
                 <tr>
-
-
                   <th>  </th>
                   <th> 2019 </th>
                   <th> 2020 </th>
@@ -36,7 +30,6 @@ use Illuminate\Support\Facades\DB;
                 </tr>
                 </thead>
 <tbody>
-
 <tr>
   <td style="padding: 3px;"><b>Registration</b></td>
   <td style="padding: 3px;">
@@ -53,12 +46,10 @@ use Illuminate\Support\Facades\DB;
               $Registration = $Registration+$element->amount;
             ?>
           @else
-
           @endif
         @endforeach
       @endif
   </td>
-
   <td style="padding: 3px;">
     <?php
       $total_2020 = 0;
@@ -72,12 +63,10 @@ use Illuminate\Support\Facades\DB;
               $Registration = $Registration+$element->amount;
               ?>
           @else
-
           @endif
         @endforeach
       @endif
   </td>
-
   <td style="padding: 3px;">
     <?php
       $total_2021 = 0;
@@ -90,7 +79,6 @@ use Illuminate\Support\Facades\DB;
             $Registration = $Registration+$element->amount;
             $total_2021 = $total_2021+$element->amount;?>
           @else
-
           @endif
         @endforeach
       @endif
@@ -108,7 +96,6 @@ use Illuminate\Support\Facades\DB;
             $Registration = $Registration+$element->amount;
             $total_2022 = $total_2022+$element->amount;?>
           @else
-
           @endif
         @endforeach
       @endif
@@ -144,7 +131,6 @@ use Illuminate\Support\Facades\DB;
               $Registration = $Registration+$element->amount;
             $total_2024 = $total_2024+$element->amount;?>
           @else
-
           @endif
         @endforeach
       @endif
@@ -171,7 +157,6 @@ use Illuminate\Support\Facades\DB;
     {{ $Registration }}
   </td>
 </tr>
-
 <tr>
   <td style="padding: 3px;"><b>January</b></td>
   <td style="padding: 3px;">
@@ -1654,7 +1639,6 @@ use Illuminate\Support\Facades\DB;
         @endforeach
       @endif
   </td>
-
   <td style="padding: 3px;">
       @if(isset($deposite2024))
         @foreach ($deposite2024 as $element)
@@ -1688,8 +1672,6 @@ use Illuminate\Support\Facades\DB;
   </td>
   <td style="padding: 3px;background-color: #18666f;color: #fff;font-weight: bold;">{{ $Yearly }}</td>
 </tr>
-
-
 <tr>
   <td style="padding: 3px;"><b>Profit</b></td>
   <td style="padding: 3px;"><b></b></td>
@@ -1742,8 +1724,6 @@ use Illuminate\Support\Facades\DB;
 
     <td style="padding: 3px;background-color: #18666f;color: #fff;font-weight: bold;">{{ $profit2025+$profit2024+$profit2023+$profit2022+$profit2021 }}</td>
 </tr>
-
-
 <tr>
   <td><b>Total</b></td>
   <td style="background: #064073;color: #fff;"><b>{{ $total_2019 }}</b></td>
@@ -1755,45 +1735,136 @@ use Illuminate\Support\Facades\DB;
   <td style="background: #064073;color: #fff;"><b>{{ $total_2025+$profit2025 }}</b></td>
   <td style="background: #064073;color: #fff;"><b>{{ $total_2025+$total_2019+$total_2024+$total_2023+$total_2022+$total_2021+$total_2020+$profit2025+$profit2024+$profit2023+$profit2022+$profit2021 }}</b></td>
 </tr>
-
-{{--<tr>
-    <td><b>Total</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2019+$profit2019 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2020+$profit2020 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2021+$profit2021 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2022+$profit2022 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2023+$profit2023 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2024+$profit2024 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2025+$profit2025 }}</b></td>
-    <td style="background: #064073;color: #fff;"><b>{{ $total_2025+$total_2019+$total_2024+$total_2023+$total_2022+$total_2021+$total_2020 }}</b></td>
-</tr>--}}
-
-  {{-- <h3 style="    background-color: #8c0707;
-    color: #fff;
-    padding: 5px 5px;
-    text-align: center;
-}"> Has No Deposite !</h3> --}}
 </tbody>
               </table>
             </div>
-            <!-- /.box-body -->
-
-
-
                   </div>
                 </div>
-                <!-- /.tab-content -->
-              </div><!-- /.card-body -->
+              </div>
             </div>
-            <!-- /.nav-tabs-custom -->
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
 
 
 
 
+
+--}}
+
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    @foreach($years as $year)
+                                        <th>{{ $year }}</th>
+                                    @endforeach
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{-- Registration Fees --}}
+                                <tr>
+                                    <td><b>Registration</b></td>
+                                    @php $registration_total = 0; @endphp
+                                    @foreach($years as $year)
+                                        <td>
+                                            @php $year_total = 0; @endphp
+                                            @foreach($deposits[$year] as $d)
+                                                @if($d->type == 'Registration')
+                                                    {{ $d->amount }}<br>
+                                                    @php $registration_total += $d->amount; $year_total += $d->amount; @endphp
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    @endforeach
+                                    <td style="background-color:#18666f;color:white;font-weight:bold">{{ $registration_total }}</td>
+                                </tr>
+
+                                {{-- Monthly (January to December) --}}
+                                @php
+                                    $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                                @endphp
+                                @foreach($months as $month)
+                                    <tr>
+                                        <td><b>{{ $month }}</b></td>
+                                        @php $month_total = 0; @endphp
+                                        @foreach($years as $year)
+                                            <td>
+                                                @php $monthly = 0; @endphp
+                                                @foreach($deposits[$year] as $d)
+                                                    @if(($d->month == $month) && ($d->type == 'Monthly' || $d->type == 'Monthly With Due'))
+                                                        {{ $d->amount }}<br>
+                                                        @php $month_total += $d->amount; $monthly += $d->amount; @endphp
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        @endforeach
+                                        <td style="background-color:#18666f;color:white;font-weight:bold">{{ $month_total }}</td>
+                                    </tr>
+                                @endforeach
+
+                                {{-- Yearly --}}
+                                <tr>
+                                    <td><b>Yearly</b></td>
+                                    @php $yearly_total = 0; @endphp
+                                    @foreach($years as $year)
+                                        <td>
+                                            @php $yearly = 0; @endphp
+                                            @foreach($deposits[$year] as $d)
+                                                @if($d->type == 'Yearly')
+                                                    {{ $d->amount }}<br>
+                                                    @php $yearly_total += $d->amount; $yearly += $d->amount; @endphp
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    @endforeach
+                                    <td style="background-color:#18666f;color:white;font-weight:bold">{{ $yearly_total }}</td>
+                                </tr>
+
+                                {{-- Profit --}}
+                                <tr>
+                                    <td><b>Profit</b></td>
+                                    @php $profit_total = 0; @endphp
+                                    @foreach($years as $year)
+                                        @php
+                                            $p = $profits[$year] ?? 0;
+                                            $profit_total += $p;
+                                        @endphp
+                                        <td><b>{{ $p > 0 ? $p : '' }}</b></td>
+                                    @endforeach
+                                    <td style="background-color:#18666f;color:white;font-weight:bold">{{ $profit_total }}</td>
+                                </tr>
+
+                                {{-- Year Totals --}}
+                                <tr>
+                                    <td><b>Total</b></td>
+                                    @php $grandTotal = 0; @endphp
+                                    @foreach($years as $year)
+                                        @php
+                                            $yearSum = $deposits[$year]->sum('amount') + ($profits[$year] ?? 0);
+                                            $grandTotal += $yearSum;
+                                        @endphp
+                                        <td style="background:#064073;color:white"><b>{{ $yearSum }}</b></td>
+                                    @endforeach
+                                    <td style="background:#064073;color:white"><b>{{ $grandTotal }}</b></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 

@@ -60,7 +60,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <a id="view_member_deposite" title="Member Total Deposite"
-                                               data-href="{{ route('admin.member.showDeposite') }}"
+                                               data-href="{{ route('admin.member.show_deposit') }}"
                                                member_id="{{ $values->id }}">
                                                 <img src="{{ asset('uploads/member/'.$values->image_link) }}" class="img-circle" style="width:50px;height:50px;" alt="User Image"><br>
                                                 {{ $values->name }}<br>{{ $values->mobile }}
