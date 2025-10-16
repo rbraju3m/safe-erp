@@ -403,31 +403,53 @@ class UserController extends Controller
      */
 
 
-    public function show($id){
-        $response = [];
-        $member_id = $id;
-        // echo $id;
-        // exit();
-        $member = Member::where('member.id', $id)
-                        // ->where('status', 'active')
-                        ->select('member.*')
-                        ->first();
+    public function show($id)
+    {
+        $member = Member::where('member.id', $id)->first();
 
+        if (!$member) {
+            return [
+                'result' => 'error',
+                'content' => '',
+                'header' => 'Member not found'
+            ];
+        }
+
+        // Last 10 Deposits
         $deposite = Deposite::where('member_id', $id)
-                        ->where('status', 'active')
-                        ->orderBy('id', 'desc')
-                        ->select('*')
-                        ->limit(10)
-                        ->get();
+            ->where('status', 'active')
+            ->orderBy('id', 'desc')
+            ->limit(10)
+            ->get();
 
-        $view = \Illuminate\Support\Facades\View::make('User::user.show',compact('member','deposite'));
+        // Calculate yearly totals (from 2019 to current year)
+        $startYear = 2019;
+        $currentYear = date('Y');
+        $yearTotals = [];
+
+        for ($year = $startYear; $year <= $currentYear; $year++) {
+            $yearTotals[$year] = Deposite::where('member_id', $id)
+                ->where('status', 'active')
+                ->where('year', $year)
+                ->sum('amount');
+        }
+
+        // Total sum of all deposits
+        $grandTotal = array_sum($yearTotals);
+
+        $view = \Illuminate\Support\Facades\View::make('User::user.show', compact(
+            'member', 'deposite', 'yearTotals', 'grandTotal', 'startYear', 'currentYear'
+        ));
+
         $contents = $view->render();
-        $response['result'] = 'success';
-        $response['content'] = $contents;
 
-        $response['header'] = $member->name.' Profile';
-        return $response;
+        return [
+            'result' => 'success',
+            'content' => $contents,
+            'header' => $member->name . ' Profile',
+        ];
     }
+
 
 
     /**
