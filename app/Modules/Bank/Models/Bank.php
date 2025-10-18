@@ -2,6 +2,7 @@
 
 namespace App\Modules\Bank\Models;
 
+use App\Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use App;
 use Auth;
@@ -25,7 +26,7 @@ class Bank extends Model {
         'image_link',
     ];
 
-    
+
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
@@ -42,5 +43,11 @@ class Bank extends Model {
             }
         });
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
 
 }

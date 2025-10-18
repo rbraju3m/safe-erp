@@ -113,7 +113,7 @@
             </li>
 
             {{-- File --}}
-            <li class="treeview {{ request()->routeIs('admin.file.*') ? 'menu-open active' : '' }}">
+            {{--<li class="treeview {{ request()->routeIs('admin.file.*') ? 'menu-open active' : '' }}">
                 <a href="#">
                     <i class="fa fa-file-word-o"></i> <span>File</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -123,7 +123,7 @@
                     <li><a href="{{ route('admin.file.index') }}"><i class="fa fa-list-ol"></i> Active File</a></li>
                     <li><a href="{{ route('admin.file.inactive') }}"><i class="fa fa-list-ol"></i> Inactive File</a></li>
                 </ul>
-            </li>
+            </li>--}}
 
             {{-- Gallery --}}
             <li class="treeview {{ request()->routeIs('admin.gallery.*') ? 'menu-open active' : '' }}">

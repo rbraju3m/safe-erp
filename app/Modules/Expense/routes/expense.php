@@ -49,9 +49,4 @@ Route::prefix('admin-expense')->name('admin.expense.')->group(function () {
         'uses' => 'ExpenseController@delete'
     ]);
 
-    Route::get('intotal/{year}', [
-        'as' => 'intotal',
-        'uses' => 'ExpenseController@intotal'
-    ]);
-
 });
