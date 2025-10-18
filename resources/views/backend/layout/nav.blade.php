@@ -133,7 +133,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.gallery.create') }}"><i class="fa fa-plus-circle"></i> Add Gallery</a></li>
-                    <li><a href="{{ route('admin.gallery.index') }}"><i class="fa fa-list-ol"></i> Active Gallery</a></li>
+                    <li><a href="{{ route('admin.gallery.folders') }}"><i class="fa fa-list-ol"></i> Active Gallery</a></li>
                     <li><a href="{{ route('admin.gallery.inactive') }}"><i class="fa fa-list-ol"></i> Inactive Gallery</a></li>
                 </ul>
             </li>

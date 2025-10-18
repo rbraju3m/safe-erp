@@ -1,46 +1,18 @@
 <?php
 
-	Route::get('admin-gallery-create', [
-	    'as' => 'admin.gallery.create',
-	    'uses' => 'GalleryController@create'
-	]);
+Route::prefix('admin-gallery')->name('admin.gallery.')->group(function () {
+    Route::get('folders', 'GalleryController@folderList')->name('folders');
 
-	Route::post('admin-gallery-store',[
-		'as' => 'admin.gallery.store',
-		'uses' => 'GalleryController@store'
-	]);
+    Route::get('create', 'GalleryController@create')->name('create');
+    Route::post('store', 'GalleryController@store')->name('store');
+    Route::get('index/{folder}', 'GalleryController@index')->name('index');
 
-	Route::get('admin-gallery-index',[
-		'as' => 'admin.gallery.index',
-		'uses' => 'GalleryController@index'
-	]);
+    Route::get('edit/{id}', 'GalleryController@edit')->name('edit');
+    Route::patch('update/{id}', 'GalleryController@update')->name('update');
 
-	Route::get('admin-gallery-edit/{id}',[
-		'as' => 'admin.gallery.edit',
-		'uses' => 'GalleryController@edit'
-	]);
+    Route::get('destroy/{id}', 'GalleryController@destroy')->name('destroy');
+    Route::get('inactive', 'GalleryController@inactivelist')->name('inactive');
+    Route::get('rollback/{id}', 'GalleryController@rollback')->name('rollback');
+    Route::get('delete/{id}', 'GalleryController@delete')->name('delete');
 
-	Route::PATCH('admin-gallery-update/{id}',[
-		'as' => 'admin.gallery.update',
-		'uses' => 'GalleryController@update'
-	]);
-
-	Route::get('admin-gallery-destroy/{id}',[
-		'as' => 'admin.gallery.destroy',
-		'uses' => 'GalleryController@destroy'
-	]);
-
-	Route::get('admin-gallery-inactive',[
-		'as' => 'admin.gallery.inactive',
-		'uses' => 'GalleryController@inactivelist'
-	]);
-
-	Route::get('admin-gallery-rollback/{id}',[
-		'as' => 'admin.gallery.rollback',
-		'uses' => 'GalleryController@rollback'
-	]);
-
-	Route::get('admin-gallery-delete/{id}',[
-		'as' => 'admin.gallery.delete',
-		'uses' => 'GalleryController@delete'
-	]);
+});

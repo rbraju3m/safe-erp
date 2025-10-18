@@ -11,6 +11,7 @@ class Gallery extends Model {
 
     protected $table = 'gallery';
     protected $fillable = [
+        'folder',
         'title',
         'discription',
         'image_link',
@@ -24,7 +25,7 @@ class Gallery extends Model {
         'created_by',
     ];
 
-    
+
 
     // TODO :: boot
     // boot() function used to insert logged user_id at 'created_by' & 'updated_by'
