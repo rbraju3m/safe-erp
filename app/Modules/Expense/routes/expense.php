@@ -1,52 +1,57 @@
 <?php
 
-	Route::get('admin-expense-create', [
-	    'as' => 'admin.expense.create',
-	    'uses' => 'ExpenseController@create'
-	]);
+use Illuminate\Support\Facades\Route;
 
-	Route::post('admin-expense-store',[
-		'as' => 'admin.expense.store',
-		'uses' => 'ExpenseController@store'
-	]);
+Route::prefix('admin-expense')->name('admin.expense.')->group(function () {
 
-	Route::get('admin-expense-index',[
-		'as' => 'admin.expense.index',
-		'uses' => 'ExpenseController@index'
-	]);
+    Route::get('create', [
+        'as' => 'create',
+        'uses' => 'ExpenseController@create'
+    ]);
 
-	Route::get('admin-expense-edit/{id}',[
-		'as' => 'admin.expense.edit',
-		'uses' => 'ExpenseController@edit'
-	]);
+    Route::post('store', [
+        'as' => 'store',
+        'uses' => 'ExpenseController@store'
+    ]);
 
-	Route::PATCH('admin-expense-update/{id}',[
-		'as' => 'admin.expense.update',
-		'uses' => 'ExpenseController@update'
-	]);
+    Route::get('index', [
+        'as' => 'index',
+        'uses' => 'ExpenseController@index'
+    ]);
 
-	Route::get('admin-expense-destroy/{id}',[
-		'as' => 'admin.expense.destroy',
-		'uses' => 'ExpenseController@destroy'
-	]);
+    Route::get('edit/{id}', [
+        'as' => 'edit',
+        'uses' => 'ExpenseController@edit'
+    ]);
 
-	Route::get('admin-expense-inactive',[
-		'as' => 'admin.expense.inactive',
-		'uses' => 'ExpenseController@inactivelist'
-	]);
+    Route::patch('update/{id}', [
+        'as' => 'update',
+        'uses' => 'ExpenseController@update'
+    ]);
 
-	Route::get('admin-expense-rollback/{id}',[
-		'as' => 'admin.expense.rollback',
-		'uses' => 'ExpenseController@rollback'
-	]);
+    Route::get('destroy/{id}', [
+        'as' => 'destroy',
+        'uses' => 'ExpenseController@destroy'
+    ]);
 
-	Route::get('admin-expense-delete/{id}',[
-		'as' => 'admin.expense.delete',
-		'uses' => 'ExpenseController@delete'
-	]);
+    Route::get('inactive', [
+        'as' => 'inactive',
+        'uses' => 'ExpenseController@inactivelist'
+    ]);
 
+    Route::get('rollback/{id}', [
+        'as' => 'rollback',
+        'uses' => 'ExpenseController@rollback'
+    ]);
 
-	Route::get('admin-expense-intotal/{year}',[
-		'as' => 'admin.expense.intotal',
-		'uses' => 'ExpenseController@intotal'
-	]);
+    Route::get('delete/{id}', [
+        'as' => 'delete',
+        'uses' => 'ExpenseController@delete'
+    ]);
+
+    Route::get('intotal/{year}', [
+        'as' => 'intotal',
+        'uses' => 'ExpenseController@intotal'
+    ]);
+
+});
