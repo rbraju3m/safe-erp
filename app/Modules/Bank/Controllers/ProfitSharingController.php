@@ -4,13 +4,12 @@ namespace App\Modules\Bank\Controllers;
 
 use App\Modules\Bank\Models\ProfitDistribute;
 use App\Modules\Bank\Models\ProfitDistributeMember;
-use App\Modules\Deposite\Models\Deposit;
+use App\Modules\Deposit\Models\Deposit;
 use App\Modules\Expense\Models\Expense;
 use App\Modules\User\Models\Member;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Bank\Requests;
-use Illuminate\Support\Facades\Input;
 
 
 use App\Modules\Bank\Models\Bank;
@@ -45,11 +44,6 @@ class ProfitSharingController extends Controller
         return view("Bank::profit-sharing.index", compact('pageTitle','ModuleTitle','data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $pageTitle = "Generate profit Sharing Information";
@@ -61,30 +55,6 @@ class ProfitSharingController extends Controller
             ->all();
 
         return view("Bank::profit-sharing.create", compact('pageTitle','ModuleTitle','activeMember'));
-    }
-
-    public function getYearWiseProfitExpense(){
-        $year = $_GET['year'];
-        $response = [];
-        $response['totalBankProfit'] = Bank::orderBy('id','desc')
-                                        ->where('status','active')
-                                        ->where('type','profit')
-                                        ->where('expense_year',$year)
-                                        ->select('*')
-                                        ->sum('amount');
-        $response['totalBankExpense'] = Bank::orderBy('id','desc')
-                                ->where('status','active')
-                                ->where('type','Expense')
-                                ->where('expense_year',$year)
-                                ->select('*')
-                                ->sum('amount');
-
-        $response['otherExpense'] = Expense::orderBy('id','desc')
-                                    ->where('status','active')
-                                    ->where('expense_year',$year)
-                                    ->select('*')
-                                    ->sum('amount');
-        return $response;
     }
 
     public function profitGenerate(Request $request){
@@ -144,6 +114,33 @@ class ProfitSharingController extends Controller
 
 //        dd($input['member_id'],$activeMember,$profitMember,$totalBankProfit,$totalBankExpense,$otherExpense);
     }
+
+
+
+    public function getYearWiseProfitExpense(){
+        $year = $_GET['year'];
+        $response = [];
+        $response['totalBankProfit'] = Bank::orderBy('id','desc')
+                                        ->where('status','active')
+                                        ->where('type','profit')
+                                        ->where('expense_year',$year)
+                                        ->select('*')
+                                        ->sum('amount');
+        $response['totalBankExpense'] = Bank::orderBy('id','desc')
+                                ->where('status','active')
+                                ->where('type','Expense')
+                                ->where('expense_year',$year)
+                                ->select('*')
+                                ->sum('amount');
+
+        $response['otherExpense'] = Expense::orderBy('id','desc')
+                                    ->where('status','active')
+                                    ->where('expense_year',$year)
+                                    ->select('*')
+                                    ->sum('amount');
+        return $response;
+    }
+
 
     /**
      * Store a newly created resource in storage.

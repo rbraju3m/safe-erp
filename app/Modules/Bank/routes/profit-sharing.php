@@ -4,15 +4,23 @@
 		'uses' => 'ProfitSharingController@create'
 	]);
 
+    Route::post('profit-generate',[
+        'as' => 'profit_generate',
+        'uses' => 'ProfitSharingController@profitGenerate'
+    ]);
+
+
+
+
+
+
+
 	Route::get('admin-year-wise-profit-expense',[
 		'as' => 'get_year_wise_profit_expense',
 		'uses' => 'ProfitSharingController@getYearWiseProfitExpense'
 	]);
 
-    Route::post('profit-generate',[
-        'as' => 'profit_generate',
-        'uses' => 'ProfitSharingController@profitGenerate'
-    ]);
+
 
     Route::post('profit-generate-store',[
         'as' => 'profit_generate_store',

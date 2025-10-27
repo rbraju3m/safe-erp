@@ -32,12 +32,10 @@
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
-                    @if (Auth::user()->type == 'Admin')
+                    @if (Auth::user()->type == 'Admin' && Auth::user()->email == '01729762344')
                         <li><a href="{{ route('admin_profit_sharing') }}"><i class="fa fa-plus-circle"></i> Add Profit Sharing</a></li>
                     @endif
                     <li><a href="{{ route('admin_profit_sharing_index') }}"><i class="fa fa-list-ol"></i> Profit Sharing Index</a></li>
-                    <li><a href="{{ route('admin.member.index') }}"><i class="fa fa-list-ol"></i> Active Member</a></li>
-                    <li><a href="{{ route('admin.member.inactive') }}"><i class="fa fa-list-ol"></i> Inactive Member</a></li>
                 </ul>
             </li>
 

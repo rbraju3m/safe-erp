@@ -4,46 +4,26 @@
 
 
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
 
       <h1 style="text-transform: uppercase;font-weight: bold;font-size: 18px;">
 
         {{$ModuleTitle}}
-        {{-- <small>Preview</small> --}}
       </h1>
 
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        {{--<li><a href="{{route('admin.bank.index')}}">{{$ModuleTitle.' > '}}</a><a href="{{route('admin.bank.create')}}">{{$pageTitle}}</a></li>--}}
       </ol>
 
       <ol class="breadcrumb breadcrumbbutton">
         <a style="margin-left: 2px;font-weight: bold;" href="javascript:history.back()" class="btn btn-warning waves-effect pull-right">Back</a>
 
-        {{--@if (Route::currentRouteName() != 'admin.bank.inactive')
-        <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.bank.inactive')}} " class="btn btn-danger waves-effect pull-right">Inactive Bank Profit / EX</a>
-        @endif
-
-        @if (Route::currentRouteName() != 'admin.bank.index')
-          <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.bank.index')}} " class="btn btn-success waves-effect pull-right">Active Bank Profit / EX</a>
-        @endif
-
-        @if (Route::currentRouteName() != 'admin.bank.create')
-        @if(Auth::user()->type == 'Admin')
-
-        <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.bank.create')}} " class="btn btn-primary waves-effect pull-right">Add Bank Profit / EX</a>
-        @endif
-        @endif--}}
-
       </ol>
     </section>
 
-    <!-- Main content -->
     <section class="content">
        @include('backend.layout.msg')
 
-      <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
           <h3 class="box-title" style="text-transform: uppercase;font-weight: bold;font-size: 18px;">{{$pageTitle}}</h3>
@@ -53,7 +33,6 @@
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
           </div>
         </div>
-        <!-- /.box-header -->
         <div class="box-body">
 
     {!! Form::open(['route' => 'profit_generate','enctype'=>'multipart/form-data',  'files'=> true]) !!}
@@ -63,7 +42,6 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-{{--                        <a data-href="{{route('get_year_wise_profit_expense')}}" id="get_year_wise_profit_expense"></a>--}}
                         {!! Form::label(' year', 'Select Year', array('class' => 'col-form-label')) !!}
 
                         <span style="color: red"> *</span>
@@ -73,6 +51,8 @@
                         $year['2023'] = '2023';
                         $year['2024'] = '2024';
                         $year['2025'] = '2025';
+                        $year['2026'] = '2026';
+                        $year['2027'] = '2027';
                         ?>
                         {!! Form::Select('year',$year,$input?$input['year']:null,['class'=>'form-control select2','placeholder'=>'Choose Year','required'=>true]) !!}
                         <span style="color: red">{!! $errors->first('year') !!}</span>
@@ -116,7 +96,6 @@
                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
                    </div>
                </div>
-               <!-- /.box-header -->
                <div class="box-body">
 
                    {!! Form::open(['route' => 'profit_generate_store','enctype'=>'multipart/form-data',  'files'=> true]) !!}
@@ -162,8 +141,7 @@
                                     <td>{{$index}}</td>
                                     <td>{{$member}}</td>
                                     @php
-                                        #$memberTotalDipositAmount = DB::table('deposit')->where('member_id',$id)->sum('amount');
-                                        $memberTotalDipositAmount = DB::table('deposit')->where('member_id',$id)->whereBetween('year', [2019, $input['year']])->sum('amount');
+                                        $memberTotalDipositAmount = DB::table('deposite')->where('member_id',$id)->whereBetween('year', [2019, $input['year']])->sum('amount');
                                         $memberTotalDipositAmount = $memberTotalDipositAmount-100;
 
                                     @endphp
@@ -177,7 +155,6 @@
                                         $personWiseProfit = ($netProfit*$memberTotalDipositAmount);
                                         $personWiseProfit = ($personWiseProfit/$netAmount);
                                         $totalPersonProfit = $totalPersonProfit + $personWiseProfit;
-                                        /*dd($netProfit,$memberTotalDipositAmount,$netAmount);*/
                                     @endphp
                                     <td>
                                         {{number_format($personWiseProfit,2)}}
@@ -211,9 +188,7 @@
                    {!! Form::close() !!}
                </div>
            </div>
-      <!-- /.box -->
     </section>
-    <!-- /.content -->
   </div>
 
 @endsection
@@ -233,13 +208,6 @@
                 }
             }).done(function( response ) {
                 alert(response.totalBankProfit)
-                /*if(response.result == 'success'){
-                    $('.modal-title').text(response.header);
-                    $('.modal .modal-body').html(response.content);
-                    $('.modal').modal('show');
-                }else{
-                    alert('Something went wrong');
-                }*/
             }).fail(function( jqXHR, textStatus ) {
 
             });
