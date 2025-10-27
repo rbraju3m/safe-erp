@@ -14,7 +14,12 @@
                 <select id="folder" name="folder" class="form-control">
                     <option value="">Select Folder</option>
                     @foreach($folders ?? [] as $folderName)
-                        <option value="{{ $folderName }}" {{ old('folder') == $folderName ? 'selected' : '' }}>{{ $folderName }}</option>
+                        @if($data)
+                            <option value="{{ $folderName }}" {{ $data->folder == $folderName ? 'selected' : '' }}>{{ $folderName }}</option>
+                        @else
+                            <option value="{{ $folderName }}" {{ old('folder') == $folderName ? 'selected' : '' }}>{{ $folderName }}</option>
+                        @endif
+
                     @endforeach
                     <option value="new_folder" {{ old('folder') == 'new_folder' ? 'selected' : '' }}>+ Create New Folder</option>
                 </select>

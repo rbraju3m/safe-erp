@@ -2,265 +2,236 @@
 
 namespace App\Modules\Gallery\Controllers;
 
-use App\Modules\Gallery\Requests\GalleryRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modules\Gallery\Requests;
-use Illuminate\Support\Facades\Input;
 use App\Modules\Gallery\Models\Gallery;
-
-
-use DB;
-use Session;
-use Image;
-use File;
-use Storage;
-use App;
-Use Auth;
-
+use App\Modules\Gallery\Requests\GalleryRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Intervention\Image\Facades\Image;
 
 class GalleryController extends Controller
 {
-
     /**
-     * @return bool
+     * Display a list of folders with image counts.
      */
-    protected function isGetRequest(){
-        return Input::server("REQUEST_METHOD") == "GET";
-    }
-
-
-    /**
-     * @return bool
-     */
-    protected function isPostRequest(){
-        return Input::server("REQUEST_METHOD") == "POST";
-    }
-
     public function folderList()
     {
-        // Get all unique folders and count of images
-        $folders = Gallery::select('folder')
-            ->whereNotNull('folder')
-            ->selectRaw('COUNT(*) as image_count')
+        $folders = Gallery::whereNotNull('folder')
+            ->select('folder', DB::raw('COUNT(*) as image_count'))
             ->groupBy('folder')
-            ->orderBy('folder', 'asc')
+            ->orderBy('folder')
             ->get();
 
         return view("Gallery::gallery.folders", compact('folders'));
     }
 
-
-    public function index($folder)
+    /**
+     * Show all active images within a folder.
+     */
+    public function index(string $folder)
     {
-        $pageTitle = "List of Gallery Information";
-        $ModuleTitle = "Gallery Information";
+        $pageTitle   = "Gallery List";
+        $ModuleTitle = "{$folder} Gallery";
 
+        $data = Gallery::where([
+            ['status', 'active'],
+            ['folder', $folder],
+        ])
+            ->orderByDesc('id')
+            ->get();
 
-        // Get gallery  data
-        $data = Gallery::where('status','active')
-            ->where('folder',$folder)
-                ->select('*')
-                ->orderby('id','desc')
-                ->get();
-
-        return view("Gallery::gallery.index", compact('pageTitle','ModuleTitle','data'));
+        return view("Gallery::gallery.index", compact('pageTitle', 'ModuleTitle', 'data'));
     }
 
-
+    /**
+     * Show create form.
+     */
     public function create()
     {
-        $pageTitle = "Add Gallery Information";
-        $ModuleTitle = "Gallery Information";
-        $folders = Gallery::select('folder')->whereNotNull('folder')->distinct()->pluck('folder','folder');
+        $pageTitle   = "Add Gallery Image";
+        $ModuleTitle = "Gallery Management";
 
-        return view("Gallery::gallery.create", compact('pageTitle','ModuleTitle','folders'));
+        $folders = Gallery::whereNotNull('folder')->distinct()->pluck('folder', 'folder');
+
+        return view("Gallery::gallery.create", compact('pageTitle', 'ModuleTitle', 'folders'));
     }
 
+    /**
+     * Store new gallery image.
+     */
     public function store(GalleryRequest $request)
     {
-        $input = $request->all();
-        $name = preg_replace('/\s+/', '', $input['title']);
+        $input = $request->validated();
 
-        // Decide folder
-        $folder = $request->folder === 'new_folder' ? trim($request->new_folder) : $request->folder;
+        // Folder sanitization
+        $folder = $request->folder === 'new_folder'
+            ? trim(preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->new_folder))
+            : $request->folder;
 
-        // Create folder if new
-        $folder_path = public_path('uploads/gallery/');
-        if(!file_exists($folder_path)){
-            mkdir($folder_path, 0755, true);
+        $uploadDir = public_path('uploads/gallery/');
+        if (!File::exists($uploadDir)) {
+            File::makeDirectory($uploadDir, 0755, true);
         }
 
-        $input['folder'] = $folder;
-        $input['image_date'] = date("d-m-Y");
-        $input['image_day'] = date("l");
-        $input['image_month'] = date("F");
-        $input['image_year'] = date("Y");
-        $input['image_time'] = date("h:i:sa");
+        $input['folder']      = $folder;
+        $input['image_date']  = now()->format('d-m-Y');
+        $input['image_day']   = now()->format('l');
+        $input['image_month'] = now()->format('F');
+        $input['image_year']  = now()->format('Y');
+        $input['image_time']  = now()->format('h:i:sa');
+        $input['status']  = 'active';
+        $input['created_by']  = Auth::id();
 
-        if($request->hasFile('image_link')){
-            $avatar = $request->file('image_link');
-            $gallery_img_title = $name.'-'.time().rand(5).'.'.$avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(600, 400)->save($folder_path . '/' . $gallery_img_title);
-            $input['image_link'] = $gallery_img_title;
+        if ($request->hasFile('image_link')) {
+            $file     = $request->file('image_link');
+            $filename = preg_replace('/\s+/', '', $input['title']).'-'.time().'.'.$file->getClientOriginalExtension();
+
+            Image::make($file)
+                ->resize(600, 400)
+                ->save($uploadDir.$filename);
+
+            $input['image_link'] = $filename;
         }
 
         DB::beginTransaction();
+
         try {
-            $gallery_data = Gallery::create($input);
+            Gallery::create($input);
             DB::commit();
 
             Session::flash('message', 'Gallery added successfully!');
-            return redirect()->route('admin.gallery.index');
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            Session::flash('danger', $e->getMessage());
-            return redirect()->back()->withInput();
+            return redirect()->route('admin.gallery.index', $folder);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Gallery Store Error: '.$e->getMessage());
+            Session::flash('danger', 'Error saving gallery. Please try again.');
+            return back()->withInput();
         }
     }
+
+    /**
+     * Edit existing gallery.
+     */
     public function edit($id)
     {
-        $pageTitle = "Update Gallery Information";
-        $ModuleTitle = "Gallery Information";
+        $pageTitle   = "Edit Gallery Image";
+        $ModuleTitle = "Gallery Management";
 
-        // Find news
-        $data = Gallery::where('id', $id)
-                        ->select('*')
-                        ->first();
-        $folders = Gallery::select('folder')->whereNotNull('folder')->distinct()->pluck('folder','folder');
+        $data = Gallery::findOrFail($id);
+        $folders = Gallery::whereNotNull('folder')->distinct()->pluck('folder', 'folder');
 
-        return view("Gallery::gallery.edit", compact('pageTitle','ModuleTitle','data','folders'));
+        return view("Gallery::gallery.edit", compact('pageTitle', 'ModuleTitle', 'data', 'folders'));
     }
 
-
+    /**
+     * Update gallery.
+     */
     public function update(GalleryRequest $request, $id)
     {
         $gallery = Gallery::findOrFail($id);
-        $input = $request->all();
+        $input   = $request->validated();
 
-        $folder = $request->folder === 'new_folder' ? trim($request->new_folder) : $request->folder;
+        $folder = $request->folder === 'new_folder'
+            ? trim(preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->new_folder))
+            : $request->folder;
 
-        $folder_path = public_path('uploads/gallery/');
-        if(!file_exists($folder_path)){
-            mkdir($folder_path, 0755, true);
+        $uploadDir = public_path('uploads/gallery/');
+        if (!File::exists($uploadDir)) {
+            File::makeDirectory($uploadDir, 0755, true);
         }
 
-        if($request->hasFile('image_link')){
-            // Delete old image
-            $old_image = $gallery->image_link;
-            if(file_exists(public_path('uploads/gallery/'.$old_image))){
-                unlink(public_path('uploads/gallery/'.$old_image));
+        if ($request->hasFile('image_link')) {
+            if ($gallery->image_link && File::exists($uploadDir.$gallery->image_link)) {
+                File::delete($uploadDir.$gallery->image_link);
             }
 
-            $image = $request->file('image_link');
-            $image_name = preg_replace('/\s+/', '', $input['title']).'-'.time().rand(5).'.'.$image->getClientOriginalExtension();
-            $image->move($folder_path, $image_name);
-            $input['image_link'] = $image_name;
+            $file     = $request->file('image_link');
+            $filename = preg_replace('/\s+/', '', $input['title']).'-'.time().'.'.$file->getClientOriginalExtension();
+
+            Image::make($file)
+                ->resize(600, 400)
+                ->save($uploadDir.$filename);
+
+            $input['image_link'] = $filename;
         }
 
         $input['folder'] = $folder;
-
         $gallery->update($input);
 
         Session::flash('message', 'Gallery updated successfully!');
-        return redirect()->route('admin.gallery.index');
+        return redirect()->route('admin.gallery.index', $folder);
     }
 
+    /**
+     * Move gallery to inactive.
+     */
     public function destroy($id)
     {
-        DB::beginTransaction();
-        try {
-            $gallery = DB::table('gallery')->where('id', $id);
+        $gallery = Gallery::find($id);
 
-            if ($gallery->exists()) {
-                $gallery->update([
-                    'status' => 'inactive',
-                    'updated_by' => Auth::user()->id,
-                ]);
-
-                DB::commit();
-                Session::flash('warning', 'Gallery moved to Inactive List!');
-            } else {
-                DB::rollBack();
-                Session::flash('danger', 'Gallery not found.');
-            }
-
-            return redirect()->route('admin.gallery.inactive');
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            Session::flash('danger', $e->getMessage());
-            return redirect()->back();
+        if (!$gallery) {
+            Session::flash('danger', 'Gallery not found.');
+            return back();
         }
+
+        $gallery->update([
+            'status'     => 'inactive',
+            'updated_by' => Auth::id(),
+        ]);
+
+        Session::flash('warning', 'Gallery moved to inactive list!');
+        return redirect()->route('admin.gallery.inactive');
     }
 
-
+    /**
+     * List inactive galleries.
+     */
     public function inactivelist()
     {
-        $pageTitle = "List of Inactive Gallery";
-        $ModuleTitle = "Gallery Information";
-        $Cancel = 'Cancel';
+        $pageTitle   = "Inactive Gallery";
+        $ModuleTitle = "Gallery Management";
+        $Cancel      = 'Cancel';
 
-        // Fetch all inactive galleries
         $data = Gallery::where('status', 'inactive')
-            ->orderBy('updated_at', 'desc')
+            ->orderByDesc('updated_at')
             ->get();
 
-        // Pass to view
         return view("Gallery::gallery.index", compact('pageTitle', 'ModuleTitle', 'data', 'Cancel'));
     }
 
-
+    /**
+     * Rollback (reactivate) gallery.
+     */
     public function rollback($id)
     {
-        DB::beginTransaction();
-        try {
-            // Find the gallery
-            $gallery = Gallery::findOrFail($id);
+        $gallery = Gallery::findOrFail($id);
+        $gallery->update([
+            'status'     => 'active',
+            'updated_by' => Auth::id(),
+        ]);
 
-            // Update status to active
-            $gallery->status = 'active';
-            $gallery->updated_by = Auth::user()->id;
-            $gallery->save();
-
-            DB::commit();
-
-            Session::flash('message', 'Gallery rolled back successfully!');
-            return redirect()->route('admin.gallery.inactive');
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            Session::flash('danger', 'Error: ' . $e->getMessage());
-            return redirect()->back();
-        }
+        Session::flash('message', 'Gallery restored successfully!');
+        return redirect()->route('admin.gallery.inactive');
     }
 
+    /**
+     * Permanently delete gallery.
+     */
     public function delete($id)
     {
-        DB::beginTransaction();
-        try {
-            // Find the gallery
-            $gallery = Gallery::findOrFail($id);
+        $gallery = Gallery::findOrFail($id);
 
-            // Delete the image file if it exists
-            $imagePath = public_path('uploads/gallery/' . $gallery->image_link);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
-
-            // Delete the record
-            $gallery->delete();
-
-            DB::commit();
-            Session::flash('message', 'Gallery deleted successfully!');
-            return redirect()->route('admin.gallery.inactive');
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            Session::flash('danger', 'Error: ' . $e->getMessage());
-            return redirect()->back();
+        $path = public_path('uploads/gallery/'.$gallery->image_link);
+        if (File::exists($path)) {
+            File::delete($path);
         }
-    }
 
+        $gallery->delete();
+
+        Session::flash('message', 'Gallery permanently deleted.');
+        return redirect()->route('admin.gallery.inactive');
+    }
 }

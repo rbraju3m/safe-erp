@@ -11,7 +11,7 @@
 
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="{{route('admin.gallery.index')}}">{{$ModuleTitle.' > '}}</a><a
+                <li><a href="">{{$ModuleTitle.' > '}}</a><a
                         href="{{route('admin.gallery.create')}}">{{$pageTitle}}</a></li>
             </ol>
 
@@ -24,10 +24,10 @@
                        class="btn btn-danger waves-effect pull-right">Inactive Gallery</a>
                 @endif
 
-                @if (Route::currentRouteName() != 'admin.gallery.index')
+                {{--@if (Route::currentRouteName() != 'admin.gallery.index')
                     <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.gallery.index')}} "
                        class="btn btn-success waves-effect pull-right">Active Gallery</a>
-                @endif
+                @endif--}}
 
                 @if (Route::currentRouteName() != 'admin.gallery.create')
                     @if(Auth::user()->type == 'Admin')
