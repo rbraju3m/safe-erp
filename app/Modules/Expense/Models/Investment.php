@@ -7,22 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Investment extends Model {
 
-    protected $table = 'investment';
+    protected $table = 'investments';
     protected $fillable = [
+        'project_id',
         'name',
         'amount',
-        'ex_date',
         'note',
-        'investment_day',
-        'investment_month',
-        'investment_year',
-        'investment_time',
         'investment_date',
         'status',
         'updated_by',
         'created_by',
-        'image_link',
+        'image',
     ];
+
+    protected $casts = [
+        'investment_date' => 'datetime',
+    ];
+
+
+    public function project() {
+        return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
 
 
 

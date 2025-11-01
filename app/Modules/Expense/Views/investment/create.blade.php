@@ -10,29 +10,29 @@
 
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="{{route('admin.expense.index')}}">{{$ModuleTitle.' > '}}</a><a
-                        href="{{route('admin.expense.create')}}">{{$pageTitle}}</a></li>
+                <li><a href="{{route('admin.investment.index')}}">{{$ModuleTitle.' > '}}</a><a
+                        href="{{route('admin.investment.create')}}">{{$pageTitle}}</a></li>
             </ol>
 
             <ol class="breadcrumb breadcrumbbutton">
                 <a style="margin-left: 2px;font-weight: bold;" href="javascript:history.back()"
                    class="btn btn-warning waves-effect pull-right">Back</a>
 
-                @if (Route::currentRouteName() != 'admin.expense.inactive')
-                    <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.expense.inactive')}} "
-                       class="btn btn-danger waves-effect pull-right">Inactive expense</a>
+                @if (Route::currentRouteName() != 'admin.investment.inactive')
+                    <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.investment.inactive')}} "
+                       class="btn btn-danger waves-effect pull-right">Inactive investment</a>
                 @endif
 
-                @if (Route::currentRouteName() != 'admin.expense.index')
-                    <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.expense.index')}} "
-                       class="btn btn-success waves-effect pull-right">Active expense</a>
+                @if (Route::currentRouteName() != 'admin.investment.index')
+                    <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.investment.index')}} "
+                       class="btn btn-success waves-effect pull-right">Active investment</a>
                 @endif
 
-                @if (Route::currentRouteName() != 'admin.expense.create')
+                @if (Route::currentRouteName() != 'admin.investment.create')
                     @if(Auth::user()->type == 'Admin')
 
-                        <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.expense.create')}} "
-                           class="btn btn-primary waves-effect pull-right">Add expense</a>
+                        <a style="margin-left: 2px;font-weight: bold;" href=" {{route('admin.investment.create')}} "
+                           class="btn btn-primary waves-effect pull-right">Add investment</a>
                     @endif
                 @endif
 
@@ -56,9 +56,9 @@
                 </div>
                 <div class="box-body">
 
-                    {!! Form::open(['route' => 'admin.expense.store','enctype'=>'multipart/form-data',  'files'=> true, 'id'=>'expenseform', 'class' => '']) !!}
+                    {!! Form::open(['route' => 'admin.investment.store','enctype'=>'multipart/form-data',  'files'=> true, 'id'=>'investmentform', 'class' => '']) !!}
 
-                    @include('Expense::expense._form')
+                    @include('Expense::investment._form')
 
                     {!! Form::close() !!}
                 </div>

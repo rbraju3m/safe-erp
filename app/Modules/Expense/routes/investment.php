@@ -6,47 +6,47 @@ Route::prefix('admin-investment')->name('admin.investment.')->group(function () 
 
     Route::get('create', [
         'as' => 'create',
-        'uses' => 'ExpenseController@create'
+        'uses' => 'InvestmentController@create'
     ]);
 
     Route::post('store', [
         'as' => 'store',
-        'uses' => 'ExpenseController@store'
+        'uses' => 'InvestmentController@store'
     ]);
 
     Route::get('index', [
         'as' => 'index',
-        'uses' => 'ExpenseController@index'
+        'uses' => 'InvestmentController@index'
     ]);
 
     Route::get('edit/{id}', [
         'as' => 'edit',
-        'uses' => 'ExpenseController@edit'
+        'uses' => 'InvestmentController@edit'
     ]);
 
     Route::patch('update/{id}', [
         'as' => 'update',
-        'uses' => 'ExpenseController@update'
+        'uses' => 'InvestmentController@update'
     ]);
 
     Route::get('destroy/{id}', [
         'as' => 'destroy',
-        'uses' => 'ExpenseController@destroy'
+        'uses' => 'InvestmentController@destroy'
     ]);
 
     Route::get('inactive', [
         'as' => 'inactive',
-        'uses' => 'ExpenseController@inactivelist'
+        'uses' => 'InvestmentController@inactivelist'
     ]);
 
     Route::get('rollback/{id}', [
         'as' => 'rollback',
-        'uses' => 'ExpenseController@rollback'
+        'uses' => 'InvestmentController@rollback'
     ]);
 
     Route::get('delete/{id}', [
         'as' => 'delete',
-        'uses' => 'ExpenseController@delete'
+        'uses' => 'InvestmentController@delete'
     ]);
 
 });

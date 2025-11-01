@@ -21,10 +21,11 @@ class InvestmentRequest extends FormRequest
     {
 
         return [
-            'name'       => 'required',
-            'amount'          => 'required',
-            'ex_date'           => 'required',
-            'status'            => 'required',
+            'project_id' => 'required',
+            'name' => 'required',
+            'amount' => 'required',
+            'investment_date' => 'required',
+            'status' => 'required',
         ];
 
     }

@@ -6,34 +6,43 @@ use Illuminate\Support\Facades\URL;
         <div class="col-md-12">
             <div class="form-group">
                 <button type="button" class="btn btn-danger btn-block" style="font-size: 18px;font-weight: bold;text-transform: uppercase;">
-                    Expense Information
+                    Investment Information
                 </button>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
-                {!! Form::label('name', 'Expense Name', ['class' => 'col-form-label']) !!}
+                {!! Form::label('project_id', 'Choose project', ['class' => 'col-form-label']) !!}
                 <span style="color: red">*</span>
-                {!! Form::text('name', old('name'), ['id'=>'name','class'=>'form-control','placeholder'=>'Enter Expense Name']) !!}
+                {!! Form::select('project_id', $projects, old('project_id'), ['id'=>'project_id', 'class'=>'form-control select2']) !!}
+                <span style="color: red">{!! $errors->first('project_id') !!}</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('name', 'Investment Name', ['class' => 'col-form-label']) !!}
+                <span style="color: red">*</span>
+                {!! Form::text('name', old('name'), ['id'=>'name','class'=>'form-control','placeholder'=>'Enter Investment Name']) !!}
                 <span style="color: red">{!! $errors->first('name') !!}</span>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
-                {!! Form::label('amount', 'Expense Amount', ['class' => 'col-form-label']) !!}
+                {!! Form::label('amount', 'Investment Amount', ['class' => 'col-form-label']) !!}
                 <span style="color: red">*</span>
-                {!! Form::text('amount', old('amount'), ['id'=>'amount','class'=>'form-control','placeholder'=>'Enter Expense Amount']) !!}
+                {!! Form::text('amount', old('amount'), ['id'=>'amount','class'=>'form-control','placeholder'=>'Enter Investment Amount']) !!}
                 <span style="color: red">{!! $errors->first('amount') !!}</span>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
-                {!! Form::label('ex_date', 'Expense Date', ['class' => 'col-form-label']) !!}
-                {!! Form::date('ex_date', old('ex_date', date('Y-m-d')), ['id'=>'expense_date','class'=>'form-control']) !!}
-                <span style="color: red">{!! $errors->first('ex_date') !!}</span>
+                {!! Form::label('investment_date', 'Investment Date', ['class' => 'col-form-label']) !!}
+                {!! Form::date('investment_date', old('investment_date', date('Y-m-d')), ['id'=>'investment_date','class'=>'form-control']) !!}
+                <span style="color: red">{!! $errors->first('investment_date') !!}</span>
             </div>
         </div>
 
@@ -47,25 +56,25 @@ use Illuminate\Support\Facades\URL;
 
         <div class="col-md-4">
             <div class="form-group">
-                {!! Form::label('image_link', 'Expense Attachment', ['class'=>'col-form-label']) !!}
+                {!! Form::label('image', 'Investment Attachment', ['class'=>'col-form-label']) !!}
                 <div style="position:relative;">
                     <a class='btn btn-primary btn-sm font-10' href='javascript:;'>
                         Choose File...
-                        <input name="image_link" onchange="readURL(this);" type="file"
+                        <input name="image" onchange="readURL(this);" type="file"
                                style='position:absolute;z-index:2;top:0;left:0;
 							filter: alpha(opacity=0);opacity:0;background-color:transparent;color:transparent;'>
                     </a>
                     &nbsp;
-                    <span style="color: red">{!! $errors->first('image_link') !!}</span>
+                    <span style="color: red">{!! $errors->first('image') !!}</span>
                     <span class='label label-info' id="upload-file-info"></span>
                     <div class="form-group">
                         <img id="blah" src="#" alt="."/>
                     </div>
                 </div>
 
-                @if(isset($data->image_link) && !empty($data->image_link))
-                    <a target="_blank" href="{{ URL::to('uploads/expense/'.$data->image_link) }}" class="btn btn-primary btn-sm font-10" style="margin-top: 5px;">
-                        <img style="height: 80px;width: 80px;" src="{{ URL::to('uploads/expense/'.$data->image_link) }}">
+                @if(isset($data->image) && !empty($data->image))
+                    <a target="_blank" href="{{ URL::to('uploads/investment/'.$data->image) }}" class="btn btn-primary btn-sm font-10" style="margin-top: 5px;">
+                        <img style="height: 80px;width: 80px;" src="{{ URL::to('uploads/investment/'.$data->image) }}">
                     </a>
                 @endif
             </div>

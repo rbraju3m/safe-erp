@@ -4,6 +4,7 @@ namespace App\Modules\Expense\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Expense\Models\Investment;
+use App\Modules\Expense\Models\Project;
 use App\Modules\Expense\Requests\InvestmentRequest;
 use Auth;
 use DB;
@@ -22,12 +23,12 @@ class InvestmentController extends Controller
         $moduleTitle = "Investment Information";
 
         // ✅ Use Eloquent, select only needed fields (better performance)
-        $data = Investment::where('status', 'active')
+        $data = Investment::where('status', 'active')->with('project')
             ->latest('id')
             ->get();
 
         // ✅ Return view with compact variables
-        return view('expense::investment.index', compact('pageTitle', 'moduleTitle', 'data'));
+        return view('Expense::investment.index', compact('pageTitle', 'moduleTitle', 'data'));
     }
 
 
@@ -35,24 +36,17 @@ class InvestmentController extends Controller
     {
         $pageTitle = "Add Investment Information";
         $ModuleTitle = "Investment Information";
-
-        return view("expense::investment.create", compact('pageTitle','ModuleTitle'));
+        $projects = Project::where('status', 1)->pluck('name', 'id')->toArray();
+        return view("Expense::investment.create", compact('pageTitle','ModuleTitle','projects'));
     }
 
     public function store(InvestmentRequest $request)
     {
         $input = $request->all();
 
-        // ✅ Use consistent naming with your form fields
-        $input['expense_date']  = now()->format('d-m-Y');
-        $input['expense_day']   = now()->format('l');
-        $input['expense_month'] = now()->format('F');
-        $input['expense_year']  = now()->format('Y');
-        $input['expense_time']  = now()->format('h:i:sa');
-
         // ✅ Handle file upload safely
-        if ($request->hasFile('image_link')) {
-            $avatar = $request->file('image_link');
+        if ($request->hasFile('image')) {
+            $avatar = $request->file('image');
             $fileName = str_replace(' ', '_', $input['name']) . '-' . time() . '.' . $avatar->getClientOriginalExtension();
 
             // Make directory if not exists
@@ -69,12 +63,12 @@ class InvestmentController extends Controller
                 })
                 ->save($destinationPath . $fileName);
 
-            $input['image_link'] = $fileName;
+            $input['image'] = $fileName;
         }
 
         DB::beginTransaction();
         try {
-            $investment = Investment::create($input);
+            Investment::create($input);
 
             DB::commit();
             Session::flash('message', 'Investment added successfully!');
@@ -85,10 +79,6 @@ class InvestmentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-
-            // Log error instead of printing directly in production
-            \Log::error('Investment store error: ' . $e->getMessage());
-
             Session::flash('danger', 'Error: ' . $e->getMessage());
             return back()->withInput();
         }
