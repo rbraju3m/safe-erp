@@ -83,6 +83,19 @@
                     <li><a href="{{ route('admin.expense.inactive') }}"><i class="fa fa-list-ol"></i> Inactive Expense</a></li>
                 </ul>
             </li>
+            <li class="treeview {{ request()->routeIs('admin.investment.*') ? 'menu-open active' : '' }}">
+                <a href="#">
+                    <i class="fa fa-minus-square"></i> <span>Investment</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    @if (Auth::user()->type == 'Admin')
+                        <li><a href="{{ route('admin.investment.create') }}"><i class="fa fa-plus-circle"></i> Add Investment</a></li>
+                    @endif
+                    <li><a href="{{ route('admin.investment.index') }}"><i class="fa fa-list-ol"></i> Active Investment</a></li>
+                    <li><a href="{{ route('admin.investment.inactive') }}"><i class="fa fa-list-ol"></i> Inactive Investment</a></li>
+                </ul>
+            </li>
 
             {{-- Bank --}}
             <li class="treeview {{ request()->routeIs('admin.bank.*') ? 'menu-open active' : '' }}">
