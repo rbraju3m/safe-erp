@@ -8,10 +8,12 @@ use App\Modules\Expense\Models\Project;
 use App\Modules\Expense\Requests\InvestmentRequest;
 use Auth;
 use DB;
+use Exception;
 use File;
 use Image;
 use Session;
 use Storage;
+use Throwable;
 
 
 class InvestmentController extends Controller
@@ -37,7 +39,7 @@ class InvestmentController extends Controller
         $pageTitle = "Add Investment Information";
         $ModuleTitle = "Investment Information";
         $projects = Project::where('status', 1)->pluck('name', 'id')->toArray();
-        return view("Expense::investment.create", compact('pageTitle','ModuleTitle','projects'));
+        return view("Expense::investment.create", compact('pageTitle', 'ModuleTitle', 'projects'));
     }
 
     public function store(InvestmentRequest $request)
@@ -77,7 +79,7 @@ class InvestmentController extends Controller
                 $input['status'] === 'active' ? 'admin.investment.index' : 'admin.investment.inactive'
             );
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Session::flash('danger', 'Error: ' . $e->getMessage());
             return back()->withInput();
@@ -86,71 +88,79 @@ class InvestmentController extends Controller
 
     public function edit($id)
     {
-        $pageTitle   = "Update Investment Information";
+        $pageTitle = "Update Investment Information";
         $ModuleTitle = "Investment Information";
+        $projects = Project::where('status', 1)->pluck('name', 'id')->toArray();
 
         // Retrieve expense or fail gracefully
         $data = Investment::findOrFail($id);
 
-        return view('expense::investment.edit', compact('pageTitle', 'ModuleTitle', 'data'));
+        return view('Expense::investment.edit', compact('pageTitle', 'ModuleTitle', 'data', 'projects'));
     }
 
     public function update(InvestmentRequest $request, $id)
     {
-        // Find the expense record or throw 404
+        // 1️⃣ Fetch the record safely
         $investment = Investment::findOrFail($id);
 
-        $input = $request->all();
+        // 2️⃣ Extract validated data
+        $input = $request->validated();
 
-        // Handle image upload
-        if ($request->hasFile('image_link')) {
-            $file = $request->file('image_link');
-            $sizeKB = $file->getSize() / 1024; // convert bytes to KB
+        // 3️⃣ Handle image upload
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $sizeKB = $file->getSize() / 1024; // bytes → KB
 
-            if ($sizeKB > 5120) { // limit 5MB
-                Session::flash('error', 'Image size must be less than 5MB');
-                return redirect()->back()->withInput();
+            // Validate file size (max 5MB)
+            if ($sizeKB > 5120) {
+                return back()->withInput()->with('error', 'Image size must be less than 5MB');
             }
 
-            // Generate new image name
-            $fileName = $input['name'] . '-' . time() . '.' . $file->getClientOriginalExtension();
+            // Generate safe file name
+            $fileName = str_replace(' ', '_', $investment->name ?? 'investment')
+                . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-            // Resize and save new image
+            // Resize and store
             Image::make($file)
-                ->resize(600, 400)
-                ->save(public_path('/uploads/investment/' . $fileName));
+                ->resize(600, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->save(public_path('uploads/investment/' . $fileName), 85);
 
-            // Delete old image if exists
-            if (!empty($investment->image_link) && File::exists(public_path('/uploads/investment/' . $investment->image_link))) {
-                File::delete(public_path('/uploads/investment/' . $investment->image_link));
+            // Delete old file if exists
+            if (!empty($investment->image) && File::exists(public_path('uploads/investment/' . $investment->image))) {
+                File::delete(public_path('uploads/investment/' . $investment->image));
             }
 
-            // Update image link
-            $input['image_link'] = $fileName;
+            // Update image field
+            $input['image'] = $fileName;
         } else {
-            // Keep old image if no new file uploaded
-            $input['image_link'] = $investment->image_link;
+            // Keep the old image if none uploaded
+            $input['image'] = $investment->image;
         }
 
         DB::beginTransaction();
 
         try {
-            // Update the expense record
+            // 4️⃣ Update the model
             $investment->update($input);
 
             DB::commit();
 
             Session::flash('message', 'Investment updated successfully!');
 
-            // Redirect based on status
-            return $input['status'] === 'active'
-                ? redirect()->route('admin.investment.index')
-                : redirect()->route('admin.investment.inactive');
+            // 5️⃣ Redirect based on status
+            return redirect()->route(
+                $input['status'] === 'active'
+                    ? 'admin.investment.index'
+                    : 'admin.investment.inactive'
+            );
 
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
-            Session::flash('danger', 'Update failed: ' . $e->getMessage());
-            return redirect()->back()->withInput();
+            report($e);
+            return back()->withInput()->with('danger', 'Update failed: ' . $e->getMessage());
         }
     }
 
@@ -172,7 +182,7 @@ class InvestmentController extends Controller
             Session::flash('danger', 'Investment moved to inactive list!');
             return redirect()->route('admin.investment.inactive');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Session::flash('danger', 'Error: ' . $e->getMessage());
             return redirect()->back();
@@ -191,7 +201,7 @@ class InvestmentController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        return view('expense::investment.index', compact('pageTitle', 'ModuleTitle', 'data', 'Cancel'));
+        return view('Expense::investment.index', compact('pageTitle', 'ModuleTitle', 'data', 'Cancel'));
     }
 
 
@@ -209,13 +219,12 @@ class InvestmentController extends Controller
 
             Session::flash('message', 'Investment rolled back successfully!');
             return redirect()->route('admin.investment.index');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             Session::flash('danger', $e->getMessage());
             return redirect()->back();
         }
     }
-
 
 
     public function delete($id)
@@ -226,8 +235,8 @@ class InvestmentController extends Controller
             $investment = Investment::findOrFail($id);
 
             // Delete image if exists
-            if (!empty($investment->image_link) && File::exists(public_path('uploads/investment/'.$investment->image_link))) {
-                File::delete(public_path('uploads/investment/'.$investment->image_link));
+            if (!empty($investment->image) && File::exists(public_path('uploads/investment/' . $investment->image))) {
+                File::delete(public_path('uploads/investment/' . $investment->image));
             }
 
             // Delete the record
@@ -238,7 +247,7 @@ class InvestmentController extends Controller
             Session::flash('danger', 'Deleted successfully!');
             return redirect()->route('admin.investment.inactive');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             Session::flash('danger', $e->getMessage());
             return redirect()->back();

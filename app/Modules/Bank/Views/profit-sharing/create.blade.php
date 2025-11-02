@@ -98,7 +98,7 @@
                </div>
                <div class="box-body">
 
-                   {!! Form::open(['route' => 'profit_generate_store','enctype'=>'multipart/form-data',  'files'=> true]) !!}
+                   {!! Form::open(['route' => 'profit_generate_store','enctype'=>'multipart/form-data',  'files'=> true,'method'=>'post']) !!}
 
                    <div class="box-body">
                        <div class="row table-responsive">

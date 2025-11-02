@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card" style="margin-top: 40px;">
-                <div class="card-header text-center" style="background: rgb(0, 89, 94) none repeat scroll 0% 0%;color: #fff;">
+                <div class="card-header text-center" style="background: rgb(94 0 0) none repeat scroll 0% 0%;color: #fff;">
                     <h2 style="font-size: 20px;font-weight: bold;border-bottom: 1px solid;padding: 7px 0px;">{{ __('SAFE') }}</h2>
                     <h4 style="font-size: 15px;font-weight: bold;">Login to start your session</h4>
                 </div>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12 ">

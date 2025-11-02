@@ -61,6 +61,12 @@ class ProfitSharingController extends Controller
         $pageTitle = "Generate profit Sharing Information";
         $ModuleTitle = "Profit Sharing Information";
         $input = $request->all();
+
+        $yearWiseProfitExists = ProfitDistribute::where('profit_year',$input['year'])->exists();
+        if($yearWiseProfitExists){
+            return redirect()->back()->with('error','Profit Sharing Information already generated');
+        }
+
         $profitMember = $activeMember = Member::orderBy('id','desc')
             ->where('status','active')
             ->pluck('name','id')
@@ -90,29 +96,9 @@ class ProfitSharingController extends Controller
         $Deposit = Deposit::where('status', 'active')->whereBetween('year', [2019, $input['year']])->sum('amount');
         $registrationFee = count($profitMember)*100;
         $netAmount = $Deposit-$registrationFee;
-        /*dd($Deposit,count($profitMember)*100);
-        $Expense = Expense::where('status','active');
-            for ($i = $input['year'] ; $i >= 2019;$i-- ){
-                $Expense = $Expense ->orWhere('ex_date', 'like', '%' . $i . '%');
-            }
-        $Expense = $Expense->sum('amount');
-
-        $BankProfit = Bank::where('status','active')->where('type','profit');
-        for ($i = $input['year'] ; $i >= 2019;$i-- ){
-            $BankProfit = $BankProfit ->orWhere('ex_date', 'like', '%' . $i . '%');
-        }
-        $BankProfit = $BankProfit->sum('amount');
-        $BankExpense = Bank::where('status','active')->where('type','expense');
-        for ($i = $input['year'] ; $i >= 2019;$i-- ){
-            $BankExpense = $BankExpense ->orWhere('ex_date', 'like', '%' . $i . '%');
-        }
-        $BankExpense = $BankExpense->sum('amount');
-        $netAmount = ($Deposit+$BankProfit)-($Expense+$BankExpense);*/
-//        dd($netAmount);
 
         return view("Bank::profit-sharing.create", compact('pageTitle','ModuleTitle','activeMember','input','profitMember','totalBankProfit','totalBankExpense','otherExpense','netAmount'));
 
-//        dd($input['member_id'],$activeMember,$profitMember,$totalBankProfit,$totalBankExpense,$otherExpense);
     }
 
 
@@ -141,13 +127,6 @@ class ProfitSharingController extends Controller
         return $response;
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function profitGenerateStore(Request $request)
     {
         $input = $request->all();
@@ -166,14 +145,7 @@ class ProfitSharingController extends Controller
                 }
 
                 DB::commit();
-                /*Session::flash('message', 'Bank profit / ex is added Successfully!');
-                $status = $input['status'];
-                if ($status =='active') {
-                    return redirect('admin-bank-index');
-                }else{
-                    return redirect('admin-bank-inactive');
-                }*/
-                 return redirect()->back();
+                return redirect()->route('admin_profit_sharing');
 
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
