@@ -12,6 +12,7 @@ use App\Modules\User\Models\User;
 
 
 use DB;
+use Illuminate\Http\Request;
 use Session;
 use Image;
 use File;
@@ -585,7 +586,7 @@ class UserController extends Controller
     }
 
 
-    public function specificData(){
+    /*public function specificData(){
         $response = [];
         $member_id = $_GET['member_id'];
 
@@ -597,7 +598,7 @@ class UserController extends Controller
                         ->first();
 
 
-        if (count($member) > 0) {
+        if ($member) {
             $deposite2019 = Deposit::where('member_id', $member_id)
                             ->where('status', 'active')
                             ->where('year', '2019')
@@ -683,5 +684,79 @@ class UserController extends Controller
 
 
         return $response;
+    }*/
+
+    public function specificData(Request $request)
+    {
+        $response = [];
+
+        $memberId = $request->get('member_id');
+
+        // Use firstOrFail for automatic 404 if not found
+        $member = Member::where('id', $memberId)
+            ->where('status', 'active')
+            ->first();
+
+        if (!$member) {
+            return response()->json([
+                'result' => 'error',
+                'message' => 'Member not found or inactive.',
+            ]);
+        }
+
+        // Define years dynamically (2019–2027)
+        $years = range(2019, 2027);
+
+        // Query all deposits in one go
+        $deposits = Deposit::where('member_id', $memberId)
+            ->where('status', 'active')
+            ->whereIn('year', $years)
+            ->select('year', DB::raw('SUM(amount) as total'))
+            ->groupBy('year')
+            ->pluck('total', 'year');
+
+        // Calculate totals for each year
+        $yearlyTotals = [];
+        $total = 0;
+
+        foreach ($years as $year) {
+            $yearlyTotals[$year] = $deposits[$year] ?? 0;
+            $total += $yearlyTotals[$year];
+        }
+
+        // Expected deposit per year (can move to config later)
+        $expected = [
+            2019 => 30100,
+            2020 => 30000,
+            2021 => 30000,
+            2022 => 30000,
+            2023 => 35000,
+            2024 => 35000,
+            2025 => 35000,
+            2026 => 35000,
+            2027 => 35000,
+        ];
+
+        $totalExpected = array_sum($expected);
+        $totalDue = $totalExpected - $total;
+
+        $view = view('User::user.showSpecificMember', compact(
+            'member',
+            'years',
+            'yearlyTotals',
+            'expected',
+            'total',
+            'totalDue'
+        ));
+
+        $response = [
+            'result' => 'success',
+            'content' => $view->render(),
+            'header' => 'Hi ' . Auth::user()->name,
+            'headerSmall' => 'I AM ' . $member->name,
+        ];
+
+        return $response;
     }
+
 }

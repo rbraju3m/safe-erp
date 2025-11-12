@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Modules\Expense\Models\Investment;
 use Illuminate\Http\Request;
 use App\Modules\User\Models\Member;
 use App\Modules\Deposit\Models\Deposit;
 use App\Modules\Expense\Models\Expense;
 use App\Modules\Bank\Models\Bank;
-
+use Illuminate\Support\Facades\Cache;
 
 
 class HomeController extends Controller
@@ -27,116 +28,72 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    /*public function index()
     {
-        $all_member = Member::orderBy('id','desc')
+        $allMember = Member::orderBy('id','desc')
                     ->where('status','active')
                     ->select('*')
                     ->get();
 
-        $member_count = Member::orderBy('id','desc')
+        $totalMember = Member::orderBy('id','desc')
                     ->where('status','active')
                     ->count();
 
-        $deposite = Deposit::where('status', 'active')
-                        ->select('*')
-                        ->get();
-
-        $current_total = 0;
-        $current_month_deposite = Deposit::where('status', 'active')
-                        ->where('month',date("F"))
-                        ->where('year',date("Y"))
+        $totalDeposit = Deposit::where('status', 'active')
                         ->select('amount')
-                        ->get();
-        foreach ($current_month_deposite as $value) {
-            $current_total = $current_total+$value['amount'];
-        }
+                        ->sum('amount');
 
-        $input['expense_month'] = date("F");
-        $input['expense_year'] = date("Y");
-        // Get current month year expense data
-        $curr_mon_year_expense_data = Expense::orderBy('id','desc')
-                ->where('status','active')
-                ->where('expense_month',date("F"))
-                ->where('expense_year',date("Y"))
-                ->select('*')
-                ->get();
-        $current_expense_total = 0;
-        foreach ($curr_mon_year_expense_data as $value) {
-            $current_expense_total = $current_expense_total+$value['amount'];
-        }
+        $totalExpense = Expense::orderBy('id','desc')
+            ->where('status','active')
+            ->select('amount')
+            ->sum('amount');
 
-        // Get previous month year expense data
-        $pre_mon_year_expense_data = Expense::orderBy('id','desc')
-                ->where('status','active')
-                ->where('expense_month',date('F',strtotime("-1 month")))
-                ->where('expense_year',date("Y"))
-                ->select('*')
-                ->get();
-        $previous_expense_total = 0;
-        foreach ($pre_mon_year_expense_data as $value) {
-            $previous_expense_total = $previous_expense_total+$value['amount'];
-        }
-
-        // Get total expense data
-        $total_expense_data = Expense::orderBy('id','desc')
-                ->where('status','active')
-                ->select('*')
-                ->get();
-        $total_expense = 0;
-        foreach ($total_expense_data as $value) {
-            $total_expense = $total_expense+$value['amount'];
-        }
-
-        // echo "<pre>";
-        // print_r($total_expense_data);
-        // echo $total_expense;
-        // exit();
-        $curr_mon_year_bank_profit = Bank::orderBy('id','desc')
-                ->where('status','active')
-                ->where('type','profit')
-                ->where('expense_month',date("F"))
-                ->where('expense_year',date("Y"))
-                ->select('*')
-                ->get();
-        $current_bank_profit = 0;
-        foreach ($curr_mon_year_bank_profit as $value) {
-            $current_bank_profit = $current_bank_profit+$value['amount'];
-        }
+        $totalBankProfit = Bank::orderBy('id','desc')
+            ->where('status','active')
+            ->where('type','profit')
+            ->select('amount')
+            ->sum('amount');
 
 
-        $curr_mon_year_bank_expense = Bank::orderBy('id','desc')
+        $totalBankExpense = Bank::orderBy('id','desc')
                 ->where('status','active')
                 ->where('type','expense')
-                ->where('expense_month',date("F"))
-                ->where('expense_year',date("Y"))
-                ->select('*')
-                ->get();
-        $current_bank_expense = 0;
-        foreach ($curr_mon_year_bank_expense as $value) {
-            $current_bank_expense = $current_bank_expense+$value['amount'];
-        }
+                ->select('amount')
+                ->sum('amount');
 
-        $total_bank_profit_data = Bank::orderBy('id','desc')
+
+        $totalInvestment = Investment::orderBy('id','desc')
                 ->where('status','active')
-                ->where('type','profit')
-                ->select('*')
-                ->get();
-        $total_bank_profit = 0;
-        foreach ($total_bank_profit_data as $value) {
-            $total_bank_profit = $total_bank_profit+$value['amount'];
-        }
+                ->select('amount')
+                ->sum('amount');
 
-        $total_bank_expense_data = Bank::orderBy('id','desc')
-                ->where('status','active')
-                ->where('type','expense')
-                ->select('*')
-                ->get();
-        $total_bank_expense = 0;
-        foreach ($total_bank_expense_data as $value) {
-            $total_bank_expense = $total_bank_expense+$value['amount'];
-        }
+        return view("backend.admin.index", compact(
+            'allMember',
+            'totalMember',
+            'totalDeposit',
+            'totalExpense',
+            'totalBankProfit',
+            'totalInvestment',
+            'totalBankExpense'
+            )
+        );
+    }*/
 
-        return view("backend.admin.index", compact('all_member','member_count','deposite','current_total','current_expense_total','total_expense','previous_expense_total','current_bank_profit','current_bank_expense','total_bank_profit','total_bank_expense'));
+    public function index()
+    {
+        $totals = Cache::remember('dashboard_totals', 300, function () {
+            return [
+                'totalMember'     => Member::where('status', 'active')->count(),
+                'totalDeposit'    => Deposit::where('status', 'active')->sum('amount'),
+                'totalExpense'    => Expense::where('status', 'active')->sum('amount'),
+                'totalInvestment' => Investment::where('status', 'active')->sum('amount'),
+                'totalBankProfit' => Bank::where(['status' => 'active', 'type' => 'profit'])->sum('amount'),
+                'totalBankExpense'=> Bank::where(['status' => 'active', 'type' => 'expense'])->sum('amount'),
+            ];
+        });
+
+        $allMember = Member::where('status', 'active')->latest()->get();
+
+        return view('backend.admin.index', array_merge($totals, compact('allMember')));
     }
 }
