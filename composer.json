@@ -19,8 +19,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.0",
-        "spatie/laravel-backup": "^7.5",
-        "league/flysystem-aws-s3-v3": "^1.0"
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "spatie/laravel-backup": "^7.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
