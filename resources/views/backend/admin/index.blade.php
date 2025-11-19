@@ -331,7 +331,7 @@ color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close
                                 </tr>
                                 <tr>
                                     <th>Net Cash</th>
-                                    <td><strong>{{ number_format($totalDeposit - $totalExpense + $totalBankProfit - $totalBankExpense,2) }} Tk</strong></td>
+                                    <td><strong>{{ number_format($totalDeposit - $totalExpense + $totalBankProfit - $totalBankExpense - $totalInvestment,2) }} Tk</strong></td>
                                 </tr>
                             </table>
                         </div>
@@ -365,9 +365,11 @@ color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close
                             <div class="col-md-2 col-sm-3 col-xs-6 text-center" style="margin-bottom:15px;">
                                 <a href="javascript:void(0)"
                                    class="view-member"
-                                   id="view_specific_member"
+                                   member_id="{{ $member->id }}"
                                    data-href="{{ route('admin.member.specificData') }}"
-                                   data-id="{{ $member->id }}">
+                                   id="view_specific_member"
+{{--                                   data-id="{{ $member->id }}"--}}
+                                >
                                     <img src="{{ asset('uploads/member/'.$member->image_link) }}"
                                          onerror="this.src='{{ asset('uploads/member/default.png') }}'"
                                          class="img-circle"
@@ -375,6 +377,7 @@ color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close
                                     <p style="margin-top:8px;font-weight:600;color:#333;">{{ $member->name }}</p>
                                 </a>
                             </div>
+                            {{--<a style="{{ $style }}" title="{{ $element->name }} Total Deposite" id="view_specific_member" member_id="{{ $element->id }}" data-href="{{ route('admin.member.specificData') }}"> <img src="{{URL::to('')}}/uploads/member/{{$element->image_link}}" class="img-circle" style="width: 50px;height: 50px;" alt="User Image"> {{ $element->name }} </a>--}}
                         @empty
                             <div class="col-md-12 text-center text-muted">No active members found</div>
                         @endforelse
@@ -401,7 +404,7 @@ color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close
 
 @endsection
 
-@section('scripts')
+{{--@section('per_page_js')
     <script>
         $(document).ready(function () {
             $('.view-member').click(function () {
@@ -423,4 +426,4 @@ color: #000;" type="button" class="close" data-dismiss="modal" aria-label="Close
             });
         });
     </script>
-@endsection
+@endsection--}}

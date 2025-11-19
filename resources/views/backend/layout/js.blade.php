@@ -180,7 +180,7 @@
 
 
     //for view specific model open with data
-    /*$(document).delegate('#view_specific_member','click',function () {
+    $(document).delegate('#view_specific_member','click',function () {
         var url = $(this).attr('data-href');
         var member_id = $(this).attr('member_id');
 
@@ -205,7 +205,7 @@
 
         });
         return false;
-    });*/
+    });
 
 
     $(document).delegate('#profit-details','click',function () {
