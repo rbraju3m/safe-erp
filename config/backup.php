@@ -58,7 +58,7 @@ return [
     'cleanup' => [
         'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
         'default_strategy' => [
-            'keep_all_backups_for_days' => 0,
+            'keep_all_backups_for_days' => 2,
             'keep_daily_backups_for_days' => 0,
             'keep_weekly_backups_for_weeks' => 0,
             'keep_monthly_backups_for_months' => 0,
