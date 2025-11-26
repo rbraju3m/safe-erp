@@ -574,7 +574,7 @@ class UserController extends Controller
                     ]);
                 DB::commit();
                 Session::flash('message', 'Password Change Successfully ! New Password '.$input['password']);
-                return redirect('admin-password-ChangeForm');
+                return redirect()->route('admin.member.password.change.form');
 
             } catch (\Exception $e) {
                 //If there are any exceptions, rollback the transaction`
